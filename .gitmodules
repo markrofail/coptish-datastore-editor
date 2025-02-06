@@ -1,0 +1,3 @@
+[submodule "assets/coptish-datastore"]
+	path = assets/coptish-datastore
+	url = git@github.com:markrofail/coptish-datastore.git
