@@ -1,20 +1,20 @@
 "use client";
 
-import styles from "./page.module.css";
-import initialData from "../../assets/coptish-datastore/output/liturgy-st-basil/00-matins-raising-of-incense/01-have-mercy-on-us.json";
 import React, { useState } from "react";
+import _ from "lodash";
 import { Prayer } from "./types";
 import { TextField, Button, Box, Typography } from "@mui/material";
-import _ from "lodash";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
 import { OccasionForm } from "@/components/OccasionForm";
 import { Section, SectionsForm } from "@/components/SectionsForm";
 import { Header } from "@/components/Header";
+import styles from "./page.module.css";
 
 export default function Home() {
-  const [formData, setFormData] = useState<Prayer>(initialData);
+  const [formData, setFormData] = useState<Prayer>({});
   const [fileName, setFileName] = useState("prayer_data.json"); // State for filename
 
+  /* eslint-disable  @typescript-eslint/no-explicit-any */
   const handleChange = (path: string, value: any) => {
     setFormData((prevData) => {
       const newData = { ...prevData };
@@ -24,13 +24,14 @@ export default function Home() {
   };
 
   const handleAddSection = (type: string) => {
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     const newSection: any = { type };
     if (type === "verses") newSection.verses = [{ english: "" }];
     if (type === "info") newSection.text = { english: "" };
     if (type === "compound-prayer") newSection.path = "";
     setFormData((prevData) => ({
       ...prevData,
-      sections: [...prevData.sections!, newSection],
+      sections: [...(prevData.sections || []), newSection],
     }));
   };
 

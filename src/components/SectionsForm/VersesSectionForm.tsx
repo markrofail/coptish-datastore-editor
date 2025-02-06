@@ -1,5 +1,5 @@
 import { VersesSection, MultiLingualText } from "@/app/types";
-import { Box, Button, IconButton } from "@mui/material";
+import { Box, IconButton } from "@mui/material";
 import { MultiLingualTextForm } from "../MultiLingualTextForm";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -34,7 +34,7 @@ export const VersesSectionComponent: React.FC<VersesSectionProps> = ({
   return (
     <>
       {/* ... speaker, saint, inaudible, occasion fields (using MUI components) */}
-      {section.verses.map((verse, verseIndex) => (
+      {section.verses?.map((verse, verseIndex) => (
         <Box
           key={verseIndex}
           sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 1 }}

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import {
   Box,
   Button,
@@ -7,8 +7,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import { MultiLingualText, Prayer } from "@/app/types";
-import _ from "lodash";
+import { Prayer } from "@/app/types";
 import { CompoundPrayerSectionComponent } from "./CompoundPrayerSectionForm";
 import { InfoSectionComponent } from "./InfoSectionForm";
 import { ReadingSectionComponent, ReadingType } from "./ReadingSectionForm";
@@ -17,7 +16,7 @@ import { VersesSectionComponent } from "./VersesSectionForm";
 export type Section = Required<Prayer>["sections"][number];
 
 interface SectionsProps {
-  sections: Section[];
+  sections: Section[] | undefined;
   onChange: (newSections: Section[]) => void;
   onDelete: (index: number) => void;
 }
@@ -28,13 +27,13 @@ export const SectionsForm: React.FC<SectionsProps> = ({
   onDelete,
 }) => {
   const handleChange = (index: number, updatedSection: Section) => {
-    const newSections = [...sections];
+    const newSections = [...(sections || [])];
     newSections[index] = updatedSection;
     onChange(newSections);
   };
 
   const handleSectionTypeChange = (sectionIndex: number, newType: string) => {
-    const newSections = [...sections];
+    const newSections = [...(sections || [])];
     const currentSection = newSections[sectionIndex];
 
     // Preserve common properties (occasion)
@@ -72,12 +71,9 @@ export const SectionsForm: React.FC<SectionsProps> = ({
 
   return (
     <>
-      {sections.map((section, sectionIndex) => (
-        <>
-          <Box
-            key={sectionIndex}
-            sx={{ border: "1px solid #ccc", p: 2, gap: 2 }}
-          >
+      {sections?.map((section, sectionIndex) => (
+        <Fragment key={sectionIndex}>
+          <Box sx={{ border: "1px solid #ccc", p: 2, gap: 2 }}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 2 }}>
               <FormControl fullWidth>
                 <InputLabel id="section-type-label">Section Type</InputLabel>
@@ -145,7 +141,7 @@ export const SectionsForm: React.FC<SectionsProps> = ({
           >
             Delete Section
           </Button>
-        </>
+        </Fragment>
       ))}
     </>
   );

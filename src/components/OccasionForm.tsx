@@ -7,7 +7,7 @@ enum Occasion {
 }
 
 interface OccasionFormProps {
-  value?: Occasion;
+  value?: string;
   onChange: (newValue?: Occasion) => void;
 }
 
@@ -29,7 +29,7 @@ export const OccasionForm: React.FC<OccasionFormProps> = ({
       >
         <MenuItem value="">Select Occasion</MenuItem>
         {Object.values(Occasion).map((occasion) => (
-          <MenuItem key={occasion} value={occasion}>
+          <MenuItem key={occasion} value={occasion as string}>
             {occasion}
           </MenuItem>
         ))}
