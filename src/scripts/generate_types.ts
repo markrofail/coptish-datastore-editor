@@ -3,7 +3,6 @@ import { compile } from "json-schema-to-typescript";
 import * as fs from "fs/promises";
 import { dirname, join } from "path";
 import { fileURLToPath } from "url";
-import camelCase from "camelcase";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -35,6 +34,7 @@ async function generateTypes({
     }
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 function extractEnums(schema: any, key: string = "", enums: any[] = []): any[] {
     if (schema.enum) {
         enums.push({ ...schema, propertyName: key }); // Store the entire schema fragment with the enum
@@ -48,6 +48,7 @@ function extractEnums(schema: any, key: string = "", enums: any[] = []): any[] {
     return enums;
 }
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 function createEnumDeclaration(enumSchema: any): string {
     const enumName = `${enumSchema.propertyName}Enum`; //Better naming strategy
     if (!enumName) {

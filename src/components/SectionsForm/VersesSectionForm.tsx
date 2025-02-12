@@ -2,7 +2,6 @@ import {
     type VersesSection,
     type MultiLingualText,
     type Saint,
-    type Occasion,
     type Speaker,
     SaintEnum,
     SpeakerEnum,
