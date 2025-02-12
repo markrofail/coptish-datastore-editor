@@ -2,22 +2,14 @@ import { InfoSection, MultiLingualText } from "@/app/types";
 import { MultiLingualTextForm } from "../MultiLingualTextForm";
 
 interface InfoSectionProps {
-  section: InfoSection;
-  onChange: (updatedSection: InfoSection) => void;
+    section: InfoSection;
+    onChange: (updatedSection: InfoSection) => void;
 }
 
-export const InfoSectionComponent: React.FC<InfoSectionProps> = ({
-  section,
-  onChange,
-}) => {
-  const handleMultiLingualTextChange = (newValue: MultiLingualText) => {
-    onChange({ ...section, text: newValue });
-  };
+export const InfoSectionComponent = ({ section, onChange }: InfoSectionProps) => {
+    const handleMultiLingualTextChange = (newValue: MultiLingualText) => {
+        onChange({ ...section, text: newValue });
+    };
 
-  return (
-    <MultiLingualTextForm
-      value={section.text}
-      onChange={handleMultiLingualTextChange}
-    />
-  );
+    return <MultiLingualTextForm value={section.text} onChange={handleMultiLingualTextChange} />;
 };
