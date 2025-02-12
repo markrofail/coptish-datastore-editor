@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { MultiLingualText } from "@/app/types";
+import { MultiLingualText } from "@/types";
 import { Box, TextField } from "@mui/material";
 
 interface MultiLingualTextFormProps {

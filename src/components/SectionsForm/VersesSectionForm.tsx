@@ -1,11 +1,4 @@
-import {
-    type VersesSection,
-    type MultiLingualText,
-    type Saint,
-    type Speaker,
-    SaintEnum,
-    SpeakerEnum,
-} from "@/app/types";
+import { type VersesSection, type MultiLingualText, type Saint, type Speaker, SaintEnum, SpeakerEnum } from "@/types";
 import {
     Box,
     Checkbox,

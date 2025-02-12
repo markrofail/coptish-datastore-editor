@@ -1,4 +1,4 @@
-import { ReadingSection, ReadingTypeEnum } from "@/app/types";
+import { ReadingSection, ReadingTypeEnum } from "@/types";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 
 interface ReadingSectionProps {

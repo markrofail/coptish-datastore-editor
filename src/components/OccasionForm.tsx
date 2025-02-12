@@ -1,6 +1,6 @@
 import React from "react";
 import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
-import { OccasionEnum } from "@/app/types";
+import { OccasionEnum } from "@/types";
 
 interface OccasionFormProps {
     value?: string;

@@ -1,4 +1,4 @@
-import { CompoundPrayerSection } from "@/app/types";
+import { CompoundPrayerSection } from "@/types";
 import { TextField } from "@mui/material";
 
 interface CompoundPrayerSectionProps {

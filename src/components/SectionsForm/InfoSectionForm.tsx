@@ -1,4 +1,4 @@
-import { InfoSection, MultiLingualText } from "@/app/types";
+import { InfoSection, MultiLingualText } from "@/types";
 import { MultiLingualTextForm } from "../MultiLingualTextForm";
 
 interface InfoSectionProps {

@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
 import { Box, Button, FormControl, InputLabel, Select, MenuItem, Typography } from "@mui/material";
-import { Occasion, Prayer, ReadingTypeEnum } from "@/app/types";
+import { Occasion, Prayer, ReadingTypeEnum } from "@/types";
 import { CompoundPrayerSectionComponent } from "./CompoundPrayerSectionForm";
 import { InfoSectionComponent } from "./InfoSectionForm";
 import { ReadingSectionComponent } from "./ReadingSectionForm";
