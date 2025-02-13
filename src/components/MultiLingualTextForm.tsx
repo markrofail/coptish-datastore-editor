@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import { MultiLingualText } from "@/types";
 import { Box, TextField } from "@mui/material";
+import localFont from "next/font/local";
+
+const cSAvaVeni = localFont({
+    src: "../../public/fonts/CSAvaVeni.ttf",
+});
 
 interface MultiLingualTextFormProps {
     value: MultiLingualText;
@@ -35,7 +40,7 @@ export const MultiLingualTextForm = ({ value, onChange, multiline }: MultiLingua
                         flex: field === focusedField ? 5 : 1, // Grow if focused, otherwise normal
                         transition: "flex-grow 0.3s ease-in-out",
                         "& .MuiInputBase-root": {
-                            fontFamily: field === "coptic" ? "CSAvaVeni, sans-serif" : "inherit",
+                            ...(field === "coptic" ? cSAvaVeni.style : {}),
                         },
                     }}
                     rows={multiline ? 3 : 1}
