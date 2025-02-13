@@ -40,11 +40,3 @@ a {
         color-scheme: dark;
     }
 }
-
-@font-face {
-    font-family: "CSAvaVeni";
-    src: url("https://github.com/markrofail/coptish-datastore-editor/raw/refs/heads/main/public/fonts/CSAvaVeni.ttf")
-        format("truetype");
-    font-weight: normal;
-    font-style: normal;
-}

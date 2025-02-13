@@ -1,3 +1,52 @@
 {
-    "title-field-label": "العنوان"
+    "title": "نموذج إدخال البيانات",
+    "title-field-label": "العنوان",
+    "occasion-field-label": "المناسبة",
+    "sections-field-label": "مقاطع",
+    "fileName-field-label": "اسم الملف",
+    "addSections-button-label": "إضافة مقطع",
+    "MultiLingualText": {
+        "multiLingual-field-option-english": "إنجليزي",
+        "multiLingual-field-option-arabic": "عربي",
+        "multiLingual-field-option-coptic": "قبطي",
+        "multiLingual-field-option-copticEnglish": "قبطي (إنجليزي)",
+        "multiLingual-field-option-copticArabic": "قبطي (عربي)"
+    },
+    "VersesSection": {
+        "speaker-field-label": "القائل",
+        "verses-field-label": "الكلمات",
+        "inaudible-field-on": "سراً",
+        "inaudible-field-off": "مسموع",
+        "saint-field-label": "القديس"
+    },
+    "ReadingSection": {
+        "readingType-field-label": "القراءة",
+        "readingType-field-option-acts-of-the-apostles": "أعمال الرسل",
+        "readingType-field-option-catholic-epistle": "الكاثوليكون",
+        "readingType-field-option-liturgy-gospel": "إنجيل القداس",
+        "readingType-field-option-liturgy-psalm": "مزمور القداس",
+        "readingType-field-option-matins-gospel": "إنجيل باكر",
+        "readingType-field-option-matins-psalm": "مزمور باكر",
+        "readingType-field-option-pauline-epistle": "البولس",
+        "readingType-field-option-synaxarium": "السنكسار",
+        "readingType-field-option-vespers-gospel": "إنجيل عشية",
+        "readingType-field-option-vespers-psalm": "مزمور عشية"
+    },
+    "CompoundPrayerSection": {
+        "path-field-label": "مكان الملف"
+    },
+    "OccasionField": {
+        "occasion-field-label": "المناسبة",
+        "occasion-field-option-annual": "سنوي",
+        "occasion-field-option-great-lent": "الصوم الكبير"
+    },
+    "SectionsForm": {
+        "section-label": "المقطع #{index}",
+        "sectionType-field-label": "نوع المقطع",
+        "sectionType-field-option-verses": "كلمات",
+        "sectionType-field-option-info": "معلومات",
+        "sectionType-field-option-reading": "قراءة",
+        "sectionType-field-option-compound-prayer": "صلاة مركبة",
+        "deleteSection-button-label": "حذف المقطع"
+    }
 }

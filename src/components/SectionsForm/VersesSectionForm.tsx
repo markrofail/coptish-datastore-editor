@@ -1,7 +1,6 @@
 import { type VersesSection, type MultiLingualText, type Saint, type Speaker, SaintEnum, SpeakerEnum } from "@/types";
 import {
     Box,
-    Checkbox,
     FormControl,
     FormControlLabel,
     IconButton,
@@ -9,8 +8,10 @@ import {
     MenuItem,
     Select,
     SelectChangeEvent,
+    Switch,
     Typography,
 } from "@mui/material";
+import { useTranslations } from "next-intl";
 import { MultiLingualTextForm } from "../MultiLingualTextForm";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -22,6 +23,8 @@ interface VersesSectionProps {
 }
 
 export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps) => {
+    const t = useTranslations("VersesSection");
+
     const handleSpeakerChange = (event: SelectChangeEvent<SpeakerEnum>) => {
         onChange({ ...section, speaker: event.target.value as Speaker });
     };
@@ -53,15 +56,14 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
         <>
             {/* Speaker Field */}
             <FormControl fullWidth margin="normal">
-                <InputLabel id="speaker-label">Speaker</InputLabel>
+                <InputLabel id="speaker-label">{t("speaker-field-label")}</InputLabel>
                 <Select
                     labelId="speaker-label"
                     id="speaker"
                     value={section.speaker as unknown as SpeakerEnum}
-                    label="Speaker"
+                    label={t("speaker-field-label")}
                     onChange={handleSpeakerChange}
                 >
-                    <MenuItem value="">Select Speaker</MenuItem>
                     {Object.entries(SpeakerEnum).map(([key, value]) => (
                         <MenuItem key={key} value={value}>
                             {key}
@@ -71,19 +73,20 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
             </FormControl>
 
             {/* InAudible Field */}
+
             <FormControlLabel
-                control={<Checkbox checked={section.inaudible || false} onChange={handleInaudibleChange} />}
-                label="Inaudible"
+                control={<Switch checked={section.inaudible || false} onChange={handleInaudibleChange} />}
+                label={t(`inaudible-field-${section.inaudible ? "on" : "off"}`)}
             />
 
             {/* Saint Field */}
             <FormControl fullWidth margin="normal">
-                <InputLabel id="saint-label">Saint</InputLabel>
+                <InputLabel id="saint-label">{t("saint-field-label")}</InputLabel>
                 <Select
                     labelId="saint-label"
                     id="saint"
                     value={section.saint as unknown as SaintEnum}
-                    label="Saint"
+                    label={t("saint-field-label")}
                     onChange={handleSaintChange}
                 >
                     <MenuItem value="">Select Saint</MenuItem>
@@ -97,7 +100,7 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
 
             {/* Verses Field */}
             <Box>
-                <Typography variant="subtitle2">Verses</Typography>
+                <Typography variant="subtitle2">{t("verses-field-label")}</Typography>
                 {section.verses?.map((verse, verseIndex) => (
                     <Box key={verseIndex} sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 1 }}>
                         <Box

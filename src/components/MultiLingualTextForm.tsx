@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { MultiLingualText } from "@/types";
 import { Box, TextField } from "@mui/material";
 import localFont from "next/font/local";
+import { useTranslations } from "next-intl";
 
 const cSAvaVeni = localFont({
     src: "../../public/fonts/CSAvaVeni.ttf",
@@ -14,6 +15,7 @@ interface MultiLingualTextFormProps {
 }
 
 export const MultiLingualTextForm = ({ value, onChange, multiline }: MultiLingualTextFormProps) => {
+    const t = useTranslations("MultiLingualText");
     const [focusedField, setFocusedField] = useState<keyof MultiLingualText | null>(null);
 
     const handleChange = (field: keyof MultiLingualText, newValue: string) => {
@@ -23,11 +25,11 @@ export const MultiLingualTextForm = ({ value, onChange, multiline }: MultiLingua
     return (
         <Box sx={{ display: "flex", flexDirection: "row", gap: 1, flex: 1 }}>
             {[
-                { field: "english", label: "English" },
-                { field: "arabic", label: "Arabic" },
-                { field: "coptic", label: "Coptic" },
-                { field: "coptic_english", label: "Coptic (English)" },
-                { field: "coptic_arabic", label: "Coptic (Arabic)" },
+                { field: "english", label: t("multiLingual-field-option-english") },
+                { field: "arabic", label: t("multiLingual-field-option-arabic") },
+                { field: "coptic", label: t("multiLingual-field-option-coptic") },
+                { field: "coptic_english", label: t("multiLingual-field-option-copticEnglish") },
+                { field: "coptic_arabic", label: t("multiLingual-field-option-copticArabic") },
             ].map(({ label, field }) => (
                 <TextField
                     key={field}

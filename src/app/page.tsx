@@ -92,7 +92,7 @@ export default function Home() {
                 <main className={styles.main}>
                     <Box sx={{ flex: 1, display: "flex" }}>
                         <Typography variant="h2" component="div" sx={{ flex: 1 }}>
-                            Data Input Form
+                            {t("title")}
                         </Typography>
 
                         <Box>
@@ -116,43 +116,42 @@ export default function Home() {
                     <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                         {/* Filename input */}
                         <TextField
-                            label="File Name"
+                            label={t("fileName-field-label")}
                             value={fileName}
                             onChange={(e) => setFileName(e.target.value)}
                             fullWidth
-                            margin="normal" // Add some margin
                         />
 
                         {/* Title */}
-                        <>
+                        <Box>
                             <Typography variant="h6">{t("title-field-label")}</Typography>
                             <MultiLingualTextForm
                                 value={formData.title || { english: "" }}
                                 onChange={(newValue) => handleChange("title", newValue)}
                             />
-                        </>
+                        </Box>
 
                         {/* Occasion */}
-                        <>
-                            <Typography variant="h6">Occasion</Typography>
+                        <Box>
+                            <Typography variant="h6">{t("occasion-field-label")}</Typography>
                             <OccasionForm
                                 value={formData.occasion}
                                 onChange={(newValue) => handleChange("occasion", newValue)}
                             />
-                        </>
+                        </Box>
 
                         {/* Sections */}
-                        <>
-                            <Typography variant="h6">Sections</Typography>
+                        <Box>
+                            <Typography variant="h6">{t("sections-field-label")}</Typography>
                             <SectionsForm
                                 sections={formData.sections}
                                 onChange={handleSectionsChange}
                                 onDelete={handleDeleteSection}
                             />
-                        </>
+                        </Box>
 
                         <Button variant="contained" onClick={() => handleAddSection("verses")}>
-                            Add Section
+                            {t("addSections-button-label")}
                         </Button>
                     </Box>
                 </main>

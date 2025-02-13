@@ -1,3 +1,52 @@
 {
-    "title-field-label": "Title"
+    "title": "Data Input Form",
+    "title-field-label": "Title",
+    "occasion-field-label": "Occasion",
+    "sections-field-label": "Sections",
+    "fileName-field-label": "File Name",
+    "addSections-button-label": "Add Section",
+    "MultiLingualText": {
+        "multiLingual-field-option-english": "English",
+        "multiLingual-field-option-arabic": "Arabic",
+        "multiLingual-field-option-coptic": "Coptic",
+        "multiLingual-field-option-copticEnglish": "Coptic (English)",
+        "multiLingual-field-option-copticArabic": "Coptic (Arabic)"
+    },
+    "VersesSection": {
+        "speaker-field-label": "Speaker",
+        "verses-field-label": "Verses",
+        "inaudible-field-on": "Inaudible",
+        "inaudible-field-off": "Spoken",
+        "saint-field-label": "Saint"
+    },
+    "ReadingSection": {
+        "readingType-field-label": "Reading",
+        "readingType-field-option-acts-of-the-apostles": "Acts Of The Apostles",
+        "readingType-field-option-catholic-epistle": "Catholic Epistle",
+        "readingType-field-option-liturgy-gospel": "Liturgy Gospel",
+        "readingType-field-option-liturgy-psalm": "Liturgy Psalm",
+        "readingType-field-option-matins-gospel": "Matins Gospel",
+        "readingType-field-option-matins-psalm": "Matins Psalm",
+        "readingType-field-option-pauline-epistle": "Pauline Epistle",
+        "readingType-field-option-synaxarium": "Synaxarium",
+        "readingType-field-option-vespers-gospel": "Vespers Gospel",
+        "readingType-field-option-vespers-psalm": "Vespers Psalmة"
+    },
+    "CompoundPrayerSection": {
+        "path-field-label": "Path"
+    },
+    "OccasionField": {
+        "occasion-field-label": "Occasion",
+        "occasion-field-option-annual": "Annual",
+        "occasion-field-option-great-lent": "Great Lent"
+    },
+    "SectionsForm": {
+        "section-label": "Section #{index}",
+        "sectionType-field-label": "Section Type",
+        "sectionType-field-option-verses": "Verses",
+        "sectionType-field-option-info": "Info",
+        "sectionType-field-option-reading": "Reading",
+        "sectionType-field-option-compound-prayer": "Compound Prayer",
+        "deleteSection-button-label": "Delete Section"
+    }
 }

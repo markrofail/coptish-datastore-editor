@@ -6,6 +6,7 @@ import { InfoSectionComponent } from "./InfoSectionForm";
 import { ReadingSectionComponent } from "./ReadingSectionForm";
 import { VersesSectionComponent } from "./VersesSectionForm";
 import { OccasionForm } from "../OccasionForm";
+import { useTranslations } from "next-intl";
 
 export type Section = Required<Prayer>["sections"][number];
 
@@ -16,6 +17,8 @@ interface SectionsProps {
 }
 
 export const SectionsForm = ({ sections, onChange, onDelete }: SectionsProps) => {
+    const t = useTranslations("SectionsForm");
+
     const handleChange = (index: number, updatedSection: Section) => {
         const newSections = [...(sections || [])];
         newSections[index] = updatedSection;
@@ -70,17 +73,26 @@ export const SectionsForm = ({ sections, onChange, onDelete }: SectionsProps) =>
             {sections?.map((section, sectionIndex) => (
                 <Fragment key={sectionIndex}>
                     <Box sx={{ border: "1px solid #ccc", p: 2, gap: 2 }}>
-                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
+                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                             <Typography variant="subtitle1" marginBottom={2}>
-                                Section #{sectionIndex + 1}
+                                {t("section-label", { index: sectionIndex + 1 })}
                             </Typography>
 
                             <Button variant="contained" color="error" onClick={() => onDelete(sectionIndex)}>
-                                Delete Section
+                                {t("deleteSection-button-label")}
                             </Button>
                         </Box>
-                        <FormControl fullWidth>
-                            <InputLabel id="section-type-label">Section Type</InputLabel>
+
+                        {/* Occasion Field */}
+                        <Box marginBottom={2}>
+                            <OccasionForm
+                                value={section.occasion}
+                                onChange={(newOccasion) => handleOccasionChange(sectionIndex, newOccasion)}
+                            />
+                        </Box>
+
+                        <FormControl fullWidth margin="normal">
+                            <InputLabel id="section-type-label">{t("sectionType-field-label")}</InputLabel>
                             <Select
                                 labelId="section-type-label"
                                 id="section-type"
@@ -88,18 +100,13 @@ export const SectionsForm = ({ sections, onChange, onDelete }: SectionsProps) =>
                                 label="Section Type"
                                 onChange={(e) => handleSectionTypeChange(sectionIndex, e.target.value as string)}
                             >
-                                <MenuItem value="verses">Verses</MenuItem>
-                                <MenuItem value="info">Info</MenuItem>
-                                <MenuItem value="reading">Reading</MenuItem>
-                                <MenuItem value="compound-prayer">Compound Prayer</MenuItem>
+                                {["verses", "info", "reading", "compound-prayer"].map((type) => (
+                                    <MenuItem key={type} value={type}>
+                                        {t(`sectionType-field-option-${type}`)}
+                                    </MenuItem>
+                                ))}
                             </Select>
                         </FormControl>
-
-                        {/* Occasion Field */}
-                        <OccasionForm
-                            value={section.occasion}
-                            onChange={(newOccasion) => handleOccasionChange(sectionIndex, newOccasion)}
-                        />
 
                         {section.type === "verses" && (
                             <VersesSectionComponent
