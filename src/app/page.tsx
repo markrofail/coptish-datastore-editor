@@ -11,7 +11,7 @@ import styles from "./page.module.css";
 import { useTranslations } from "next-intl";
 import SaveIcon from "@mui/icons-material/Save";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import TranslateIcon from "@mui/icons-material/Translate";
+import TranslateIcon from "../components/TranslateIcon";
 import { useLocale } from "./providers";
 
 export default function Home() {
