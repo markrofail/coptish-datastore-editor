@@ -1,5 +1,8 @@
 import React, { Fragment } from "react";
-import { Box, Button, FormControl, InputLabel, Select, MenuItem, Typography } from "@mui/material";
+import { Box, FormControl, InputLabel, Select, MenuItem, Typography, IconButton, ButtonGroup } from "@mui/material";
+import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
+import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { Occasion, Prayer, ReadingTypeEnum } from "@/types";
 import { CompoundPrayerSectionComponent } from "./CompoundPrayerSectionForm";
 import { InfoSectionComponent } from "./InfoSectionForm";
@@ -18,6 +21,26 @@ interface SectionsProps {
 
 export const SectionsForm = ({ sections, onChange, onDelete }: SectionsProps) => {
     const t = useTranslations("SectionsForm");
+
+    const moveSectionUp = (index: number) => {
+        if (sections && index > 0) {
+            const newSections = [...sections];
+            const temp = newSections[index];
+            newSections[index] = newSections[index - 1];
+            newSections[index - 1] = temp;
+            onChange(newSections);
+        }
+    };
+
+    const moveSectionDown = (index: number) => {
+        if (sections && index < sections.length - 1) {
+            const newSections = [...sections];
+            const temp = newSections[index];
+            newSections[index] = newSections[index + 1];
+            newSections[index + 1] = temp;
+            onChange(newSections);
+        }
+    };
 
     const handleChange = (index: number, updatedSection: Section) => {
         const newSections = [...(sections || [])];
@@ -69,18 +92,41 @@ export const SectionsForm = ({ sections, onChange, onDelete }: SectionsProps) =>
     };
 
     return (
-        <>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {sections?.map((section, sectionIndex) => (
                 <Fragment key={sectionIndex}>
                     <Box sx={{ border: "1px solid #ccc", p: 2, gap: 2 }}>
-                        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                            <Typography variant="subtitle1" marginBottom={2}>
-                                {t("section-label", { index: sectionIndex + 1 })}
-                            </Typography>
+                        <Box
+                            sx={{
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "space-between",
+                                marginBottom: 2,
+                            }}
+                        >
+                            <Typography variant="h6">{t("section-label", { index: sectionIndex + 1 })}</Typography>
 
-                            <Button variant="contained" color="error" onClick={() => onDelete(sectionIndex)}>
-                                {t("deleteSection-button-label")}
-                            </Button>
+                            <ButtonGroup variant="contained">
+                                <IconButton
+                                    onClick={() => moveSectionUp(sectionIndex)}
+                                    disabled={sectionIndex === 0}
+                                    size="small"
+                                >
+                                    <ArrowUpwardIcon />
+                                </IconButton>
+
+                                <IconButton
+                                    onClick={() => moveSectionDown(sectionIndex)}
+                                    disabled={sectionIndex === sections.length - 1}
+                                    size="small"
+                                >
+                                    <ArrowDownwardIcon />
+                                </IconButton>
+
+                                <IconButton onClick={() => moveSectionDown(sectionIndex)} size="small" color="error">
+                                    <DeleteIcon />
+                                </IconButton>
+                            </ButtonGroup>
                         </Box>
 
                         {/* Occasion Field */}
@@ -135,6 +181,6 @@ export const SectionsForm = ({ sections, onChange, onDelete }: SectionsProps) =>
                     </Box>
                 </Fragment>
             ))}
-        </>
+        </Box>
     );
 };
