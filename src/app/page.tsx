@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import _ from "lodash";
 import { Prayer } from "@/types";
-import { TextField, Button, Box, Typography, IconButton } from "@mui/material";
+import { TextField, Button, Box, Typography } from "@mui/material";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
 import { OccasionForm } from "@/components/OccasionForm";
 import { Section, SectionsForm } from "@/components/SectionsForm";
@@ -95,21 +95,35 @@ export default function Home() {
                             {t("title")}
                         </Typography>
 
-                        <Box>
-                            {/* Load Button */}
-                            <IconButton color="inherit" onClick={handleSave}>
-                                <SaveIcon />
-                            </IconButton>
+                        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+                            <Box>
+                                <Button variant="text" color="inherit" startIcon={<SaveIcon />} onClick={handleSave}>
+                                    {t("save-button-label")}
+                                </Button>
+                            </Box>
 
-                            {/* SaveButton */}
-                            <IconButton color="inherit" onClick={() => document.getElementById("file-upload")?.click()}>
-                                <CloudUploadIcon />
-                            </IconButton>
-                            <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleLoad} />
+                            <Box>
+                                <Button
+                                    variant="text"
+                                    color="inherit"
+                                    startIcon={<CloudUploadIcon />}
+                                    onClick={() => document.getElementById("file-upload")?.click()}
+                                >
+                                    {t("upload-button-label")}
+                                </Button>
+                                <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleLoad} />
+                            </Box>
 
-                            <IconButton color="inherit" onClick={handleChangeLocale}>
-                                <TranslateIcon />
-                            </IconButton>
+                            <Box>
+                                <Button
+                                    variant="text"
+                                    color="inherit"
+                                    startIcon={<TranslateIcon />}
+                                    onClick={handleChangeLocale}
+                                >
+                                    {locale === "en" ? "عربي" : "English"}
+                                </Button>
+                            </Box>
                         </Box>
                     </Box>
 

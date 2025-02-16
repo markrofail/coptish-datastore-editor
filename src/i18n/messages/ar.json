@@ -1,5 +1,7 @@
 {
     "title": "نموذج إدخال البيانات",
+    "save-button-label": "حفظ",
+    "upload-button-label": "رفع",
     "title-field-label": "العنوان",
     "occasion-field-label": "المناسبة",
     "sections-field-label": "مقاطع",
@@ -13,7 +15,7 @@
     },
     "VersesSection": {
         "speaker-field-label": "القائل",
-        "verses-field-label": "الكلمات",
+        "verses-field-label": "المرادات",
         "inaudible-field-on": "سراً",
         "inaudible-field-off": "مسموع",
         "saint-field-label": "القديس",
@@ -47,8 +49,8 @@
     "SectionsForm": {
         "section-label": "المقطع #{index}",
         "sectionType-field-label": "نوع المقطع",
-        "sectionType-field-option-verses": "كلمات",
-        "sectionType-field-option-info": "معلومات",
+        "sectionType-field-option-verses": "مرادات",
+        "sectionType-field-option-info": "تعليق",
         "sectionType-field-option-reading": "قراءة",
         "sectionType-field-option-compound-prayer": "صلاة مركبة",
         "deleteSection-button-label": "حذف المقطع",

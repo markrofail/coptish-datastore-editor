@@ -1,5 +1,7 @@
 {
     "title": "Data Input Form",
+    "save-button-label": "Save",
+    "upload-button-label": "Upload",
     "title-field-label": "Title",
     "occasion-field-label": "Occasion",
     "sections-field-label": "Sections",
