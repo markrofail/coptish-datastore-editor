@@ -77,11 +77,11 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
                     <Select
                         labelId="saint-label"
                         id="saint"
-                        value={section.saint as unknown as SaintEnum}
+                        value={(section.saint as unknown as SaintEnum) || ""}
                         label={t("saint-field-label")}
                         onChange={handleSaintChange}
                     >
-                        <MenuItem value="">Select Saint</MenuItem>
+                        <MenuItem value="" />
                         {Object.entries(SaintEnum).map(([key, value]) => (
                             <MenuItem key={key} value={value}>
                                 {key}
@@ -98,13 +98,14 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
                     <Select
                         labelId="speaker-label"
                         id="speaker"
-                        value={section.speaker as unknown as SpeakerEnum}
+                        value={(section.speaker as unknown as SpeakerEnum) || ""}
                         label={t("speaker-field-label")}
                         onChange={handleSpeakerChange}
                     >
+                        <MenuItem value="" />
                         {Object.entries(SpeakerEnum).map(([key, value]) => (
                             <MenuItem key={key} value={value}>
-                                {key}
+                                {t(`speaker-field-option-${value}`) || value}
                             </MenuItem>
                         ))}
                     </Select>

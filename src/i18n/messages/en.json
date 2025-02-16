@@ -16,7 +16,12 @@
         "verses-field-label": "Verses",
         "inaudible-field-on": "Inaudible",
         "inaudible-field-off": "Spoken",
-        "saint-field-label": "Saint"
+        "saint-field-label": "Saint",
+        "speaker-field-option-": "",
+        "speaker-field-option-deacon": "Deacon",
+        "speaker-field-option-priest": "Priest",
+        "speaker-field-option-reader": "Reader",
+        "speaker-field-option-people": "People"
     },
     "ReadingSection": {
         "readingType-field-label": "Reading",

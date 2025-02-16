@@ -16,7 +16,12 @@
         "verses-field-label": "الكلمات",
         "inaudible-field-on": "سراً",
         "inaudible-field-off": "مسموع",
-        "saint-field-label": "القديس"
+        "saint-field-label": "القديس",
+        "speaker-field-option-": "",
+        "speaker-field-option-deacon": "الشماس",
+        "speaker-field-option-priest": "الكاهن",
+        "speaker-field-option-reader": "القارئ",
+        "speaker-field-option-people": "الشعب"
     },
     "ReadingSection": {
         "readingType-field-label": "القراءة",

@@ -19,7 +19,7 @@ export default function Home() {
     const { locale, setLocale } = useLocale();
 
     const [formData, setFormData] = useState<Prayer>({});
-    const [fileName, setFileName] = useState("prayer_data.json"); // State for filename
+    const [fileName, setFileName] = useState("");
 
     /* eslint-disable  @typescript-eslint/no-explicit-any */
     const handleChange = (path: string, value: any) => {

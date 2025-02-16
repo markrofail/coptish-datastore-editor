@@ -21,10 +21,10 @@ export const OccasionForm = ({ value, onChange }: OccasionFormProps) => {
                 label={t("occasion-field-label")}
                 onChange={(e) => onChange(e.target.value ? (e.target.value as OccasionEnum) : undefined)}
             >
-                <MenuItem value="">Select Occasion</MenuItem>
+                <MenuItem value="" />
                 {Object.entries(OccasionEnum).map(([key, value]) => (
                     <MenuItem key={key} value={value}>
-                        {key}
+                        {t(`occasion-field-option-${value}`) || value}
                     </MenuItem>
                 ))}
             </Select>

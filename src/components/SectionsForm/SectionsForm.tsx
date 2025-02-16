@@ -1,17 +1,5 @@
 import React, { Fragment, useState } from "react";
-import {
-    Box,
-    FormControl,
-    InputLabel,
-    Select,
-    MenuItem,
-    Typography,
-    IconButton,
-    ButtonGroup,
-    Button,
-    Tab,
-    Tabs,
-} from "@mui/material";
+import { Box, Typography, IconButton, ButtonGroup, Button, Tab, Tabs } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -118,6 +106,16 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
         onChange(newSections);
     };
 
+    const handleAddSection = () => {
+        onAdd();
+        setSectionIds([...sectionIds, uuidv4()]);
+    };
+
+    const handleDeleteSection = (index: number) => {
+        onDelete(index);
+        setSectionIds(sectionIds.filter((_, i) => i !== index));
+    };
+
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }} ref={parent}>
             {sections?.map((section, sectionIndex) => (
@@ -129,7 +127,7 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
                             onChange={(_, newType) => handleSectionTypeChange(sectionIndex, newType)}
                         >
                             {["verses", "info", "reading", "compound-prayer"].map((type) => (
-                                <Tab value={type} label={t(`sectionType-field-option-${type}`)} />
+                                <Tab key={type} value={type} label={t(`sectionType-field-option-${type}`)} />
                             ))}
                         </Tabs>
 
@@ -154,7 +152,11 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
                                         <ArrowDownwardIcon />
                                     </IconButton>
 
-                                    <IconButton onClick={() => onDelete(sectionIndex)} size="small" color="error">
+                                    <IconButton
+                                        onClick={() => handleDeleteSection(sectionIndex)}
+                                        size="small"
+                                        color="error"
+                                    >
                                         <DeleteIcon />
                                     </IconButton>
                                 </ButtonGroup>
@@ -189,7 +191,7 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
                 </Fragment>
             ))}
 
-            <Button variant="contained" onClick={onAdd}>
+            <Button variant="contained" onClick={handleAddSection}>
                 {t("addSections-button-label")}
             </Button>
         </Box>
