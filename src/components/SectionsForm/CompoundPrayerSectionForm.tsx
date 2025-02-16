@@ -1,6 +1,7 @@
-import { CompoundPrayerSection } from "@/types";
+import { CompoundPrayerSection, Occasion } from "@/types";
 import { TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { OccasionForm } from "../OccasionForm";
 
 interface CompoundPrayerSectionProps {
     section: CompoundPrayerSection;
@@ -10,12 +11,21 @@ interface CompoundPrayerSectionProps {
 export const CompoundPrayerSectionComponent = ({ section, onChange }: CompoundPrayerSectionProps) => {
     const t = useTranslations("CompoundPrayerSection");
 
+    const handleOccasionChange = (value: Occasion | undefined) => {
+        onChange({ ...section, occasion: value });
+    };
+
     return (
-        <TextField
-            label={t("path-field-label")}
-            value={section.path}
-            onChange={(e) => onChange({ ...section, path: e.target.value })}
-            fullWidth
-        />
+        <>
+            {/* Occasion Field */}
+            <OccasionForm value={section.occasion} onChange={handleOccasionChange} />
+            {/* PrayerPath Field */}
+            <TextField
+                label={t("path-field-label")}
+                value={section.path}
+                onChange={(e) => onChange({ ...section, path: e.target.value })}
+                fullWidth
+            />
+        </>
     );
 };

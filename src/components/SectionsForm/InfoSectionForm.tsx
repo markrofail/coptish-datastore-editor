@@ -1,5 +1,6 @@
-import { InfoSection, MultiLingualText } from "@/types";
+import { InfoSection, MultiLingualText, Occasion } from "@/types";
 import { MultiLingualTextForm } from "../MultiLingualTextForm";
+import { OccasionForm } from "../OccasionForm";
 
 interface InfoSectionProps {
     section: InfoSection;
@@ -11,5 +12,16 @@ export const InfoSectionComponent = ({ section, onChange }: InfoSectionProps) =>
         onChange({ ...section, text: newValue });
     };
 
-    return <MultiLingualTextForm value={section.text} onChange={handleMultiLingualTextChange} />;
+    const handleOccasionChange = (value: Occasion | undefined) => {
+        onChange({ ...section, occasion: value });
+    };
+
+    return (
+        <>
+            {/* Occasion Field */}
+            <OccasionForm value={section.occasion} onChange={handleOccasionChange} />
+            {/* InfoText Field */}
+            <MultiLingualTextForm value={section.text} onChange={handleMultiLingualTextChange} />;
+        </>
+    );
 };

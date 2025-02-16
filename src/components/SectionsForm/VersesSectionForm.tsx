@@ -1,4 +1,12 @@
-import { type VersesSection, type MultiLingualText, type Saint, type Speaker, SaintEnum, SpeakerEnum } from "@/types";
+import {
+    type VersesSection,
+    type MultiLingualText,
+    type Saint,
+    type Speaker,
+    SaintEnum,
+    SpeakerEnum,
+    Occasion,
+} from "@/types";
 import {
     Box,
     FormControl,
@@ -15,6 +23,7 @@ import { useTranslations } from "next-intl";
 import { MultiLingualTextForm } from "../MultiLingualTextForm";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
+import { OccasionForm } from "../OccasionForm";
 
 interface VersesSectionProps {
     section: VersesSection;
@@ -37,6 +46,10 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
         onChange({ ...section, inaudible: event.target.checked });
     };
 
+    const handleOccasionChange = (value: Occasion | undefined) => {
+        onChange({ ...section, occasion: value });
+    };
+
     const handleMultiLingualTextChange = (verseIndex: number, newValue: MultiLingualText) => {
         const newVerses = [...section.verses];
         newVerses[verseIndex] = newValue;
@@ -54,30 +67,8 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
 
     return (
         <>
-            {/* Speaker Field */}
-            <FormControl fullWidth margin="normal">
-                <InputLabel id="speaker-label">{t("speaker-field-label")}</InputLabel>
-                <Select
-                    labelId="speaker-label"
-                    id="speaker"
-                    value={section.speaker as unknown as SpeakerEnum}
-                    label={t("speaker-field-label")}
-                    onChange={handleSpeakerChange}
-                >
-                    {Object.entries(SpeakerEnum).map(([key, value]) => (
-                        <MenuItem key={key} value={value}>
-                            {key}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
-
-            {/* InAudible Field */}
-
-            <FormControlLabel
-                control={<Switch checked={section.inaudible || false} onChange={handleInaudibleChange} />}
-                label={t(`inaudible-field-${section.inaudible ? "on" : "off"}`)}
-            />
+            {/* Occasion Field */}
+            <OccasionForm value={section.occasion} onChange={handleOccasionChange} />
 
             {/* Saint Field */}
             <FormControl fullWidth margin="normal">
@@ -91,6 +82,30 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
                 >
                     <MenuItem value="">Select Saint</MenuItem>
                     {Object.entries(SaintEnum).map(([key, value]) => (
+                        <MenuItem key={key} value={value}>
+                            {key}
+                        </MenuItem>
+                    ))}
+                </Select>
+            </FormControl>
+
+            {/* InAudible Field */}
+            <FormControlLabel
+                control={<Switch checked={section.inaudible || false} onChange={handleInaudibleChange} />}
+                label={t(`inaudible-field-${section.inaudible ? "on" : "off"}`)}
+            />
+
+            {/* Speaker Field */}
+            <FormControl fullWidth margin="normal">
+                <InputLabel id="speaker-label">{t("speaker-field-label")}</InputLabel>
+                <Select
+                    labelId="speaker-label"
+                    id="speaker"
+                    value={section.speaker as unknown as SpeakerEnum}
+                    label={t("speaker-field-label")}
+                    onChange={handleSpeakerChange}
+                >
+                    {Object.entries(SpeakerEnum).map(([key, value]) => (
                         <MenuItem key={key} value={value}>
                             {key}
                         </MenuItem>
