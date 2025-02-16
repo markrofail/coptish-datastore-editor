@@ -67,7 +67,7 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
 
     return (
         <>
-            <Box sx={{ display: "flex", flexDirection: "row", gap: 2, marginBottom: 2 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 2, marginBottom: 1 }}>
                 {/* Occasion Field */}
                 <OccasionForm value={section.occasion} onChange={handleOccasionChange} />
 
@@ -91,7 +91,7 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
                 </FormControl>
             </Box>
 
-            <Box sx={{ display: "flex", flexDirection: "row", gap: 2, marginBottom: 2 }}>
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 2, marginBottom: 1 }}>
                 {/* Speaker Field */}
                 <FormControl fullWidth>
                     <InputLabel id="speaker-label">{t("speaker-field-label")}</InputLabel>

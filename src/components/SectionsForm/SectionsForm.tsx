@@ -9,6 +9,8 @@ import {
     IconButton,
     ButtonGroup,
     Button,
+    Tab,
+    Tabs,
 } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
@@ -120,81 +122,69 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }} ref={parent}>
             {sections?.map((section, sectionIndex) => (
                 <Fragment key={sectionIds[sectionIndex]}>
-                    <Box sx={{ border: "1px solid #ccc", p: 2, gap: 2 }}>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                marginBottom: 2,
-                            }}
+                    <Box sx={{ border: "1px solid #ccc" }}>
+                        <Tabs
+                            variant="fullWidth"
+                            value={section.type}
+                            onChange={(_, newType) => handleSectionTypeChange(sectionIndex, newType)}
                         >
-                            <Typography variant="h6">{t("section-label", { index: sectionIndex + 1 })}</Typography>
+                            {["verses", "info", "reading", "compound-prayer"].map((type) => (
+                                <Tab value={type} label={t(`sectionType-field-option-${type}`)} />
+                            ))}
+                        </Tabs>
 
-                            <ButtonGroup variant="contained">
-                                <IconButton
-                                    onClick={() => moveSectionUp(sectionIndex)}
-                                    disabled={sectionIndex === 0}
-                                    size="small"
-                                >
-                                    <ArrowUpwardIcon />
-                                </IconButton>
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, padding: 2 }}>
+                            <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                                <Typography variant="h6">{t("section-label", { index: sectionIndex + 1 })}</Typography>
 
-                                <IconButton
-                                    onClick={() => moveSectionDown(sectionIndex)}
-                                    disabled={sectionIndex === sections.length - 1}
-                                    size="small"
-                                >
-                                    <ArrowDownwardIcon />
-                                </IconButton>
+                                <ButtonGroup>
+                                    <IconButton
+                                        onClick={() => moveSectionUp(sectionIndex)}
+                                        disabled={sectionIndex === 0}
+                                        size="small"
+                                    >
+                                        <ArrowUpwardIcon />
+                                    </IconButton>
 
-                                <IconButton onClick={() => onDelete(sectionIndex)} size="small" color="error">
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ButtonGroup>
+                                    <IconButton
+                                        onClick={() => moveSectionDown(sectionIndex)}
+                                        disabled={sectionIndex === sections.length - 1}
+                                        size="small"
+                                    >
+                                        <ArrowDownwardIcon />
+                                    </IconButton>
+
+                                    <IconButton onClick={() => onDelete(sectionIndex)} size="small" color="error">
+                                        <DeleteIcon />
+                                    </IconButton>
+                                </ButtonGroup>
+                            </Box>
+
+                            {section.type === "verses" && (
+                                <VersesSectionComponent
+                                    section={section}
+                                    onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
+                                />
+                            )}
+                            {section.type === "info" && (
+                                <InfoSectionComponent
+                                    section={section}
+                                    onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
+                                />
+                            )}
+                            {section.type === "reading" && (
+                                <ReadingSectionComponent
+                                    section={section}
+                                    onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
+                                />
+                            )}
+                            {section.type === "compound-prayer" && (
+                                <CompoundPrayerSectionComponent
+                                    section={section}
+                                    onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
+                                />
+                            )}
                         </Box>
-
-                        <FormControl fullWidth margin="normal">
-                            <InputLabel id="section-type-label">{t("sectionType-field-label")}</InputLabel>
-                            <Select
-                                labelId="section-type-label"
-                                id="section-type"
-                                value={section.type}
-                                label="Section Type"
-                                onChange={(e) => handleSectionTypeChange(sectionIndex, e.target.value as string)}
-                            >
-                                {["verses", "info", "reading", "compound-prayer"].map((type) => (
-                                    <MenuItem key={type} value={type}>
-                                        {t(`sectionType-field-option-${type}`)}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
-
-                        {section.type === "verses" && (
-                            <VersesSectionComponent
-                                section={section}
-                                onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
-                            />
-                        )}
-                        {section.type === "info" && (
-                            <InfoSectionComponent
-                                section={section}
-                                onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
-                            />
-                        )}
-                        {section.type === "reading" && (
-                            <ReadingSectionComponent
-                                section={section}
-                                onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
-                            />
-                        )}
-                        {section.type === "compound-prayer" && (
-                            <CompoundPrayerSectionComponent
-                                section={section}
-                                onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
-                            />
-                        )}
                     </Box>
                 </Fragment>
             ))}

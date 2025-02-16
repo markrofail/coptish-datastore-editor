@@ -21,7 +21,7 @@ export const InfoSectionComponent = ({ section, onChange }: InfoSectionProps) =>
             {/* Occasion Field */}
             <OccasionForm value={section.occasion} onChange={handleOccasionChange} />
             {/* InfoText Field */}
-            <MultiLingualTextForm value={section.text} onChange={handleMultiLingualTextChange} />;
+            <MultiLingualTextForm value={section.text} onChange={handleMultiLingualTextChange} />
         </>
     );
 };
