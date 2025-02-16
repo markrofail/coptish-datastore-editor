@@ -1,15 +1,15 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Box, FormControl, InputLabel, Select, MenuItem, Typography, IconButton, ButtonGroup } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Occasion, Prayer, ReadingTypeEnum } from "@/types";
+import { Prayer, ReadingTypeEnum } from "@/types";
 import { CompoundPrayerSectionComponent } from "./CompoundPrayerSectionForm";
 import { InfoSectionComponent } from "./InfoSectionForm";
 import { ReadingSectionComponent } from "./ReadingSectionForm";
 import { VersesSectionComponent } from "./VersesSectionForm";
-import { OccasionForm } from "../OccasionForm";
 import { useTranslations } from "next-intl";
+import { useAutoAnimate } from "@formkit/auto-animate/react";
 
 export type Section = Required<Prayer>["sections"][number];
 
@@ -21,6 +21,7 @@ interface SectionsProps {
 
 export const SectionsForm = ({ sections, onChange, onDelete }: SectionsProps) => {
     const t = useTranslations("SectionsForm");
+    const [parent] = useAutoAnimate();
 
     const moveSectionUp = (index: number) => {
         if (sections && index > 0) {
@@ -45,12 +46,6 @@ export const SectionsForm = ({ sections, onChange, onDelete }: SectionsProps) =>
     const handleChange = (index: number, updatedSection: Section) => {
         const newSections = [...(sections || [])];
         newSections[index] = updatedSection;
-        onChange(newSections);
-    };
-
-    const handleOccasionChange = (sectionIndex: number, newOccasion: Occasion | undefined) => {
-        const newSections = [...(sections || [])];
-        newSections[sectionIndex] = { ...newSections[sectionIndex], occasion: newOccasion };
         onChange(newSections);
     };
 
@@ -92,94 +87,84 @@ export const SectionsForm = ({ sections, onChange, onDelete }: SectionsProps) =>
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }} ref={parent}>
             {sections?.map((section, sectionIndex) => (
-                <Fragment key={sectionIndex}>
-                    <Box sx={{ border: "1px solid #ccc", p: 2, gap: 2 }}>
-                        <Box
-                            sx={{
-                                display: "flex",
-                                alignItems: "center",
-                                justifyContent: "space-between",
-                                marginBottom: 2,
-                            }}
-                        >
-                            <Typography variant="h6">{t("section-label", { index: sectionIndex + 1 })}</Typography>
+                <Box key={JSON.stringify(section)} sx={{ border: "1px solid #ccc", p: 2, gap: 2 }}>
+                    <Box
+                        sx={{
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "space-between",
+                            marginBottom: 2,
+                        }}
+                    >
+                        <Typography variant="h6">{t("section-label", { index: sectionIndex + 1 })}</Typography>
 
-                            <ButtonGroup variant="contained">
-                                <IconButton
-                                    onClick={() => moveSectionUp(sectionIndex)}
-                                    disabled={sectionIndex === 0}
-                                    size="small"
-                                >
-                                    <ArrowUpwardIcon />
-                                </IconButton>
-
-                                <IconButton
-                                    onClick={() => moveSectionDown(sectionIndex)}
-                                    disabled={sectionIndex === sections.length - 1}
-                                    size="small"
-                                >
-                                    <ArrowDownwardIcon />
-                                </IconButton>
-
-                                <IconButton onClick={() => moveSectionDown(sectionIndex)} size="small" color="error">
-                                    <DeleteIcon />
-                                </IconButton>
-                            </ButtonGroup>
-                        </Box>
-
-                        {/* Occasion Field */}
-                        <Box marginBottom={2}>
-                            <OccasionForm
-                                value={section.occasion}
-                                onChange={(newOccasion) => handleOccasionChange(sectionIndex, newOccasion)}
-                            />
-                        </Box>
-
-                        <FormControl fullWidth margin="normal">
-                            <InputLabel id="section-type-label">{t("sectionType-field-label")}</InputLabel>
-                            <Select
-                                labelId="section-type-label"
-                                id="section-type"
-                                value={section.type}
-                                label="Section Type"
-                                onChange={(e) => handleSectionTypeChange(sectionIndex, e.target.value as string)}
+                        <ButtonGroup variant="contained">
+                            <IconButton
+                                onClick={() => moveSectionUp(sectionIndex)}
+                                disabled={sectionIndex === 0}
+                                size="small"
                             >
-                                {["verses", "info", "reading", "compound-prayer"].map((type) => (
-                                    <MenuItem key={type} value={type}>
-                                        {t(`sectionType-field-option-${type}`)}
-                                    </MenuItem>
-                                ))}
-                            </Select>
-                        </FormControl>
+                                <ArrowUpwardIcon />
+                            </IconButton>
 
-                        {section.type === "verses" && (
-                            <VersesSectionComponent
-                                section={section}
-                                onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
-                            />
-                        )}
-                        {section.type === "info" && (
-                            <InfoSectionComponent
-                                section={section}
-                                onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
-                            />
-                        )}
-                        {section.type === "reading" && (
-                            <ReadingSectionComponent
-                                section={section}
-                                onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
-                            />
-                        )}
-                        {section.type === "compound-prayer" && (
-                            <CompoundPrayerSectionComponent
-                                section={section}
-                                onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
-                            />
-                        )}
+                            <IconButton
+                                onClick={() => moveSectionDown(sectionIndex)}
+                                disabled={sectionIndex === sections.length - 1}
+                                size="small"
+                            >
+                                <ArrowDownwardIcon />
+                            </IconButton>
+
+                            <IconButton onClick={() => onDelete(sectionIndex)} size="small" color="error">
+                                <DeleteIcon />
+                            </IconButton>
+                        </ButtonGroup>
                     </Box>
-                </Fragment>
+
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel id="section-type-label">{t("sectionType-field-label")}</InputLabel>
+                        <Select
+                            labelId="section-type-label"
+                            id="section-type"
+                            value={section.type}
+                            label="Section Type"
+                            onChange={(e) => handleSectionTypeChange(sectionIndex, e.target.value as string)}
+                        >
+                            {["verses", "info", "reading", "compound-prayer"].map((type) => (
+                                <MenuItem key={type} value={type}>
+                                    {t(`sectionType-field-option-${type}`)}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
+
+                    {section.type === "verses" && (
+                        <VersesSectionComponent
+                            section={section}
+                            onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
+                        />
+                    )}
+                    {section.type === "info" && (
+                        <InfoSectionComponent
+                            section={section}
+                            onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
+                        />
+                    )}
+                    {section.type === "reading" && (
+                        <ReadingSectionComponent
+                            section={section}
+                            onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
+                        />
+                    )}
+                    {section.type === "compound-prayer" && (
+                        <CompoundPrayerSectionComponent
+                            section={section}
+                            onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
+                        />
+                    )}
+                </Box>
             ))}
         </Box>
     );

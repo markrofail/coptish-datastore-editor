@@ -12,6 +12,7 @@
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",
+    "@formkit/auto-animate": "^0.8.2",
     "@jsonforms/core": "^3.5.1",
     "@jsonforms/examples": "^3.5.1",
     "@jsonforms/material-renderers": "^3.5.1",
