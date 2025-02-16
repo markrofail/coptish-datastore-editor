@@ -4,7 +4,6 @@
     "occasion-field-label": "المناسبة",
     "sections-field-label": "مقاطع",
     "fileName-field-label": "اسم الملف",
-    "addSections-button-label": "إضافة مقطع",
     "MultiLingualText": {
         "multiLingual-field-option-english": "إنجليزي",
         "multiLingual-field-option-arabic": "عربي",
@@ -47,6 +46,7 @@
         "sectionType-field-option-info": "معلومات",
         "sectionType-field-option-reading": "قراءة",
         "sectionType-field-option-compound-prayer": "صلاة مركبة",
-        "deleteSection-button-label": "حذف المقطع"
+        "deleteSection-button-label": "حذف المقطع",
+        "addSections-button-label": "إضافة مقطع"
     }
 }

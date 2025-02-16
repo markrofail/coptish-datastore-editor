@@ -30,12 +30,12 @@ export default function Home() {
         });
     };
 
-    const handleAddSection = (type: string) => {
+    const handleAddSection = () => {
         /* eslint-disable  @typescript-eslint/no-explicit-any */
-        const newSection: any = { type };
-        if (type === "verses") newSection.verses = [{ english: "" }];
-        if (type === "info") newSection.text = { english: "" };
-        if (type === "compound-prayer") newSection.path = "";
+        const newSection: any = { type: "verses" };
+        if (newSection.type === "verses") newSection.verses = [{ english: "" }];
+        if (newSection.type === "info") newSection.text = { english: "" };
+        if (newSection.type === "compound-prayer") newSection.path = "";
         setFormData((prevData) => ({
             ...prevData,
             sections: [...(prevData.sections || []), newSection],
@@ -147,12 +147,9 @@ export default function Home() {
                                 sections={formData.sections}
                                 onChange={handleSectionsChange}
                                 onDelete={handleDeleteSection}
+                                onAdd={handleAddSection}
                             />
                         </Box>
-
-                        <Button variant="contained" onClick={() => handleAddSection("verses")}>
-                            {t("addSections-button-label")}
-                        </Button>
                     </Box>
                 </main>
             </div>

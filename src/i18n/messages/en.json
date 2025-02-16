@@ -4,7 +4,6 @@
     "occasion-field-label": "Occasion",
     "sections-field-label": "Sections",
     "fileName-field-label": "File Name",
-    "addSections-button-label": "Add Section",
     "MultiLingualText": {
         "multiLingual-field-option-english": "English",
         "multiLingual-field-option-arabic": "Arabic",
@@ -47,6 +46,7 @@
         "sectionType-field-option-info": "Info",
         "sectionType-field-option-reading": "Reading",
         "sectionType-field-option-compound-prayer": "Compound Prayer",
-        "deleteSection-button-label": "Delete Section"
+        "deleteSection-button-label": "Delete Section",
+        "addSections-button-label": "Add Section"
     }
 }
