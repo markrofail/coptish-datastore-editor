@@ -10,13 +10,13 @@ import {
 import {
     Box,
     FormControl,
-    FormControlLabel,
     IconButton,
     InputLabel,
     MenuItem,
     Select,
     SelectChangeEvent,
-    Switch,
+    ToggleButton,
+    ToggleButtonGroup,
     Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
@@ -42,8 +42,8 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
         onChange({ ...section, saint: event.target.value as Saint });
     };
 
-    const handleInaudibleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        onChange({ ...section, inaudible: event.target.checked });
+    const handleInaudibleChange = (_: React.MouseEvent<HTMLElement>, value: boolean) => {
+        onChange({ ...section, inaudible: value });
     };
 
     const handleOccasionChange = (value: Occasion | undefined) => {
@@ -67,55 +67,67 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
 
     return (
         <>
-            {/* Occasion Field */}
-            <OccasionForm value={section.occasion} onChange={handleOccasionChange} />
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 2, marginBottom: 2 }}>
+                {/* Occasion Field */}
+                <OccasionForm value={section.occasion} onChange={handleOccasionChange} />
 
-            {/* Saint Field */}
-            <FormControl fullWidth margin="normal">
-                <InputLabel id="saint-label">{t("saint-field-label")}</InputLabel>
-                <Select
-                    labelId="saint-label"
-                    id="saint"
-                    value={section.saint as unknown as SaintEnum}
-                    label={t("saint-field-label")}
-                    onChange={handleSaintChange}
-                >
-                    <MenuItem value="">Select Saint</MenuItem>
-                    {Object.entries(SaintEnum).map(([key, value]) => (
-                        <MenuItem key={key} value={value}>
-                            {key}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+                {/* Saint Field */}
+                <FormControl fullWidth>
+                    <InputLabel id="saint-label">{t("saint-field-label")}</InputLabel>
+                    <Select
+                        labelId="saint-label"
+                        id="saint"
+                        value={section.saint as unknown as SaintEnum}
+                        label={t("saint-field-label")}
+                        onChange={handleSaintChange}
+                    >
+                        <MenuItem value="">Select Saint</MenuItem>
+                        {Object.entries(SaintEnum).map(([key, value]) => (
+                            <MenuItem key={key} value={value}>
+                                {key}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
+            </Box>
 
-            {/* InAudible Field */}
-            <FormControlLabel
-                control={<Switch checked={section.inaudible || false} onChange={handleInaudibleChange} />}
-                label={t(`inaudible-field-${section.inaudible ? "on" : "off"}`)}
-            />
+            <Box sx={{ display: "flex", flexDirection: "row", gap: 2, marginBottom: 2 }}>
+                {/* Speaker Field */}
+                <FormControl fullWidth>
+                    <InputLabel id="speaker-label">{t("speaker-field-label")}</InputLabel>
+                    <Select
+                        labelId="speaker-label"
+                        id="speaker"
+                        value={section.speaker as unknown as SpeakerEnum}
+                        label={t("speaker-field-label")}
+                        onChange={handleSpeakerChange}
+                    >
+                        {Object.entries(SpeakerEnum).map(([key, value]) => (
+                            <MenuItem key={key} value={value}>
+                                {key}
+                            </MenuItem>
+                        ))}
+                    </Select>
+                </FormControl>
 
-            {/* Speaker Field */}
-            <FormControl fullWidth margin="normal">
-                <InputLabel id="speaker-label">{t("speaker-field-label")}</InputLabel>
-                <Select
-                    labelId="speaker-label"
-                    id="speaker"
-                    value={section.speaker as unknown as SpeakerEnum}
-                    label={t("speaker-field-label")}
-                    onChange={handleSpeakerChange}
-                >
-                    {Object.entries(SpeakerEnum).map(([key, value]) => (
-                        <MenuItem key={key} value={value}>
-                            {key}
-                        </MenuItem>
-                    ))}
-                </Select>
-            </FormControl>
+                {/* InAudible Field */}
+                <ToggleButtonGroup value={section.inaudible} onChange={handleInaudibleChange} color="primary" exclusive>
+                    <ToggleButton value={false}>{t("inaudible-field-off")}</ToggleButton>
+                    <ToggleButton value={true}>{t("inaudible-field-on")}</ToggleButton>
+                </ToggleButtonGroup>
+            </Box>
 
             {/* Verses Field */}
             <Box>
-                <Typography variant="subtitle2">{t("verses-field-label")}</Typography>
+                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
+                    <Typography variant="h6">{t("verses-field-label")}</Typography>
+
+                    {/* Plus icon button */}
+                    <IconButton aria-label="add verse" onClick={handleAddVerse} color="primary">
+                        <AddIcon />
+                    </IconButton>
+                </Box>
+
                 {section.verses?.map((verse, verseIndex) => (
                     <Box key={verseIndex} sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 1 }}>
                         <Box
@@ -147,10 +159,6 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
                         </Box>
                     </Box>
                 ))}
-                {/* Plus icon button */}
-                <IconButton aria-label="add verse" onClick={handleAddVerse} color="primary">
-                    <AddIcon />
-                </IconButton>
             </Box>
         </>
     );
