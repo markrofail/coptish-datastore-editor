@@ -1,22 +1,22 @@
-import React from "react";
-import { Select, MenuItem, FormControl, InputLabel } from "@mui/material";
+import React, { useId } from "react";
+import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from "@mui/material";
 import { OccasionEnum } from "@/types";
 import { useTranslations } from "next-intl";
 
 interface OccasionFormProps {
     value?: string;
-    onChange: (newValue?: OccasionEnum) => void;
+    onChange: (value?: OccasionEnum) => void;
 }
 
 export const OccasionForm = ({ value, onChange }: OccasionFormProps) => {
+    const labelId = useId();
     const t = useTranslations("OccasionField");
 
     return (
         <FormControl fullWidth>
-            <InputLabel id="occasion-label">{t("occasion-field-label")}</InputLabel>
+            <InputLabel id={labelId}>{t("occasion-field-label")}</InputLabel>
             <Select
-                labelId="occasion-label"
-                id="occasion"
+                labelId={labelId}
                 value={value || ""}
                 label={t("occasion-field-label")}
                 onChange={(e) => onChange(e.target.value ? (e.target.value as OccasionEnum) : undefined)}
@@ -28,6 +28,7 @@ export const OccasionForm = ({ value, onChange }: OccasionFormProps) => {
                     </MenuItem>
                 ))}
             </Select>
+            <FormHelperText>{t("occasion-field-helper") || value}</FormHelperText>
         </FormControl>
     );
 };

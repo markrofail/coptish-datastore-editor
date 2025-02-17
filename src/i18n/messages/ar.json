@@ -43,6 +43,7 @@
     },
     "OccasionField": {
         "occasion-field-label": "المناسبة",
+        "occasion-field-helper": "اعرض فقط إذا كانت المناسبة متطابقة",
         "occasion-field-option-annual": "سنوي",
         "occasion-field-option-great-lent": "الصوم الكبير"
     },

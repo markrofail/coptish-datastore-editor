@@ -43,6 +43,7 @@
     },
     "OccasionField": {
         "occasion-field-label": "Occasion",
+        "occasion-field-helper": "Only show section if the occasion matches",
         "occasion-field-option-annual": "Annual",
         "occasion-field-option-great-lent": "Great Lent"
     },
