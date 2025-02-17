@@ -2,11 +2,13 @@ import React, { useEffect } from "react";
 import { TreeItem, SimpleTreeView } from "@mui/x-tree-view";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
+import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import { Typography, Box } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
 import FileIcon from "@mui/icons-material/Description";
 import { MultiLingualText, Prayer } from "@/types";
 import { useFetchJson } from "./utils";
+import { useLocale } from "@/app/providers";
 
 interface Node {
     id: string;
@@ -21,6 +23,7 @@ interface FileExplorerProps {
     onFileLoad: (fileName: string, data: Prayer) => void;
 }
 export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
+    const { dir } = useLocale();
     const { fetchJson, fileName, jsonData } = useFetchJson();
 
     useEffect(() => {
@@ -39,7 +42,7 @@ export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
 
     return (
         <SimpleTreeView
-            slots={{ collapseIcon: ExpandMoreIcon, expandIcon: ChevronRightIcon }}
+            slots={{ collapseIcon: ExpandMoreIcon, expandIcon: dir === "ltr" ? ChevronRightIcon : ChevronLeftIcon }}
             sx={{ flexGrow: 1, maxWidth: 400, width: 400, overflowY: "auto" }}
         >
             {directory.children?.map((node) => <DirectoryTree key={node.id} node={node} onSelect={onSelect} />)}
@@ -48,6 +51,8 @@ export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
 };
 
 const DirectoryTree = ({ node, prefix, onSelect }: { node: Node; prefix?: string; onSelect: (node: Node) => void }) => {
+    const { dir } = useLocale();
+
     return (
         <TreeItem
             key={node.id}
@@ -66,7 +71,12 @@ const DirectoryTree = ({ node, prefix, onSelect }: { node: Node; prefix?: string
                         </Typography>
                     )}
                     {node.title ? (
-                        <Box display="flex" flexDirection="row" justifyContent="space-between" flex={1}>
+                        <Box
+                            display="flex"
+                            flexDirection={dir === "ltr" ? "row" : "row-reverse"}
+                            justifyContent="space-between"
+                            flex={1}
+                        >
                             <Typography variant="body2">{node.title.english}</Typography>
                             <Typography variant="body2">{node.title.arabic}</Typography>
                         </Box>

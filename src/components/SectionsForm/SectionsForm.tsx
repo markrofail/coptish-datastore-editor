@@ -121,16 +121,6 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
             {sections?.map((section, sectionIndex) => (
                 <Fragment key={sectionIds[sectionIndex]}>
                     <Box sx={{ border: "1px solid #ccc" }}>
-                        <Tabs
-                            variant="fullWidth"
-                            value={section.type}
-                            onChange={(_, newType) => handleSectionTypeChange(sectionIndex, newType)}
-                        >
-                            {["verses", "info", "reading", "compound-prayer"].map((type) => (
-                                <Tab key={type} value={type} label={t(`sectionType-field-option-${type}`)} />
-                            ))}
-                        </Tabs>
-
                         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, padding: 2 }}>
                             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                 <Typography variant="h6">{t("section-label", { index: sectionIndex + 1 })}</Typography>
@@ -161,6 +151,16 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
                                     </IconButton>
                                 </ButtonGroup>
                             </Box>
+
+                            <Tabs
+                                variant="fullWidth"
+                                value={section.type}
+                                onChange={(_, newType) => handleSectionTypeChange(sectionIndex, newType)}
+                            >
+                                {["verses", "info", "reading", "compound-prayer"].map((type) => (
+                                    <Tab key={type} value={type} label={t(`sectionType-field-option-${type}`)} />
+                                ))}
+                            </Tabs>
 
                             {section.type === "verses" && (
                                 <VersesSectionComponent
