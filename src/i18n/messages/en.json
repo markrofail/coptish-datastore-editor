@@ -2,10 +2,18 @@
     "title": "Data Input Form",
     "save-button-label": "Save",
     "upload-button-label": "Upload",
-    "title-field-label": "Title",
     "occasion-field-label": "Occasion",
     "sections-field-label": "Sections",
-    "fileName-field-label": "File Name",
+    "DataForm": {
+        "title-field-label": "Title",
+        "formType-field-label": "Type",
+        "formType-field-option-prayer": "Prayer",
+        "formType-field-option-reading": "Reading",
+        "fileName-field-label": "File Name"
+    },
+    "ReadingForm": {
+        "text-field-label": "Text"
+    },
     "MultiLingualText": {
         "multiLingual-field-option-english": "English",
         "multiLingual-field-option-arabic": "Arabic",
@@ -49,7 +57,7 @@
     },
     "SectionsForm": {
         "section-label": "Section #{index}",
-        "sectionType-field-label": "Section Type",
+        "sectionType-field-label": "Type",
         "sectionType-field-option-verses": "Verses",
         "sectionType-field-option-info": "Info",
         "sectionType-field-option-reading": "Reading",

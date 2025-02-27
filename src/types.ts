@@ -7,148 +7,148 @@
 
 export type Root = Prayer | Reading | Synaxarium;
 export type Occasion = "annual" | "great-lent";
-export type Speaker = "" | "deacon" | "people" | "priest" | "reader";
+export type Speaker = "deacon" | "people" | "priest" | "reader";
 export type Saint =
-    | "any-martyr-all"
-    | "archangel-gabriel"
-    | "archangel-michael"
-    | "archangel-raphael"
-    | "archangel-suriel"
-    | "pope-kyrillos-vi"
-    | "st-abanoub"
-    | "st-abraam"
-    | "st-antony-the-great"
-    | "st-athanasius-the-apostolic"
-    | "st-bishoy"
-    | "st-demiana"
-    | "st-george"
-    | "st-john-the-baptist"
-    | "st-karas-the-anchorite"
-    | "st-marina-the-martyr"
-    | "st-mark"
-    | "st-mary"
-    | "st-mina"
-    | "st-moses-the-black"
-    | "st-paul-the-1st-hermit"
-    | "st-philopater-mercurius"
-    | "st-reweis-teji"
-    | "st-shenouda-the-archimandrite"
-    | "st-stephen"
-    | "st-thomas-the-hermit"
-    | "sts-maximos-and-dometius"
-    | "sts-sergios-and-bachus";
+  | "any-martyr-all"
+  | "archangel-gabriel"
+  | "archangel-michael"
+  | "archangel-raphael"
+  | "archangel-suriel"
+  | "pope-kyrillos-vi"
+  | "st-abanoub"
+  | "st-abraam"
+  | "st-antony-the-great"
+  | "st-athanasius-the-apostolic"
+  | "st-bishoy"
+  | "st-demiana"
+  | "st-george"
+  | "st-john-the-baptist"
+  | "st-karas-the-anchorite"
+  | "st-marina-the-martyr"
+  | "st-mark"
+  | "st-mary"
+  | "st-mina"
+  | "st-moses-the-black"
+  | "st-paul-the-1st-hermit"
+  | "st-philopater-mercurius"
+  | "st-reweis-teji"
+  | "st-shenouda-the-archimandrite"
+  | "st-stephen"
+  | "st-thomas-the-hermit"
+  | "sts-maximos-and-dometius"
+  | "sts-sergios-and-bachus";
 export type ReadingType =
-    | "acts-of-the-apostles"
-    | "catholic-epistle"
-    | "liturgy-gospel"
-    | "liturgy-psalm"
-    | "matins-gospel"
-    | "matins-psalm"
-    | "pauline-epistle"
-    | "synaxarium"
-    | "vespers-gospel"
-    | "vespers-psalm";
+  | "acts-of-the-apostles"
+  | "catholic-epistle"
+  | "liturgy-gospel"
+  | "liturgy-psalm"
+  | "matins-gospel"
+  | "matins-psalm"
+  | "pauline-epistle"
+  | "synaxarium"
+  | "vespers-gospel"
+  | "vespers-psalm";
 
 export interface Prayer {
-    title?: MultiLingualText;
-    occasion?: Occasion;
-    sections?: (VersesSection | InfoSection | ReadingSection | CompoundPrayerSection)[];
+  title?: MultiLingualText;
+  occasion?: Occasion;
+  sections?: (VersesSection | InfoSection | ReadingSection | CompoundPrayerSection)[];
 }
 export interface MultiLingualText {
-    english: string;
-    arabic?: string;
-    coptic?: string;
-    coptic_english?: string;
-    coptic_arabic?: string;
+  english?: string;
+  arabic?: string;
+  coptic?: string;
+  coptic_english?: string;
+  coptic_arabic?: string;
 }
 export interface VersesSection {
-    type: "verses";
-    speaker?: Speaker;
-    saint?: Saint;
-    inaudible?: boolean;
-    verses: MultiLingualText[];
-    occasion?: Occasion;
+  type: "verses";
+  speaker?: Speaker;
+  saint?: Saint;
+  inaudible?: boolean;
+  verses: MultiLingualText[];
+  occasion?: Occasion;
 }
 export interface InfoSection {
-    type: "info";
-    text: MultiLingualText;
-    occasion?: Occasion;
+  type: "info";
+  text: MultiLingualText;
+  occasion?: Occasion;
 }
 export interface ReadingSection {
-    type: "reading";
-    readingType: ReadingType;
-    occasion?: Occasion;
+  type: "reading";
+  readingType: ReadingType;
+  occasion?: Occasion;
 }
 export interface CompoundPrayerSection {
-    type: "compound-prayer";
-    path: string;
-    occasion?: Occasion;
+  type: "compound-prayer";
+  path: string;
+  occasion?: Occasion;
 }
 export interface Reading {
-    title: MultiLingualText;
-    text: MultiLingualText;
+  title: MultiLingualText;
+  text: MultiLingualText[];
 }
 export interface Synaxarium {
+  title: MultiLingualText;
+  commemorations: {
     title: MultiLingualText;
-    commemorations: {
-        title: MultiLingualText;
-        text: MultiLingualText;
-    }[];
+    text: MultiLingualText;
+  }[];
 }
 
+
 export enum OccasionEnum {
-    "Annual" = "annual",
-    "Great Lent" = "great-lent",
+  "Annual" = "annual",
+  "Great Lent" = "great-lent",
 }
 
 export enum SpeakerEnum {
-    "" = "",
-    "Deacon" = "deacon",
-    "People" = "people",
-    "Priest" = "priest",
-    "Reader" = "reader",
+  "Deacon" = "deacon",
+  "People" = "people",
+  "Priest" = "priest",
+  "Reader" = "reader",
 }
 
 export enum SaintEnum {
-    "Any Martyr All" = "any-martyr-all",
-    "Archangel Gabriel" = "archangel-gabriel",
-    "Archangel Michael" = "archangel-michael",
-    "Archangel Raphael" = "archangel-raphael",
-    "Archangel Suriel" = "archangel-suriel",
-    "Pope Kyrillos Vi" = "pope-kyrillos-vi",
-    "St Abanoub" = "st-abanoub",
-    "St Abraam" = "st-abraam",
-    "St Antony The Great" = "st-antony-the-great",
-    "St Athanasius The Apostolic" = "st-athanasius-the-apostolic",
-    "St Bishoy" = "st-bishoy",
-    "St Demiana" = "st-demiana",
-    "St George" = "st-george",
-    "St John The Baptist" = "st-john-the-baptist",
-    "St Karas The Anchorite" = "st-karas-the-anchorite",
-    "St Marina The Martyr" = "st-marina-the-martyr",
-    "St Mark" = "st-mark",
-    "St Mary" = "st-mary",
-    "St Mina" = "st-mina",
-    "St Moses The Black" = "st-moses-the-black",
-    "St Paul The 1st Hermit" = "st-paul-the-1st-hermit",
-    "St Philopater Mercurius" = "st-philopater-mercurius",
-    "St Reweis Teji" = "st-reweis-teji",
-    "St Shenouda The Archimandrite" = "st-shenouda-the-archimandrite",
-    "St Stephen" = "st-stephen",
-    "St Thomas The Hermit" = "st-thomas-the-hermit",
-    "Sts Maximos And Dometius" = "sts-maximos-and-dometius",
-    "Sts Sergios And Bachus" = "sts-sergios-and-bachus",
+  "Any Martyr All" = "any-martyr-all",
+  "Archangel Gabriel" = "archangel-gabriel",
+  "Archangel Michael" = "archangel-michael",
+  "Archangel Raphael" = "archangel-raphael",
+  "Archangel Suriel" = "archangel-suriel",
+  "Pope Kyrillos Vi" = "pope-kyrillos-vi",
+  "St Abanoub" = "st-abanoub",
+  "St Abraam" = "st-abraam",
+  "St Antony The Great" = "st-antony-the-great",
+  "St Athanasius The Apostolic" = "st-athanasius-the-apostolic",
+  "St Bishoy" = "st-bishoy",
+  "St Demiana" = "st-demiana",
+  "St George" = "st-george",
+  "St John The Baptist" = "st-john-the-baptist",
+  "St Karas The Anchorite" = "st-karas-the-anchorite",
+  "St Marina The Martyr" = "st-marina-the-martyr",
+  "St Mark" = "st-mark",
+  "St Mary" = "st-mary",
+  "St Mina" = "st-mina",
+  "St Moses The Black" = "st-moses-the-black",
+  "St Paul The 1st Hermit" = "st-paul-the-1st-hermit",
+  "St Philopater Mercurius" = "st-philopater-mercurius",
+  "St Reweis Teji" = "st-reweis-teji",
+  "St Shenouda The Archimandrite" = "st-shenouda-the-archimandrite",
+  "St Stephen" = "st-stephen",
+  "St Thomas The Hermit" = "st-thomas-the-hermit",
+  "Sts Maximos And Dometius" = "sts-maximos-and-dometius",
+  "Sts Sergios And Bachus" = "sts-sergios-and-bachus",
 }
 
 export enum ReadingTypeEnum {
-    "Acts Of The Apostles" = "acts-of-the-apostles",
-    "Catholic Epistle" = "catholic-epistle",
-    "Liturgy Gospel" = "liturgy-gospel",
-    "Liturgy Psalm" = "liturgy-psalm",
-    "Matins Gospel" = "matins-gospel",
-    "Matins Psalm" = "matins-psalm",
-    "Pauline Epistle" = "pauline-epistle",
-    "Synaxarium" = "synaxarium",
-    "Vespers Gospel" = "vespers-gospel",
-    "Vespers Psalm" = "vespers-psalm",
+  "Acts Of The Apostles" = "acts-of-the-apostles",
+  "Catholic Epistle" = "catholic-epistle",
+  "Liturgy Gospel" = "liturgy-gospel",
+  "Liturgy Psalm" = "liturgy-psalm",
+  "Matins Gospel" = "matins-gospel",
+  "Matins Psalm" = "matins-psalm",
+  "Pauline Epistle" = "pauline-epistle",
+  "Synaxarium" = "synaxarium",
+  "Vespers Gospel" = "vespers-gospel",
+  "Vespers Psalm" = "vespers-psalm",
 }

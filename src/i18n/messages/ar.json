@@ -2,10 +2,18 @@
     "title": "نموذج إدخال البيانات",
     "save-button-label": "حفظ",
     "upload-button-label": "رفع",
-    "title-field-label": "العنوان",
     "occasion-field-label": "المناسبة",
     "sections-field-label": "المقاطع",
-    "fileName-field-label": "اسم الملف",
+    "DataForm": {
+        "title-field-label": "العنوان",
+        "formType-field-label": "النوع",
+        "formType-field-option-prayer": "صلاة",
+        "formType-field-option-reading": "قراءة",
+        "fileName-field-label": "اسم الملف"
+    },
+    "ReadingForm": {
+        "text-field-label": "النص"
+    },
     "MultiLingualText": {
         "multiLingual-field-option-english": "إنجليزي",
         "multiLingual-field-option-arabic": "عربي",

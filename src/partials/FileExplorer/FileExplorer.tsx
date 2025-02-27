@@ -3,7 +3,7 @@ import { TreeItem, SimpleTreeView } from "@mui/x-tree-view";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import { Typography, Box } from "@mui/material";
+import { Typography, Box, Tooltip } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
 import FileIcon from "@mui/icons-material/Description";
 import { MultiLingualText, Prayer } from "@/types";
@@ -50,43 +50,41 @@ export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
     );
 };
 
-const DirectoryTree = ({ node, prefix, onSelect }: { node: Node; prefix?: string; onSelect: (node: Node) => void }) => {
-    const { dir } = useLocale();
-
+const DirectoryTree = ({ node, onSelect }: { node: Node; onSelect: (node: Node) => void }) => {
     return (
         <TreeItem
             key={node.id}
             itemId={node.id}
             label={
-                <Box display="flex" alignItems="center" onDoubleClick={() => onSelect(node)}>
-                    {!node.children ? (
-                        <FileIcon sx={{ mr: 1, fontSize: "small" }} />
-                    ) : (
-                        <FolderIcon sx={{ mr: 1, fontSize: "small" }} />
-                    )}
-                    {prefix && !node.children && (
-                        <Typography variant="body2">
-                            {prefix}
-                            {"- "}
-                        </Typography>
-                    )}
-                    {node.title ? (
-                        <Box
-                            display="flex"
-                            flexDirection={dir === "ltr" ? "row" : "row-reverse"}
-                            justifyContent="space-between"
-                            flex={1}
-                        >
-                            <Typography variant="body2">{node.title.english}</Typography>
-                            <Typography variant="body2">{node.title.arabic}</Typography>
-                        </Box>
-                    ) : (
+                <Tooltip
+                    title={
+                        node.title ? (
+                            <Box display="flex" flexDirection="column" justifyContent="space-between" flex={1}>
+                                <Typography variant="body2">{node.title.english}</Typography>
+                                <Typography variant="body2">{node.title.arabic}</Typography>
+                            </Box>
+                        ) : undefined
+                    }
+                >
+                    <Box
+                        display="flex"
+                        alignItems="center"
+                        onDoubleClick={(e) => {
+                            onSelect(node);
+                            e.stopPropagation();
+                        }}
+                    >
+                        {!node.children ? (
+                            <FileIcon sx={{ mr: 1, fontSize: "small" }} />
+                        ) : (
+                            <FolderIcon sx={{ mr: 1, fontSize: "small" }} />
+                        )}
                         <Typography variant="body2">{node.name}</Typography>
-                    )}
-                </Box>
+                    </Box>
+                </Tooltip>
             }
         >
-            {node.children?.map((n, i) => <DirectoryTree key={i} prefix={`${i + 1}`} node={n} onSelect={onSelect} />)}
+            {node.children?.map((n, i) => <DirectoryTree key={i} node={n} onSelect={onSelect} />)}
         </TreeItem>
     );
 };

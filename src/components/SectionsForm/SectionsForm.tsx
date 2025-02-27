@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Box, Typography, IconButton, ButtonGroup, Button, Tab, Tabs } from "@mui/material";
+import { Box, Typography, IconButton, ButtonGroup, Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -152,15 +152,21 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
                                 </ButtonGroup>
                             </Box>
 
-                            <Tabs
-                                variant="fullWidth"
-                                value={section.type}
-                                onChange={(_, newType) => handleSectionTypeChange(sectionIndex, newType)}
-                            >
-                                {["verses", "info", "reading", "compound-prayer"].map((type) => (
-                                    <Tab key={type} value={type} label={t(`sectionType-field-option-${type}`)} />
-                                ))}
-                            </Tabs>
+                            <Box>
+                                <ToggleButtonGroup
+                                    value={section.type}
+                                    onChange={(_, value) => handleSectionTypeChange(sectionIndex, value)}
+                                    color="primary"
+                                    fullWidth
+                                    exclusive
+                                >
+                                    {["verses", "info", "reading", "compound-prayer"].map((type) => (
+                                        <ToggleButton key={type} value={type}>
+                                            {t(`sectionType-field-option-${type}`)}
+                                        </ToggleButton>
+                                    ))}
+                                </ToggleButtonGroup>
+                            </Box>
 
                             {section.type === "verses" && (
                                 <VersesSectionComponent

@@ -7,7 +7,7 @@
         "build": "next build",
         "start": "next start",
         "lint": "next lint",
-        "types:generate": "ts-node scripts/generate_types.ts",
+        "types:generate": "ts-node src/scripts/generate_types.ts",
         "directory_tree:generate": "ts-node src/scripts/generate_directory_tree.ts assets/coptish-datastore/output -o src/directory_tree.json"
     },
     "dependencies": {

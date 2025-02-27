@@ -1,22 +1,38 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
-import { OccasionForm } from "@/components/OccasionForm";
-import { Section, SectionsForm } from "@/components/SectionsForm";
-import { Box, TextField, Typography } from "@mui/material";
-import { Prayer } from "@/types";
+import { Box, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Prayer, Reading, Root } from "@/types";
 import { useTranslations } from "next-intl";
 import { Header } from "../Header";
+import { PrayerForm } from "./PrayerForm";
+import { ReadingForm } from "./ReadingForm";
+
+const isPrayerT = (formData: Root): formData is Prayer => (formData as Prayer).sections !== undefined;
+const isReadingT = (formData: Root): formData is Reading => (formData as Reading).text !== undefined;
 
 interface DataFormProps {
-    formData: Prayer;
-    setFormData: React.Dispatch<React.SetStateAction<Prayer>>;
+    formData: Root;
+    setFormData: React.Dispatch<React.SetStateAction<Root>>;
     fileName: string;
     setFileName: React.Dispatch<React.SetStateAction<string>>;
 }
 
 export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataFormProps) => {
-    const t = useTranslations();
+    const t = useTranslations("DataForm");
+    const [formType, setFormType] = useState<"prayer" | "reading" | "synaxarium">("prayer");
+
+    const isPrayer = isPrayerT(formData);
+    const isReading = isReadingT(formData);
+
+    useEffect(() => {
+        if (isPrayer || isReading) {
+            if (isPrayer) setFormType("prayer");
+            else if (isReading) setFormType("reading");
+        } else {
+            setFormType("prayer"); // default
+        }
+    }, [isPrayer, isReading]);
 
     /* eslint-disable  @typescript-eslint/no-explicit-any */
     const handleChange = (path: string, value: any) => {
@@ -27,27 +43,19 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
         });
     };
 
-    const handleAddSection = () => {
-        /* eslint-disable  @typescript-eslint/no-explicit-any */
-        const newSection: any = { type: "verses" };
-        if (newSection.type === "verses") newSection.verses = [{ english: "" }];
-        if (newSection.type === "info") newSection.text = { english: "" };
-        if (newSection.type === "compound-prayer") newSection.path = "";
-        setFormData((prevData) => ({
-            ...prevData,
-            sections: [...(prevData.sections || []), newSection],
-        }));
-    };
+    const onFormTypeChange = (value: "prayer" | "reading" | "synaxarium") => {
+        setFormType(value);
 
-    const handleSectionsChange = (newSections: Section[]) => {
-        setFormData((prevData) => ({ ...prevData, sections: newSections }));
-    };
+        const commonProps = { title: formData.title };
 
-    const handleDeleteSection = (index: number) => {
-        setFormData((prevData) => ({
-            ...prevData,
-            sections: prevData.sections?.filter((_, i) => i !== index),
-        }));
+        switch (value) {
+            case "prayer":
+                setFormData({ ...commonProps, sections: [] });
+                break;
+            case "reading":
+                setFormData({ ...commonProps, text: [{}] });
+                break;
+        }
     };
 
     return (
@@ -68,25 +76,30 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
                 <MultiLingualTextForm
                     value={formData.title || { english: "" }}
                     onChange={(newValue) => handleChange("title", newValue)}
+                    languages={["english", "arabic", "coptic"]}
                 />
             </Box>
 
-            {/* Occasion */}
+            {/* InAudible Field */}
             <Box>
-                <Typography variant="h6">{t("occasion-field-label")}</Typography>
-                <OccasionForm value={formData.occasion} onChange={(newValue) => handleChange("occasion", newValue)} />
+                <Typography variant="h6">{t("formType-field-label")}</Typography>
+                <ToggleButtonGroup
+                    value={formType}
+                    onChange={(_, value) => onFormTypeChange(value)}
+                    color="primary"
+                    fullWidth
+                    exclusive
+                >
+                    {["prayer", "reading"].map((type) => (
+                        <ToggleButton key={type} value={type}>
+                            {t(`formType-field-option-${type}`)}
+                        </ToggleButton>
+                    ))}
+                </ToggleButtonGroup>
             </Box>
 
-            {/* Sections */}
-            <Box>
-                <Typography variant="h6">{t("sections-field-label")}</Typography>
-                <SectionsForm
-                    sections={formData.sections}
-                    onChange={handleSectionsChange}
-                    onDelete={handleDeleteSection}
-                    onAdd={handleAddSection}
-                />
-            </Box>
+            {formType === "prayer" && <PrayerForm formData={formData as Prayer} setFormData={setFormData} />}
+            {formType === "reading" && <ReadingForm formData={formData as Reading} setFormData={setFormData} />}
         </Box>
     );
 };

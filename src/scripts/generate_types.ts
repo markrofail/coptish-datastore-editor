@@ -77,6 +77,6 @@ function pascalCase(str: string): string {
 
 generateTypes({
     schemaPath: "../../assets/coptish-datastore/schemas/schema.json",
-    outputPath: "../app/types.ts",
+    outputPath: "../types.ts",
     rootTypeName: "Root",
 });
