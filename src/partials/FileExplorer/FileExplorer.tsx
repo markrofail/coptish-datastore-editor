@@ -7,7 +7,7 @@ import { Typography, Box, Tooltip } from "@mui/material";
 import FolderIcon from "@mui/icons-material/Folder";
 import FileIcon from "@mui/icons-material/Description";
 import { MultiLingualText, Prayer } from "@/types";
-import { useFetchJson } from "./utils";
+import { useFetchFile } from "./utils";
 import { useLocale } from "@/app/providers";
 
 interface Node {
@@ -24,20 +24,19 @@ interface FileExplorerProps {
 }
 export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
     const { dir } = useLocale();
-    const { fetchJson, fileName, jsonData } = useFetchJson();
+    const { fetchFile, fileName, fileContent } = useFetchFile();
 
     useEffect(() => {
-        if (jsonData) {
-            console.log(jsonData);
-            onFileLoad(fileName, jsonData);
+        if (fileContent) {
+            onFileLoad(fileName, fileContent);
         }
-    }, [jsonData]);
+    }, [fileContent]);
 
     const onSelect = (node: Node) => {
         if (!!node.children) return;
 
         console.log(node);
-        fetchJson({ filePath: node.path });
+        fetchFile({ filePath: node.path });
     };
 
     return (

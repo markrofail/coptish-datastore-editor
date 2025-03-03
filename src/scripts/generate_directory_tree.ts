@@ -4,6 +4,7 @@ import { v4 as uuidv4 } from "uuid";
 import { Command } from "commander";
 import { dirname } from "path";
 import { fileURLToPath } from "url";
+import { parse } from "yaml";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -35,11 +36,11 @@ function traverseDirectory(dirPath: string): Directory {
 
             if (stats.isDirectory()) {
                 children.push(traverseDirectory(fullPath));
-            } else if (path.basename(entry) === "index.json") {
-                const fileContent = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
+            } else if (path.basename(entry) === "index.yml") {
+                const fileContent = parse(fs.readFileSync(fullPath, "utf-8"));
                 directory.title = fileContent?.title;
-            } else if (path.extname(entry) === ".json") {
-                const fileContent = JSON.parse(fs.readFileSync(fullPath, "utf-8"));
+            } else if (path.extname(entry) === ".yml") {
+                const fileContent = parse(fs.readFileSync(fullPath, "utf-8"));
                 children.push({ id: uuidv4(), name: entry, path: fileRelativePath, title: fileContent?.title });
             }
         }

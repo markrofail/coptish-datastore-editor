@@ -6,6 +6,7 @@ import TranslateIcon from "@/components/TranslateIcon";
 import { Prayer } from "@/types";
 import { useLocale } from "../../app/providers";
 import { useTranslations } from "next-intl";
+import { loadYmlFile, ymlToUrl } from "@/utils/yml";
 
 interface HeaderProps {
     formData: Prayer;
@@ -19,32 +20,27 @@ export const Header = ({ formData, setFormData, fileName, setFileName }: HeaderP
     const { locale, setLocale } = useLocale();
 
     const handleSave = () => {
-        const jsonData = JSON.stringify(formData, null, 2);
-        const blob = new Blob([jsonData], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
+        const url = ymlToUrl(formData);
+
         const link = document.createElement("a");
+        link.download = fileName.endsWith(".yml") || fileName.endsWith(".yaml") ? fileName : `${fileName}.yml`;
         link.href = url;
-        link.download = fileName; // Use the filename from state
         link.click();
+
         URL.revokeObjectURL(url);
     };
 
     const handleLoad = (event: React.ChangeEvent<HTMLInputElement>) => {
         const file = event.target.files?.[0];
-        if (file) {
-            const reader = new FileReader();
-            setFileName(file.name);
-            reader.onload = (e) => {
-                try {
-                    const loadedData = JSON.parse(e.target?.result as string);
-                    setFormData(loadedData);
-                } catch (error) {
-                    console.error("Error parsing JSON:", error);
-                    alert("Invalid JSON file.");
-                }
-            };
-            reader.readAsText(file);
-        }
+        loadYmlFile(file)
+            .then((result) => {
+                result.name && setFileName(result.name);
+                result.data && setFormData(result.data);
+            })
+            .catch((error) => {
+                console.error("Error loading file:", error);
+                alert("Error loading file. Please check the console for more details.");
+            });
     };
 
     const handleChangeLocale = () => {

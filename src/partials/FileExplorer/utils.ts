@@ -1,5 +1,6 @@
-import { Prayer } from "@/types";
 import { useState } from "react";
+import { Root } from "@/types";
+import { parse } from "yaml";
 
 interface DownloadFileProps {
     repoOwner?: string;
@@ -8,13 +9,13 @@ interface DownloadFileProps {
     filePath: string;
 }
 
-export const useFetchJson = () => {
-    const [jsonData, setJsonData] = useState<Prayer>();
+export const useFetchFile = () => {
+    const [fileContent, setFileContent] = useState<Root>();
     const [fileName, setFileName] = useState("");
-    const [isLoading, setIsLoading] = useState(true);
+    const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string>();
 
-    const fetchJson = async ({
+    const fetchFile = async ({
         filePath,
         repoOwner = "markrofail",
         repoName = "coptish-datastore",
@@ -26,19 +27,19 @@ export const useFetchJson = () => {
             const response = await fetch(rawFileUrl);
             if (!response.ok) {
                 const errorText = await response.text();
-                throw new Error(`Failed to fetch JSON: ${response.status} - ${errorText || "Unknown error"}`);
+                throw new Error(`Failed to fetch YAML: ${response.status} - ${errorText || "Unknown error"}`);
             }
 
-            const data = await response.json();
-            setJsonData(data);
+            const text = await response.text();
+            setFileContent(parse(text) as Root);
             setFileName(filePath.split("/").pop() || "");
-        } catch (err) {
-            console.error("Error fetching JSON:", err);
-            if (err instanceof Error) setError(err.message);
+        } catch (error) {
+            console.error("Error fetching YAML:", error);
+            if (error instanceof Error) setError(error.message);
         } finally {
-            setIsLoading(false);
+            setLoading(false);
         }
     };
 
-    return { fetchJson, jsonData, isLoading, error, fileName };
+    return { fetchFile, fileName, fileContent, loading, error };
 };
