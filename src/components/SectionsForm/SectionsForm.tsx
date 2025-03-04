@@ -11,6 +11,7 @@ import { VersesSectionComponent } from "./VersesSectionForm";
 import { useTranslations } from "next-intl";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { v4 as uuidv4 } from "uuid";
+import AddIcon from "@mui/icons-material/Add";
 
 export type Section = Required<Prayer>["sections"][number];
 
@@ -193,9 +194,11 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
                 </Fragment>
             ))}
 
-            <Button variant="contained" onClick={handleAddSection}>
-                {t("addSections-button-label")}
-            </Button>
+            <Box sx={{ display: "flex", justifyContent: "flex-start" }}>
+                <Button variant="contained" onClick={handleAddSection} endIcon={<AddIcon />}>
+                    {t("addSections-button-label")}
+                </Button>
+            </Box>
         </Box>
     );
 };
