@@ -66,6 +66,7 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
             <TextField
                 label={t("fileName-field-label")}
                 value={fileName}
+                dir="ltr"
                 onChange={(e) => setFileName(e.target.value)}
                 fullWidth
             />
