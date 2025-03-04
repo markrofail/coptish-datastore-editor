@@ -56,6 +56,7 @@ export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
 
 const DirectoryTree = ({ node, onSelect }: { node: Node; onSelect: (node: Node) => void }) => {
     const { locale } = useLocale();
+    const isFolder = !!node.children;
 
     return (
         <TreeItem
@@ -70,18 +71,21 @@ const DirectoryTree = ({ node, onSelect }: { node: Node; onSelect: (node: Node) 
                         e.stopPropagation();
                     }}
                 >
-                    {!node.children ? (
+                    {!isFolder ? (
                         <FileIcon sx={{ mr: 1, fontSize: "small" }} />
                     ) : (
                         <FolderIcon sx={{ mr: 1, fontSize: "small" }} />
                     )}
-                    {locale === "en" && node.title?.english ? (
-                        <Typography variant="body2">{node.title.english}</Typography>
-                    ) : locale === "ar" && node.title?.arabic ? (
-                        <Typography variant="body2">{node.title.arabic}</Typography>
-                    ) : (
+                    <Box sx={{ display: "flex", flexDirection: "column" }}>
                         <Typography variant="body2">{node.name}</Typography>
-                    )}
+                        {locale === "en" && node.title?.english && node.title.english != node.name ? (
+                            <Typography variant="body2">{node.title.english}</Typography>
+                        ) : locale === "ar" && node.title?.arabic ? (
+                            <Typography variant="body2">{node.title.arabic}</Typography>
+                        ) : (
+                            <></>
+                        )}
+                    </Box>
                 </Box>
             }
         >
