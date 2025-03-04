@@ -4,19 +4,28 @@ import React from "react";
 import enMessages from "@/i18n/messages/en.json";
 import arMessages from "@/i18n/messages/ar.json";
 import { NextIntlClientProvider } from "next-intl";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { alpha, createTheme, getContrastRatio, ThemeProvider } from "@mui/material";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 
-const rtlTheme = createTheme({
-    direction: "rtl",
+const primaryBase = "#000000";
+const primaryMain = alpha(primaryBase, 1);
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: primaryMain,
+            light: alpha(primaryBase, 0.5),
+            dark: alpha(primaryBase, 0.9),
+            contrastText: getContrastRatio(primaryMain, "#fff") > 4.5 ? "#fff" : "#111",
+        },
+    },
 });
 
-const ltrTheme = createTheme({
-    direction: "ltr",
-});
+const rtlTheme = createTheme({ ...theme, direction: "rtl" });
+const ltrTheme = createTheme({ ...theme, direction: "ltr" });
 
 const rtlCache = createCache({
     key: "muirtl",

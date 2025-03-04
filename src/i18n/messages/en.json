@@ -64,5 +64,8 @@
         "sectionType-field-option-compound-prayer": "Compound Prayer",
         "deleteSection-button-label": "Delete Section",
         "addSections-button-label": "Add Section"
+    },
+    "FileExplorer": {
+        "heading-database": "Database"
     }
 }

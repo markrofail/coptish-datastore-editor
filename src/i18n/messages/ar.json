@@ -64,5 +64,8 @@
         "sectionType-field-option-compound-prayer": "صلاة مركبة",
         "deleteSection-button-label": "حذف المقطع",
         "addSections-button-label": "إضافة مقطع"
+    },
+    "FileExplorer": {
+        "heading-database": "قاعدة البيانات"
     }
 }
