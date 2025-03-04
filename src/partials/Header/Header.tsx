@@ -34,8 +34,8 @@ export const Header = ({ formData, setFormData, fileName, setFileName }: HeaderP
         const file = event.target.files?.[0];
         loadYmlFile(file)
             .then((result) => {
-                result.name && setFileName(result.name);
-                result.data && setFormData(result.data);
+                if (result.name) setFileName(result.name);
+                if (result.data) setFormData(result.data);
             })
             .catch((error) => {
                 console.error("Error loading file:", error);

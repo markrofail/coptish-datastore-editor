@@ -5,8 +5,19 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type Root = Prayer | Reading | Synaxarium;
+export type Root = Synaxarium | Prayer | Reading;
 export type Occasion = "annual" | "great-lent";
+export type ReadingType =
+  | "acts-of-the-apostles"
+  | "catholic-epistle"
+  | "liturgy-gospel"
+  | "liturgy-psalm"
+  | "matins-gospel"
+  | "matins-psalm"
+  | "pauline-epistle"
+  | "synaxarium"
+  | "vespers-gospel"
+  | "vespers-psalm";
 export type Speaker = "deacon" | "people" | "priest" | "reader";
 export type Saint =
   | "any-martyr-all"
@@ -37,22 +48,13 @@ export type Saint =
   | "st-thomas-the-hermit"
   | "sts-maximos-and-dometius"
   | "sts-sergios-and-bachus";
-export type ReadingType =
-  | "acts-of-the-apostles"
-  | "catholic-epistle"
-  | "liturgy-gospel"
-  | "liturgy-psalm"
-  | "matins-gospel"
-  | "matins-psalm"
-  | "pauline-epistle"
-  | "synaxarium"
-  | "vespers-gospel"
-  | "vespers-psalm";
 
-export interface Prayer {
-  title?: MultiLingualText;
-  occasion?: Occasion;
-  sections?: (VersesSection | InfoSection | ReadingSection | CompoundPrayerSection)[];
+export interface Synaxarium {
+  title: MultiLingualText;
+  commemorations: {
+    title: MultiLingualText;
+    text: MultiLingualText;
+  }[];
 }
 export interface MultiLingualText {
   english?: string;
@@ -61,12 +63,9 @@ export interface MultiLingualText {
   coptic_english?: string;
   coptic_arabic?: string;
 }
-export interface VersesSection {
-  type: "verses";
-  speaker?: Speaker;
-  saint?: Saint;
-  inaudible?: boolean;
-  verses: MultiLingualText[];
+export interface Prayer {
+  sections?: (InfoSection | ReadingSection | CompoundPrayerSection | VersesSection)[];
+  title?: MultiLingualText;
   occasion?: Occasion;
 }
 export interface InfoSection {
@@ -84,22 +83,43 @@ export interface CompoundPrayerSection {
   path: string;
   occasion?: Occasion;
 }
-export interface Reading {
-  title: MultiLingualText;
-  text: MultiLingualText[];
+export interface VersesSection {
+  verses: MultiLingualTextArray;
+  type: "verses";
+  speaker?: Speaker;
+  saint?: Saint;
+  inaudible?: boolean;
+  occasion?: Occasion;
 }
-export interface Synaxarium {
+export interface MultiLingualTextArray {
+  english?: string[];
+  arabic?: string[];
+  coptic?: string[];
+  coptic_english?: string[];
+  coptic_arabic?: string[];
+}
+export interface Reading {
+  text: MultiLingualTextArray;
   title: MultiLingualText;
-  commemorations: {
-    title: MultiLingualText;
-    text: MultiLingualText;
-  }[];
 }
 
 
 export enum OccasionEnum {
   "Annual" = "annual",
   "Great Lent" = "great-lent",
+}
+
+export enum ReadingTypeEnum {
+  "Acts Of The Apostles" = "acts-of-the-apostles",
+  "Catholic Epistle" = "catholic-epistle",
+  "Liturgy Gospel" = "liturgy-gospel",
+  "Liturgy Psalm" = "liturgy-psalm",
+  "Matins Gospel" = "matins-gospel",
+  "Matins Psalm" = "matins-psalm",
+  "Pauline Epistle" = "pauline-epistle",
+  "Synaxarium" = "synaxarium",
+  "Vespers Gospel" = "vespers-gospel",
+  "Vespers Psalm" = "vespers-psalm",
 }
 
 export enum SpeakerEnum {
@@ -138,17 +158,4 @@ export enum SaintEnum {
   "St Thomas The Hermit" = "st-thomas-the-hermit",
   "Sts Maximos And Dometius" = "sts-maximos-and-dometius",
   "Sts Sergios And Bachus" = "sts-sergios-and-bachus",
-}
-
-export enum ReadingTypeEnum {
-  "Acts Of The Apostles" = "acts-of-the-apostles",
-  "Catholic Epistle" = "catholic-epistle",
-  "Liturgy Gospel" = "liturgy-gospel",
-  "Liturgy Psalm" = "liturgy-psalm",
-  "Matins Gospel" = "matins-gospel",
-  "Matins Psalm" = "matins-psalm",
-  "Pauline Epistle" = "pauline-epistle",
-  "Synaxarium" = "synaxarium",
-  "Vespers Gospel" = "vespers-gospel",
-  "Vespers Psalm" = "vespers-psalm",
 }

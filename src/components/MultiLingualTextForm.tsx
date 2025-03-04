@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { MultiLingualText } from "@/types";
 import { Box, TextField } from "@mui/material";
 import localFont from "next/font/local";
@@ -17,7 +17,6 @@ interface MultiLingualTextFormProps {
 
 export const MultiLingualTextForm = ({ value, onChange, languages, multiline }: MultiLingualTextFormProps) => {
     const t = useTranslations("MultiLingualText");
-    const [focusedField, setFocusedField] = useState<keyof MultiLingualText | null>(null);
 
     const handleChange = (field: keyof MultiLingualText, newValue: string) => {
         onChange({ ...value, [field]: newValue });
@@ -41,15 +40,7 @@ export const MultiLingualTextForm = ({ value, onChange, languages, multiline }: 
                         label={label}
                         value={value[field as keyof MultiLingualText] || ""}
                         onChange={(e) => handleChange(field as keyof MultiLingualText, e.target.value)}
-                        onFocus={() => setFocusedField(field as keyof MultiLingualText)}
-                        onBlur={() => setFocusedField(null)}
-                        sx={{
-                            flex: field === focusedField ? 5 : 1, // Grow if focused, otherwise normal
-                            transition: "flex-grow 0.3s ease-in-out",
-                            "& .MuiInputBase-root": {
-                                ...(field === "coptic" ? cSAvaVeni.style : {}),
-                            },
-                        }}
+                        sx={{ flex: 1, "& .MuiInputBase-root": { ...(field === "coptic" ? cSAvaVeni.style : {}) } }}
                         multiline={multiline}
                         dir={field === "arabic" || field === "coptic_arabic" ? "rtl" : "ltr"}
                         fullWidth

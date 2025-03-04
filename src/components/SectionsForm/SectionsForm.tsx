@@ -79,11 +79,7 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
         let newSection: Section;
         switch (newType) {
             case "verses":
-                newSection = {
-                    type: "verses",
-                    verses: [{ english: "" }],
-                    ...commonProps,
-                };
+                newSection = { type: "verses", verses: { english: [] }, ...commonProps };
                 break;
             case "info":
                 newSection = { type: "info", text: { english: "" }, ...commonProps };

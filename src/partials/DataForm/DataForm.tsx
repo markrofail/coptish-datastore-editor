@@ -53,7 +53,7 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
                 setFormData({ ...commonProps, sections: [] });
                 break;
             case "reading":
-                setFormData({ ...commonProps, text: [{}] });
+                setFormData({ ...commonProps, text: {} });
                 break;
         }
     };

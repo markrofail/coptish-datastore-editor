@@ -1,16 +1,7 @@
-import {
-    type VersesSection,
-    type MultiLingualText,
-    type Saint,
-    type Speaker,
-    SaintEnum,
-    SpeakerEnum,
-    Occasion,
-} from "@/types";
+import { type VersesSection, type Saint, type Speaker, SaintEnum, SpeakerEnum, Occasion } from "@/types";
 import {
     Box,
     FormControl,
-    IconButton,
     InputLabel,
     MenuItem,
     Select,
@@ -20,10 +11,8 @@ import {
     Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { MultiLingualTextForm } from "../MultiLingualTextForm";
-import DeleteIcon from "@mui/icons-material/Delete";
-import AddIcon from "@mui/icons-material/Add";
 import { OccasionForm } from "../OccasionForm";
+import { MultiLingualTextArrayForm } from "../MultiLingualTextArrayForm";
 
 interface VersesSectionProps {
     section: VersesSection;
@@ -48,21 +37,6 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
 
     const handleOccasionChange = (value: Occasion | undefined) => {
         onChange({ ...section, occasion: value });
-    };
-
-    const handleMultiLingualTextChange = (verseIndex: number, newValue: MultiLingualText) => {
-        const newVerses = [...section.verses];
-        newVerses[verseIndex] = newValue;
-        onChange({ ...section, verses: newVerses });
-    };
-
-    const handleAddVerse = () => {
-        onChange({ ...section, verses: [...section.verses, { english: "" }] });
-    };
-
-    const handleDeleteVerse = (verseIndex: number) => {
-        const newVerses = section.verses.filter((_, i) => i !== verseIndex);
-        onChange({ ...section, verses: newVerses });
     };
 
     return (
@@ -120,46 +94,13 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
 
             {/* Verses Field */}
             <Box>
-                <Box sx={{ display: "flex", flexDirection: "row", alignItems: "center" }}>
-                    <Typography variant="h6">{t("verses-field-label")}</Typography>
+                <Typography variant="h6">{t("verses-field-label")}</Typography>
 
-                    {/* Plus icon button */}
-                    <IconButton aria-label="add verse" onClick={handleAddVerse} color="primary">
-                        <AddIcon />
-                    </IconButton>
-                </Box>
-
-                {section.verses?.map((verse, verseIndex) => (
-                    <Box key={verseIndex} sx={{ display: "flex", flexDirection: "column", gap: 1, mb: 1 }}>
-                        <Box
-                            key={verseIndex}
-                            sx={{
-                                display: "flex",
-                                flexDirection: "row",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                                gap: 2,
-                                mb: 1,
-                            }}
-                        >
-                            {/* Flexbox for horizontal alignment */}
-                            <MultiLingualTextForm
-                                value={verse}
-                                onChange={(newValue) => handleMultiLingualTextChange(verseIndex, newValue)}
-                                multiline
-                            />
-                            <Box>
-                                <IconButton
-                                    aria-label="delete"
-                                    onClick={() => handleDeleteVerse(verseIndex)}
-                                    color="error"
-                                >
-                                    <DeleteIcon />
-                                </IconButton>
-                            </Box>
-                        </Box>
-                    </Box>
-                ))}
+                <MultiLingualTextArrayForm
+                    value={section.verses}
+                    onChange={(newValue) => onChange({ ...section, verses: newValue })}
+                    multiline
+                />
             </Box>
         </>
     );
