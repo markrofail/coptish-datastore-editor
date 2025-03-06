@@ -76,18 +76,32 @@ const DirectoryTree = ({ node, onSelect }: { node: Node; onSelect: (node: Node) 
                     ) : (
                         <FolderIcon sx={{ mr: 1, fontSize: "small" }} />
                     )}
-                    <Box sx={{ display: "flex", flexDirection: "column" }}>
-                        <Typography variant="body2" dir="ltr">
-                            {node.name}
-                        </Typography>
-                        {locale === "en" && node.title?.english && node.title.english != node.name ? (
-                            <Typography variant="body2">{node.title.english}</Typography>
-                        ) : locale === "ar" && node.title?.arabic ? (
-                            <Typography variant="body2">{node.title.arabic}</Typography>
-                        ) : (
-                            <></>
-                        )}
-                    </Box>
+                    {!isFolder ? (
+                        <Box sx={{ display: "flex", flexDirection: "column" }}>
+                            <Typography variant="body2" dir="ltr">
+                                {node.name}
+                            </Typography>
+                            {locale === "en" && node.title?.english ? (
+                                <Typography variant="body2">{node.title.english}</Typography>
+                            ) : locale === "ar" && node.title?.arabic ? (
+                                <Typography variant="body2">{node.title.arabic}</Typography>
+                            ) : (
+                                <></>
+                            )}
+                        </Box>
+                    ) : (
+                        <>
+                            {locale === "en" && node.title?.english ? (
+                                <Typography variant="body2">{node.title.english}</Typography>
+                            ) : locale === "ar" && node.title?.arabic ? (
+                                <Typography variant="body2">{node.title.arabic}</Typography>
+                            ) : (
+                                <Typography variant="body2" dir="ltr">
+                                    {node.name}
+                                </Typography>
+                            )}
+                        </>
+                    )}
                 </Box>
             }
         >
