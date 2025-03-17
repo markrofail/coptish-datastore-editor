@@ -9,6 +9,7 @@
         "formType-field-label": "Type",
         "formType-field-option-prayer": "Prayer",
         "formType-field-option-reading": "Reading",
+        "formType-field-option-readingV2": "ReadingV2",
         "fileName-field-label": "File Name"
     },
     "ReadingForm": {
@@ -39,6 +40,10 @@
         "readingType-field-option-catholic-epistle": "Catholic Epistle",
         "readingType-field-option-liturgy-gospel": "Liturgy Gospel",
         "readingType-field-option-liturgy-psalm": "Liturgy Psalm",
+        "readingType-field-option-evening-prayers-gospel": "Evening Prayers Gospel",
+        "readingType-field-option-evening-prayers-psalm": "Evening Prayers Psalm",
+        "readingType-field-option-matins-sermon": "Matins Sermon",
+        "readingType-field-option-matins-prophecies": "Matins Prophecies",
         "readingType-field-option-matins-gospel": "Matins Gospel",
         "readingType-field-option-matins-psalm": "Matins Psalm",
         "readingType-field-option-pauline-epistle": "Pauline Epistle",

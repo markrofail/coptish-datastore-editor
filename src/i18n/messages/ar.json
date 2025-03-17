@@ -9,6 +9,7 @@
         "formType-field-label": "النوع",
         "formType-field-option-prayer": "صلاة",
         "formType-field-option-reading": "قراءة",
+        "formType-field-option-readingV2": "V2 قراءة",
         "fileName-field-label": "اسم الملف"
     },
     "ReadingForm": {
@@ -34,11 +35,15 @@
         "speaker-field-option-people": "الشعب"
     },
     "ReadingSection": {
-        "readingType-field-label": "القراءة",
+        "readingType-field-label": "القراء",
         "readingType-field-option-acts-of-the-apostles": "أعمال الرسل",
         "readingType-field-option-catholic-epistle": "الكاثوليكون",
         "readingType-field-option-liturgy-gospel": "إنجيل القداس",
         "readingType-field-option-liturgy-psalm": "مزمور القداس",
+        "readingType-field-option-evening-prayers-gospel": "إنجيل صلاة المساء",
+        "readingType-field-option-evening-prayers-psalm": "مزمور صلاة المساء",
+        "readingType-field-option-matins-sermon": "عظة باكر",
+        "readingType-field-option-matins-prophecies": "نبوات باكر",
         "readingType-field-option-matins-gospel": "إنجيل باكر",
         "readingType-field-option-matins-psalm": "مزمور باكر",
         "readingType-field-option-pauline-epistle": "البولس",

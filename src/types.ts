@@ -5,15 +5,19 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type Root = Synaxarium | Prayer | Reading;
+export type Root = Synaxarium | Prayer | Reading | ReadingV2;
 export type Occasion = "annual" | "great-lent";
 export type ReadingType =
   | "acts-of-the-apostles"
   | "catholic-epistle"
+  | "evening-prayers-gospel"
+  | "evening-prayers-psalm"
   | "liturgy-gospel"
   | "liturgy-psalm"
   | "matins-gospel"
+  | "matins-prophecies"
   | "matins-psalm"
+  | "matins-sermon"
   | "pauline-epistle"
   | "synaxarium"
   | "vespers-gospel"
@@ -102,6 +106,23 @@ export interface Reading {
   text: MultiLingualTextArray;
   title: MultiLingualText;
 }
+export interface ReadingV2 {
+  "vespers-psalm"?: Reading[];
+  "vespers-gospel"?: Reading[];
+  "matins-psalm"?: Reading[];
+  "matins-gospel"?: Reading[];
+  "matins-prophecies"?: Reading[];
+  "matins-sermon"?: Reading[];
+  "pauline-epistle"?: Reading[];
+  "catholic-epistle"?: Reading[];
+  "acts-of-the-apostles"?: Reading[];
+  synaxarium?: Reading[];
+  "liturgy-psalm"?: Reading[];
+  "liturgy-gospel"?: Reading[];
+  "evening-prayers-psalm"?: Reading[];
+  "evening-prayers-gospel"?: Reading[];
+  title: MultiLingualText;
+}
 
 
 export enum OccasionEnum {
@@ -112,10 +133,14 @@ export enum OccasionEnum {
 export enum ReadingTypeEnum {
   "Acts Of The Apostles" = "acts-of-the-apostles",
   "Catholic Epistle" = "catholic-epistle",
+  "Evening Prayers Gospel" = "evening-prayers-gospel",
+  "Evening Prayers Psalm" = "evening-prayers-psalm",
   "Liturgy Gospel" = "liturgy-gospel",
   "Liturgy Psalm" = "liturgy-psalm",
   "Matins Gospel" = "matins-gospel",
+  "Matins Prophecies" = "matins-prophecies",
   "Matins Psalm" = "matins-psalm",
+  "Matins Sermon" = "matins-sermon",
   "Pauline Epistle" = "pauline-epistle",
   "Synaxarium" = "synaxarium",
   "Vespers Gospel" = "vespers-gospel",
