@@ -3,13 +3,9 @@ import { MultiLingualTextArray } from "@/types";
 import { Box, TextField, IconButton, Button, Typography } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
-import localFont from "next/font/local";
 import { useTranslations } from "next-intl";
 import { useLocale } from "@/app/providers";
-
-const cSAvaVeni = localFont({
-    src: "../../public/fonts/CSAvaVeni.ttf",
-});
+import { fontMap } from "@/fonts";
 
 interface MultiLingualTextArrayFormProps {
     value: MultiLingualTextArray;
@@ -73,37 +69,34 @@ export const MultiLingualTextArrayForm = ({
                                 )}
                             </Box>
                         )}
-                        {(value[field] || []).map((item, index) => (
-                            <Fragment key={index}>
-                                {mode === "view" ? (
-                                    <Typography>{item}</Typography>
-                                ) : (
-                                    <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                                        <TextField
-                                            value={item}
-                                            onChange={(e) => handleChange(field, index, e.target.value)}
-                                            sx={{
-                                                flex: 1,
-                                                "& .MuiInputBase-root": {
-                                                    ...(field === "coptic" ? cSAvaVeni.style : {}),
-                                                },
-                                            }}
-                                            multiline={multiline}
-                                            dir={field === "arabic" || field === "coptic_arabic" ? "rtl" : "ltr"}
-                                            fullWidth
-                                        />
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
+                            {(value[field] || []).map((item, index) => (
+                                <Fragment key={index}>
+                                    {mode === "view" ? (
+                                        <Typography>{item}</Typography>
+                                    ) : (
+                                        <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
+                                            <TextField
+                                                value={item}
+                                                onChange={(e) => handleChange(field, index, e.target.value)}
+                                                sx={{ flex: 1, "& .MuiInputBase-root": fontMap[field].style }}
+                                                multiline={multiline}
+                                                dir={field === "arabic" || field === "coptic_arabic" ? "rtl" : "ltr"}
+                                                fullWidth
+                                            />
 
-                                        <Box>
-                                            <IconButton onClick={() => handleDelete(field, index)} color="error">
-                                                <DeleteIcon />
-                                            </IconButton>
+                                            <Box>
+                                                <IconButton onClick={() => handleDelete(field, index)} color="error">
+                                                    <DeleteIcon />
+                                                </IconButton>
+                                            </Box>
                                         </Box>
-                                    </Box>
-                                )}
-                            </Fragment>
-                        ))}
+                                    )}
+                                </Fragment>
+                            ))}
+                        </Box>
                         {mode !== "view" && dir === "rtl" && (
-                            <Button variant="outlined" onClick={() => handleAdd(field)} color="primary">
+                            <Button variant="contained" onClick={() => handleAdd(field)} color="primary">
                                 <AddIcon />
                             </Button>
                         )}

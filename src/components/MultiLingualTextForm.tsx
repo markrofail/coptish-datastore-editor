@@ -1,11 +1,9 @@
 import React from "react";
 import { MultiLingualText } from "@/types";
 import { Box, TextField, Typography } from "@mui/material";
-import localFont from "next/font/local";
 import { useTranslations } from "next-intl";
 import { useLocale } from "@/app/providers";
-
-const cSAvaVeni = localFont({ src: "../../public/fonts/CSAvaVeni.ttf" });
+import { fontMap } from "@/fonts";
 
 interface MultiLingualTextFormProps {
     value: MultiLingualText;
@@ -46,10 +44,7 @@ export const MultiLingualTextForm = ({ value, onChange, languages, multiline, mo
                                 label={label}
                                 value={value[field as keyof MultiLingualText] || ""}
                                 onChange={(e) => handleChange(field as keyof MultiLingualText, e.target.value)}
-                                sx={{
-                                    flex: 1,
-                                    "& .MuiInputBase-root": { ...(field === "coptic" ? cSAvaVeni.style : {}) },
-                                }}
+                                sx={{ flex: 1, "& .MuiInputBase-root": fontMap[field].style }}
                                 multiline={multiline}
                                 dir={field === "arabic" || field === "coptic_arabic" ? "rtl" : "ltr"}
                                 fullWidth

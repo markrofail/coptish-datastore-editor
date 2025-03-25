@@ -59,10 +59,10 @@ interface EachReadingFormProps {
 }
 const EachReadingForm = ({ readingType, readings, onReadingChange, onTitleChange }: EachReadingFormProps) => {
     const t = useTranslations("ReadingSection");
-    const [mode, setMode] = useState<"view" | "edit">("edit");
+    const [mode, setMode] = useState<"view" | "edit">("view");
 
     return (
-        <Box sx={{ marginBottom: 8 }}>
+        <Box sx={{ marginBottom: 4 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Typography variant="h5"> {t(`readingType-field-option-${readingType}`)}</Typography>
                 <Box>

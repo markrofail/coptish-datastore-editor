@@ -10,6 +10,7 @@ import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 import { useLocalStorage } from "usehooks-ts";
+import { arabicFont, englishFont } from "@/fonts";
 
 const primaryBase = "#000000";
 const primaryMain = alpha(primaryBase, 1);
@@ -25,8 +26,21 @@ const theme = createTheme({
     },
 });
 
-const rtlTheme = createTheme({ ...theme, direction: "rtl" });
-const ltrTheme = createTheme({ ...theme, direction: "ltr" });
+const rtlTheme = createTheme({
+    ...theme,
+    direction: "rtl",
+    typography: {
+        fontSize: 18,
+        fontFamily: arabicFont.style.fontFamily,
+    },
+});
+const ltrTheme = createTheme({
+    ...theme,
+    direction: "ltr",
+    typography: {
+        fontFamily: englishFont.style.fontFamily,
+    },
+});
 
 const rtlCache = createCache({
     key: "muirtl",

@@ -9,7 +9,7 @@
         "formType-field-label": "النوع",
         "formType-field-option-prayer": "صلاة",
         "formType-field-option-reading": "قراءة",
-        "formType-field-option-readingV2": "V2 قراءة",
+        "formType-field-option-readingV2": "القراءات اليومية",
         "fileName-field-label": "اسم الملف"
     },
     "ReadingForm": {

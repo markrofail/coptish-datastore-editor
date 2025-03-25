@@ -16,7 +16,7 @@ export const ReadingForm = ({ formData, mode, setFormData }: ReadingFormProps) =
     return (
         <>
             <Box>
-                <Typography variant="h6">{t("text-field-label")}</Typography>
+                {mode !== "view" && <Typography variant="h6">{t("text-field-label")}</Typography>}
 
                 <MultiLingualTextArrayForm
                     value={formData.text}
