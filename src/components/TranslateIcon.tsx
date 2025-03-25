@@ -12,7 +12,7 @@ export default function TranslateIcon(props: SvgIconProps) {
             viewBox="0 0 512.000000 512.000000"
             preserveAspectRatio="xMidYMid meet"
         >
-            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#000000" stroke="none">
+            <g transform="translate(0.000000,512.000000) scale(0.100000,-0.100000)" fill="#fff" stroke="none">
                 <path
                     d="M0 3435 l0 -1355 375 0 375 0 0 -270 c0 -148 2 -270 5 -270 3 0 248
 122 545 270 l540 270 435 0 435 0 0 1355 0 1355 -1355 0 -1355 0 0 -1355z

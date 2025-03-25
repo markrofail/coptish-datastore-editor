@@ -1,20 +1,20 @@
 "use client";
 
 import React, { useState } from "react";
-import { AppBar, Box, IconButton, Toolbar, useMediaQuery, useTheme } from "@mui/material";
+import { Box, useMediaQuery, useTheme } from "@mui/material";
 import directoryTree from "@/directory_tree.json";
 import { DataForm } from "@/partials/DataForm";
 import { useLocale } from "./providers";
 import { DRAWER_WIDTH, ResponsiveDrawer } from "@/partials/Drawer";
-import MenuIcon from "@mui/icons-material/Menu";
 import { Root } from "@/types";
+import { NavigationBar } from "@/components/NavigationBar";
 
 export default function Home() {
     const { locale } = useLocale();
     const theme = useTheme();
-    const isSmallViewPort = useMediaQuery(theme.breakpoints.up("md"));
+    const isLargeViewPort = useMediaQuery(theme.breakpoints.up("md"));
 
-    const [drawerOpen, setDrawerOpen] = useState(false);
+    const [drawerOpen, setDrawerOpen] = useState(isLargeViewPort);
     const [formData, setFormData] = useState<Root>({});
     const [fileName, setFileName] = useState("");
 
@@ -27,7 +27,13 @@ export default function Home() {
 
     return (
         <Box sx={{ display: "flex" }} dir={locale === "ar" ? "rtl" : "ltr"}>
-            <Box component="nav" sx={{ width: { md: DRAWER_WIDTH }, flexShrink: { md: 0 } }}>
+            <Box
+                component="nav"
+                sx={{
+                    width: { md: drawerOpen ? DRAWER_WIDTH : 0 },
+                    flexShrink: { md: drawerOpen ? 0 : 1 },
+                }}
+            >
                 <ResponsiveDrawer
                     onFileLoad={onFileLoad}
                     directory={directoryTree}
@@ -35,23 +41,8 @@ export default function Home() {
                     onClose={toggleDrawerOpen}
                 />
             </Box>
-            <Box sx={{ flexGrow: 1, width: { md: `calc(100% - ${DRAWER_WIDTH}px)` } }}>
-                <AppBar position="static" color="transparent" variant="outlined" sx={{ border: 0 }}>
-                    <Toolbar>
-                        {!isSmallViewPort && (
-                            <IconButton
-                                size="large"
-                                edge="start"
-                                color="inherit"
-                                aria-label="menu"
-                                sx={{ mr: 2 }}
-                                onClick={toggleDrawerOpen}
-                            >
-                                <MenuIcon />
-                            </IconButton>
-                        )}
-                    </Toolbar>
-                </AppBar>
+            <Box sx={{ flexGrow: 1, width: { md: drawerOpen ? `calc(100% - ${DRAWER_WIDTH}px)` : "100%" } }}>
+                <NavigationBar onMenuClick={toggleDrawerOpen} />
                 <Box component="main" sx={{ p: 3 }}>
                     <DataForm
                         formData={formData}

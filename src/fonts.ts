@@ -3,7 +3,7 @@ import { NextFont } from "next/dist/compiled/@next/font";
 import localFont from "next/font/local";
 import { MultiLingualText } from "./types";
 
-export const englishFont = Inter();
+export const englishFont = Inter({ subsets: ["latin"] });
 export const arabicFont = localFont({ src: "../public/fonts/AdobeArabic-Bold.otf" });
 export const copticFont = localFont({ src: "../public/fonts/CSAvaVeni.ttf" });
 

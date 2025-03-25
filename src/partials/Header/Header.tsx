@@ -1,12 +1,9 @@
 import React from "react";
 import { Box, Typography, Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
-import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import TranslateIcon from "@/components/TranslateIcon";
 import { Prayer } from "@/types";
-import { useLocale } from "../../app/providers";
 import { useTranslations } from "next-intl";
-import { loadYmlFile, ymlToUrl } from "@/utils/yml";
+import { ymlToUrl } from "@/utils/yml";
 
 interface HeaderProps {
     formData: Prayer;
@@ -17,7 +14,6 @@ interface HeaderProps {
 
 export const Header = ({ formData, setFormData, fileName, setFileName }: HeaderProps) => {
     const t = useTranslations();
-    const { locale, setLocale } = useLocale();
 
     const handleSave = () => {
         const url = ymlToUrl(formData);
@@ -30,25 +26,21 @@ export const Header = ({ formData, setFormData, fileName, setFileName }: HeaderP
         URL.revokeObjectURL(url);
     };
 
-    const handleLoad = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const file = event.target.files?.[0];
-        loadYmlFile(file)
-            .then((result) => {
-                if (result.name) setFileName(result.name);
-                if (result.data) setFormData(result.data);
-            })
-            .catch((error) => {
-                console.error("Error loading file:", error);
-                alert("Error loading file. Please check the console for more details.");
-            });
-    };
-
-    const handleChangeLocale = () => {
-        setLocale(locale === "en" ? "ar" : "en");
-    };
+    // const handleLoad = (event: React.ChangeEvent<HTMLInputElement>) => {
+    //     const file = event.target.files?.[0];
+    //     loadYmlFile(file)
+    //         .then((result) => {
+    //             if (result.name) setFileName(result.name);
+    //             if (result.data) setFormData(result.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error("Error loading file:", error);
+    //             alert("Error loading file. Please check the console for more details.");
+    //         });
+    // };
 
     return (
-        <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: 2, marginBottom: 6 }}>
+        <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2, marginBottom: 6 }}>
             <Typography variant="h2" component="div">
                 {t("title")}
             </Typography>
@@ -60,7 +52,7 @@ export const Header = ({ formData, setFormData, fileName, setFileName }: HeaderP
                     </Button>
                 </Box>
 
-                <Box>
+                {/* <Box>
                     <Button
                         variant="text"
                         color="inherit"
@@ -70,13 +62,7 @@ export const Header = ({ formData, setFormData, fileName, setFileName }: HeaderP
                         {t("upload-button-label")}
                     </Button>
                     <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleLoad} />
-                </Box>
-
-                <Box>
-                    <Button variant="text" color="inherit" startIcon={<TranslateIcon />} onClick={handleChangeLocale}>
-                        {locale === "en" ? "عربي" : "English"}
-                    </Button>
-                </Box>
+                </Box> */}
             </Box>
         </Box>
     );
