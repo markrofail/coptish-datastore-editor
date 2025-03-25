@@ -9,6 +9,7 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
+import { useLocalStorage } from "usehooks-ts";
 
 const primaryBase = "#000000";
 const primaryMain = alpha(primaryBase, 1);
@@ -43,7 +44,7 @@ const LocaleContext = React.createContext<LocaleContext>({ locale: "en", setLoca
 export const useLocale = () => React.useContext(LocaleContext);
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
-    const [locale, setLocale] = React.useState<Locale>("en");
+    const [locale, setLocale] = useLocalStorage<Locale>("settings:locale", "en");
     const messages = locale === "en" ? enMessages : arMessages;
     const dir = locale === "en" ? "ltr" : "rtl";
 
