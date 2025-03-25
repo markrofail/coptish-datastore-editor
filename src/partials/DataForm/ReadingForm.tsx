@@ -7,9 +7,10 @@ import { MultiLingualTextArrayForm } from "@/components/MultiLingualTextArrayFor
 interface ReadingFormProps {
     formData: Reading;
     setFormData: React.Dispatch<React.SetStateAction<Root>>;
+    mode: "edit" | "view";
 }
 
-export const ReadingForm = ({ formData, setFormData }: ReadingFormProps) => {
+export const ReadingForm = ({ formData, mode, setFormData }: ReadingFormProps) => {
     const t = useTranslations("ReadingForm");
 
     return (
@@ -20,6 +21,9 @@ export const ReadingForm = ({ formData, setFormData }: ReadingFormProps) => {
                 <MultiLingualTextArrayForm
                     value={formData.text}
                     onChange={(value) => setFormData({ ...formData, text: value })}
+                    languages={["english", "arabic"]}
+                    direction="row"
+                    mode={mode}
                     multiline
                 />
             </Box>

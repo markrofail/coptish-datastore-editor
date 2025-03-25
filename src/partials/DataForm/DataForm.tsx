@@ -9,8 +9,8 @@ import { PrayerForm } from "./PrayerForm";
 import { ReadingForm } from "./ReadingForm";
 import { ReadingV2Form } from "./ReadingV2Form";
 
-const isPrayerT = (formData: Root): formData is Prayer => (formData as Prayer).sections !== undefined;
-const isReadingT = (formData: Root): formData is Reading => (formData as Reading).text !== undefined;
+const isPrayerT = (formData: Root): formData is Prayer => formData.hasOwnProperty("sections");
+const isReadingT = (formData: Root): formData is Reading => formData.hasOwnProperty("text");
 const isReadingV2T = (formData: Root): formData is ReadingV2 => formData.hasOwnProperty("liturgy-gospel");
 
 interface DataFormProps {
@@ -84,8 +84,8 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
                 <Typography variant="h6">{t("title-field-label")}</Typography>
                 <MultiLingualTextForm
                     value={formData.title || { english: "" }}
-                    onChange={(newValue) => handleChange("title", newValue)}
-                    languages={["english", "arabic", "coptic"]}
+                    onChange={(value) => handleChange("title", value)}
+                    languages={["english", "arabic"]}
                 />
             </Box>
 
