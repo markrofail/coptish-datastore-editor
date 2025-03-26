@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Box, useMediaQuery, useTheme } from "@mui/material";
 import directoryTree from "@/directory_tree.json";
 import { DataForm } from "@/partials/DataForm";
@@ -13,10 +13,13 @@ export default function Home() {
     const { locale } = useLocale();
     const theme = useTheme();
     const isLargeViewPort = useMediaQuery(theme.breakpoints.up("md"));
-
-    const [drawerOpen, setDrawerOpen] = useState(isLargeViewPort);
+    const [drawerOpen, setDrawerOpen] = useState(false);
     const [formData, setFormData] = useState<Root>({});
     const [fileName, setFileName] = useState("");
+
+    useEffect(() => {
+        setDrawerOpen(isLargeViewPort);
+    }, [isLargeViewPort]);
 
     const toggleDrawerOpen = () => setDrawerOpen((prev) => !prev);
 
