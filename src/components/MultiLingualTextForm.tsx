@@ -35,16 +35,15 @@ export const MultiLingualTextForm = ({ value, onChange, languages, multiline, mo
             )
                 .filter(({ field }) => !languages || languages?.includes(field))
                 .map(({ label, field }) => (
-                    <Box sx={{ flex: 1 }}>
+                    <Box key={field} sx={{ flex: 1 }}>
                         {mode === "view" ? (
                             <Typography variant="h6"> {value[field]}</Typography>
                         ) : (
                             <TextField
-                                key={field}
                                 label={label}
                                 value={value[field as keyof MultiLingualText] || ""}
                                 onChange={(e) => handleChange(field as keyof MultiLingualText, e.target.value)}
-                                sx={{ flex: 1, "& .MuiInputBase-root": fontMap[field].style }}
+                                sx={{ "& .MuiInputBase-root": fontMap[field].style }}
                                 multiline={multiline}
                                 dir={field === "arabic" || field === "coptic_arabic" ? "rtl" : "ltr"}
                                 fullWidth

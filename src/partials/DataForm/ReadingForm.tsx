@@ -7,7 +7,7 @@ import { MultiLingualTextArrayForm } from "@/components/MultiLingualTextArrayFor
 interface ReadingFormProps {
     formData: Reading;
     setFormData: React.Dispatch<React.SetStateAction<Root>>;
-    mode: "edit" | "view";
+    mode?: "edit" | "view";
 }
 
 export const ReadingForm = ({ formData, mode, setFormData }: ReadingFormProps) => {

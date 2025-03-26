@@ -1,6 +1,6 @@
 import React, { Fragment, useState } from "react";
 import _ from "lodash";
-import { Box, Button, IconButton, Typography } from "@mui/material";
+import { Box, IconButton, Typography } from "@mui/material";
 import { MultiLingualText, Reading, ReadingType, ReadingV2, Root } from "@/types";
 import { useTranslations } from "next-intl";
 import { ReadingForm } from "./ReadingForm";
@@ -13,9 +13,8 @@ interface ReadingFormProps {
 }
 
 export const ReadingV2Form = ({ formData, setFormData }: ReadingFormProps) => {
-    const [mode, setMode] = useState<"edit" | "view">("view");
+    /* eslint-disable  @typescript-eslint/no-unused-vars */
     const { title, ...rest } = formData;
-    const t = useTranslations("ReadingSection");
 
     const handleReadingChange = (readingType: ReadingType, index: number) => (value: Reading) => {
         setFormData((prevData) => {
@@ -79,6 +78,7 @@ const EachReadingForm = ({ readingType, readings, onReadingChange, onTitleChange
                         languages={["english", "arabic"]}
                         mode={mode}
                     />
+                    {/* eslint-disable @typescript-eslint/no-explicit-any */}
                     <ReadingForm formData={reading} setFormData={onReadingChange(readingType, i) as any} mode={mode} />
                 </Fragment>
             ))}

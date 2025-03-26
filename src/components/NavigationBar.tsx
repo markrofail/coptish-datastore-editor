@@ -1,4 +1,4 @@
-import { AppBar, Box, Button, IconButton, Toolbar, useMediaQuery, useTheme } from "@mui/material";
+import { AppBar, Box, Button, IconButton, Toolbar } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
 import { useLocale } from "@/app/providers";
 import TranslateIcon from "@/components/TranslateIcon";
@@ -8,13 +8,8 @@ interface NavigationBarProps {
 }
 
 export const NavigationBar = ({ onMenuClick }: NavigationBarProps) => {
-    const theme = useTheme();
-    const isSmallViewPort = useMediaQuery(theme.breakpoints.up("md"));
     const { locale, setLocale } = useLocale();
-
-    const handleChangeLocale = () => {
-        setLocale(locale === "en" ? "ar" : "en");
-    };
+    const onLocaleToggle = () => setLocale(locale === "en" ? "ar" : "en");
 
     return (
         <AppBar position="static" color="primary" variant="outlined" sx={{ border: 0 }}>
@@ -36,12 +31,7 @@ export const NavigationBar = ({ onMenuClick }: NavigationBarProps) => {
                 {/* right */}
                 <Box>
                     <Box>
-                        <Button
-                            variant="text"
-                            color="inherit"
-                            startIcon={<TranslateIcon />}
-                            onClick={handleChangeLocale}
-                        >
+                        <Button variant="text" color="inherit" startIcon={<TranslateIcon />} onClick={onLocaleToggle}>
                             {locale === "en" ? "عربي" : "English"}
                         </Button>
                     </Box>

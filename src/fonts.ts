@@ -1,4 +1,4 @@
-import { Inter, Rubik } from "next/font/google";
+import { Inter } from "next/font/google";
 import { NextFont } from "next/dist/compiled/@next/font";
 import localFont from "next/font/local";
 import { MultiLingualText } from "./types";

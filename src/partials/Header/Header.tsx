@@ -12,7 +12,7 @@ interface HeaderProps {
     setFileName: React.Dispatch<React.SetStateAction<string>>;
 }
 
-export const Header = ({ formData, setFormData, fileName, setFileName }: HeaderProps) => {
+export const Header = ({ formData, fileName }: HeaderProps) => {
     const t = useTranslations();
 
     const handleSave = () => {
