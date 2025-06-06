@@ -1,4 +1,3 @@
-// generate-types.ts (TypeScript Code)
 import { compile } from "json-schema-to-typescript";
 import * as fs from "fs/promises";
 import { dirname, join } from "path";

@@ -5,7 +5,7 @@
  * and run json-schema-to-typescript to regenerate this file.
  */
 
-export type Root = Synaxarium | Prayer | Reading | ReadingV2;
+export type Root = Synaxarium | Prayer | Reading;
 export type Occasion = "annual" | "great-lent";
 export type ReadingType =
   | "acts-of-the-apostles"
@@ -103,24 +103,24 @@ export interface MultiLingualTextArray {
   coptic_arabic?: string[];
 }
 export interface Reading {
-  text: MultiLingualTextArray;
+  "vespers-psalm"?: SubReading[];
+  "vespers-gospel"?: SubReading[];
+  "matins-psalm"?: SubReading[];
+  "matins-gospel"?: SubReading[];
+  "matins-prophecies"?: SubReading[];
+  "matins-sermon"?: SubReading[];
+  "pauline-epistle"?: SubReading[];
+  "catholic-epistle"?: SubReading[];
+  "acts-of-the-apostles"?: SubReading[];
+  synaxarium?: SubReading[];
+  "liturgy-psalm"?: SubReading[];
+  "liturgy-gospel"?: SubReading[];
+  "evening-prayers-psalm"?: SubReading[];
+  "evening-prayers-gospel"?: SubReading[];
   title: MultiLingualText;
 }
-export interface ReadingV2 {
-  "vespers-psalm"?: Reading[];
-  "vespers-gospel"?: Reading[];
-  "matins-psalm"?: Reading[];
-  "matins-gospel"?: Reading[];
-  "matins-prophecies"?: Reading[];
-  "matins-sermon"?: Reading[];
-  "pauline-epistle"?: Reading[];
-  "catholic-epistle"?: Reading[];
-  "acts-of-the-apostles"?: Reading[];
-  synaxarium?: Reading[];
-  "liturgy-psalm"?: Reading[];
-  "liturgy-gospel"?: Reading[];
-  "evening-prayers-psalm"?: Reading[];
-  "evening-prayers-gospel"?: Reading[];
+export interface SubReading {
+  text: MultiLingualTextArray;
   title: MultiLingualText;
 }
 

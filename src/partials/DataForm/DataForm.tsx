@@ -2,16 +2,14 @@ import React, { useEffect, useState } from "react";
 import _ from "lodash";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
 import { Box, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
-import { Prayer, Reading, ReadingV2, Root } from "@/types";
+import { Prayer, Reading, Root } from "@/types";
 import { useTranslations } from "next-intl";
 import { Header } from "../Header";
 import { PrayerForm } from "./PrayerForm";
-import { ReadingForm } from "./ReadingForm";
 import { ReadingV2Form } from "./ReadingV2Form";
 
 const isPrayerT = (formData: Root): formData is Prayer => formData.hasOwnProperty("sections");
-const isReadingT = (formData: Root): formData is Reading => formData.hasOwnProperty("text");
-const isReadingV2T = (formData: Root): formData is ReadingV2 => formData.hasOwnProperty("liturgy-gospel");
+const isReadingT = (formData: Root): formData is Reading => formData.hasOwnProperty("liturgy-gospel");
 
 interface DataFormProps {
     formData: Root;
@@ -22,22 +20,20 @@ interface DataFormProps {
 
 export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataFormProps) => {
     const t = useTranslations("DataForm");
-    const [formType, setFormType] = useState<"prayer" | "reading" | "readingV2" | "synaxarium">("prayer");
+    const [formType, setFormType] = useState<"prayer" | "reading" | "synaxarium">("prayer");
 
     const isPrayer = isPrayerT(formData);
     const isReading = isReadingT(formData);
-    const isReadingV2 = isReadingV2T(formData);
 
     useEffect(() => {
         console.log(formData);
-        if (isPrayer || isReading || isReadingV2) {
+        if (isPrayer || isReading) {
             if (isPrayer) setFormType("prayer");
             else if (isReading) setFormType("reading");
-            else if (isReadingV2) setFormType("readingV2");
         } else {
             setFormType("prayer"); // default
         }
-    }, [isPrayer, isReading, isReadingV2]);
+    }, [isPrayer, isReading]);
 
     /* eslint-disable  @typescript-eslint/no-explicit-any */
     const handleChange = (path: string, value: any) => {
@@ -48,7 +44,7 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
         });
     };
 
-    const onFormTypeChange = (value: "prayer" | "reading" | "readingV2" | "synaxarium") => {
+    const onFormTypeChange = (value: "prayer" | "reading" | "synaxarium") => {
         setFormType(value);
 
         const commonProps = { title: formData.title };
@@ -58,9 +54,6 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
                 setFormData({ ...commonProps, sections: [] });
                 break;
             case "reading":
-                setFormData({ ...commonProps, text: {} });
-                break;
-            case "readingV2":
                 setFormData({ ...commonProps });
                 break;
         }
@@ -99,7 +92,7 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
                     fullWidth
                     exclusive
                 >
-                    {["prayer", "reading", "readingV2"].map((type) => (
+                    {["prayer", "reading"].map((type) => (
                         <ToggleButton key={type} value={type}>
                             {t(`formType-field-option-${type}`)}
                         </ToggleButton>
@@ -108,8 +101,7 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
             </Box>
 
             {formType === "prayer" && <PrayerForm formData={formData as Prayer} setFormData={setFormData} />}
-            {formType === "reading" && <ReadingForm formData={formData as Reading} setFormData={setFormData} />}
-            {formType === "readingV2" && <ReadingV2Form formData={formData as ReadingV2} setFormData={setFormData} />}
+            {formType === "reading" && <ReadingV2Form formData={formData as Reading} setFormData={setFormData} />}
         </Box>
     );
 };

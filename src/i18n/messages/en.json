@@ -9,7 +9,6 @@
         "formType-field-label": "Type",
         "formType-field-option-prayer": "Prayer",
         "formType-field-option-reading": "Reading",
-        "formType-field-option-readingV2": "ReadingV2",
         "fileName-field-label": "File Name"
     },
     "ReadingForm": {
