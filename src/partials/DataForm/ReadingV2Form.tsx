@@ -1,22 +1,23 @@
-import React, { Fragment, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
 import _ from "lodash";
 import { Box, IconButton, Typography } from "@mui/material";
-import { MultiLingualText, Reading, ReadingType, ReadingV2, Root } from "@/types";
+import { MultiLingualText, Reading, ReadingType, Root, SubReading } from "@/types";
 import { useTranslations } from "next-intl";
 import { ReadingForm } from "./ReadingForm";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
 import EditModeIcon from "@mui/icons-material/Edit";
 import ViewModeIcon from "@mui/icons-material/ChromeReaderMode";
 interface ReadingFormProps {
-    formData: ReadingV2;
-    setFormData: React.Dispatch<React.SetStateAction<Root>>;
+    formData: Reading;
+    languages: (keyof MultiLingualText)[];
+    setFormData: Dispatch<SetStateAction<Root>>;
 }
 
-export const ReadingV2Form = ({ formData, setFormData }: ReadingFormProps) => {
+export const ReadingV2Form = ({ formData, languages, setFormData }: ReadingFormProps) => {
     /* eslint-disable  @typescript-eslint/no-unused-vars */
     const { title, ...rest } = formData;
 
-    const handleReadingChange = (readingType: ReadingType, index: number) => (value: Reading) => {
+    const handleReadingChange = (readingType: ReadingType, index: number) => (value: SubReading) => {
         setFormData((prevData) => {
             const newData = { ...prevData };
             _.set(newData, [readingType, index], value);
@@ -40,6 +41,7 @@ export const ReadingV2Form = ({ formData, setFormData }: ReadingFormProps) => {
                         <EachReadingForm
                             readingType={readingType as ReadingType}
                             readings={readings}
+                            languages={languages}
                             onReadingChange={handleReadingChange}
                             onTitleChange={handleTitleChange}
                         />
@@ -52,11 +54,18 @@ export const ReadingV2Form = ({ formData, setFormData }: ReadingFormProps) => {
 
 interface EachReadingFormProps {
     readingType: ReadingType;
-    readings: Reading[];
-    onReadingChange: (readingType: ReadingType, index: number) => (value: Reading) => void;
+    readings: SubReading[];
+    languages: (keyof MultiLingualText)[];
+    onReadingChange: (readingType: ReadingType, index: number) => (value: SubReading) => void;
     onTitleChange: (readingType: ReadingType, index: number) => (value: MultiLingualText) => void;
 }
-const EachReadingForm = ({ readingType, readings, onReadingChange, onTitleChange }: EachReadingFormProps) => {
+const EachReadingForm = ({
+    readingType,
+    readings,
+    languages,
+    onReadingChange,
+    onTitleChange,
+}: EachReadingFormProps) => {
     const t = useTranslations("ReadingSection");
     const [mode, setMode] = useState<"view" | "edit">("view");
 
@@ -75,11 +84,11 @@ const EachReadingForm = ({ readingType, readings, onReadingChange, onTitleChange
                     <MultiLingualTextForm
                         value={reading.title}
                         onChange={onTitleChange(readingType, i)}
-                        languages={["english", "arabic"]}
+                        languages={languages}
                         mode={mode}
                     />
                     {/* eslint-disable @typescript-eslint/no-explicit-any */}
-                    <ReadingForm formData={reading} setFormData={onReadingChange(readingType, i) as any} mode={mode} />
+                    <ReadingForm formData={reading} setFormData={onReadingChange(readingType, i)} mode={mode} />
                 </Fragment>
             ))}
         </Box>

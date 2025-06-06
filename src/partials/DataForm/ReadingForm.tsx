@@ -1,12 +1,12 @@
 import React from "react";
 import { Box, Typography } from "@mui/material";
-import { Reading, Root } from "@/types";
+import { SubReading } from "@/types";
 import { useTranslations } from "next-intl";
 import { MultiLingualTextArrayForm } from "@/components/MultiLingualTextArrayForm";
 
 interface ReadingFormProps {
-    formData: Reading;
-    setFormData: React.Dispatch<React.SetStateAction<Root>>;
+    formData: SubReading;
+    setFormData: (value: SubReading) => void;
     mode?: "edit" | "view";
 }
 

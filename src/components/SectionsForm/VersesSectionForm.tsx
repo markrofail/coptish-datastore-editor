@@ -1,4 +1,12 @@
-import { type VersesSection, type Saint, type Speaker, SaintEnum, SpeakerEnum, Occasion } from "@/types";
+import {
+    type VersesSection,
+    type Saint,
+    type Speaker,
+    SaintEnum,
+    SpeakerEnum,
+    Occasion,
+    MultiLingualText,
+} from "@/types";
 import {
     Box,
     FormControl,
@@ -16,11 +24,12 @@ import { MultiLingualTextArrayForm } from "../MultiLingualTextArrayForm";
 
 interface VersesSectionProps {
     section: VersesSection;
+    languages: (keyof MultiLingualText)[];
     error?: string;
     onChange: (updatedSection: VersesSection) => void;
 }
 
-export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps) => {
+export const VersesSectionComponent = ({ section, languages, onChange }: VersesSectionProps) => {
     const t = useTranslations("VersesSection");
 
     const handleSpeakerChange = (event: SelectChangeEvent<SpeakerEnum>) => {
@@ -98,6 +107,7 @@ export const VersesSectionComponent = ({ section, onChange }: VersesSectionProps
 
                 <MultiLingualTextArrayForm
                     value={section.verses}
+                    languages={languages}
                     onChange={(newValue) => onChange({ ...section, verses: newValue })}
                     multiline
                 />

@@ -7,10 +7,18 @@ import { useTranslations } from "next-intl";
 import { useLocale } from "@/app/providers";
 import { fontMap } from "@/fonts";
 
+const LABEL_MAP = (t: (id: string) => string) => ({
+    english: t("multiLingual-field-option-english"),
+    arabic: t("multiLingual-field-option-arabic"),
+    coptic: t("multiLingual-field-option-coptic"),
+    coptic_english: t("multiLingual-field-option-copticEnglish"),
+    coptic_arabic: t("multiLingual-field-option-copticArabic"),
+});
+
 interface MultiLingualTextArrayFormProps {
     value: MultiLingualTextArray;
     onChange: (newValue: MultiLingualTextArray) => void;
-    languages?: (keyof MultiLingualTextArray)[];
+    languages: (keyof MultiLingualTextArray)[];
     multiline?: boolean;
     mode?: "edit" | "view";
     direction?: "column" | "row";
@@ -44,19 +52,13 @@ export const MultiLingualTextArrayForm = ({
         onChange({ ...value, [field]: newArray });
     };
 
+    const labels = LABEL_MAP(t);
+
     const flexDirection = `${direction}-${dir === "rtl" ? "reverse" : ""}`;
     return (
         <Box sx={{ display: "flex", flexDirection, gap: 1, flex: 1 }}>
-            {(
-                [
-                    { field: "english", label: t("multiLingual-field-option-english") },
-                    { field: "arabic", label: t("multiLingual-field-option-arabic") },
-                    { field: "coptic", label: t("multiLingual-field-option-coptic") },
-                    { field: "coptic_english", label: t("multiLingual-field-option-copticEnglish") },
-                    { field: "coptic_arabic", label: t("multiLingual-field-option-copticArabic") },
-                ] as const
-            )
-                .filter(({ field }) => !languages || languages?.includes(field))
+            {languages
+                .map((lang) => ({ label: labels[lang], field: lang }))
                 .map(({ label, field }) => (
                     <Box key={field} sx={{ display: "flex", flexDirection: "column", flex: 1, gap: 1 }}>
                         {mode !== "view" && (

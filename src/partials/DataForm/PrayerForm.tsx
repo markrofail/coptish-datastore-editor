@@ -3,15 +3,16 @@ import _ from "lodash";
 import { OccasionForm } from "@/components/OccasionForm";
 import { Section, SectionsForm } from "@/components/SectionsForm";
 import { Box, Typography } from "@mui/material";
-import { Prayer, Root } from "@/types";
+import { MultiLingualText, Prayer, Root } from "@/types";
 import { useTranslations } from "next-intl";
 
 interface PrayerFormProps {
     formData: Prayer;
+    languages: (keyof MultiLingualText)[];
     setFormData: React.Dispatch<React.SetStateAction<Root>>;
 }
 
-export const PrayerForm = ({ formData, setFormData }: PrayerFormProps) => {
+export const PrayerForm = ({ formData, languages, setFormData }: PrayerFormProps) => {
     const t = useTranslations();
 
     /* eslint-disable  @typescript-eslint/no-explicit-any */
@@ -59,6 +60,7 @@ export const PrayerForm = ({ formData, setFormData }: PrayerFormProps) => {
                 <Typography variant="h6">{t("sections-field-label")}</Typography>
                 <SectionsForm
                     sections={formData.sections}
+                    languages={languages}
                     onChange={handleSectionsChange}
                     onDelete={handleDeleteSection}
                     onAdd={handleAddSection}

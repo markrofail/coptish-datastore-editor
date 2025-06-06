@@ -4,10 +4,11 @@ import { OccasionForm } from "../OccasionForm";
 
 interface InfoSectionProps {
     section: InfoSection;
+    languages: (keyof MultiLingualText)[];
     onChange: (updatedSection: InfoSection) => void;
 }
 
-export const InfoSectionComponent = ({ section, onChange }: InfoSectionProps) => {
+export const InfoSectionComponent = ({ section, languages, onChange }: InfoSectionProps) => {
     const handleMultiLingualTextChange = (newValue: MultiLingualText) => {
         onChange({ ...section, text: newValue });
     };
@@ -21,7 +22,12 @@ export const InfoSectionComponent = ({ section, onChange }: InfoSectionProps) =>
             {/* Occasion Field */}
             <OccasionForm value={section.occasion} onChange={handleOccasionChange} />
             {/* InfoText Field */}
-            <MultiLingualTextForm value={section.text} onChange={handleMultiLingualTextChange} multiline />
+            <MultiLingualTextForm
+                languages={languages}
+                value={section.text}
+                onChange={handleMultiLingualTextChange}
+                multiline
+            />
         </>
     );
 };

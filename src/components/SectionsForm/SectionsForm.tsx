@@ -3,7 +3,7 @@ import { Box, Typography, IconButton, ButtonGroup, Button, ToggleButton, ToggleB
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import DeleteIcon from "@mui/icons-material/Delete";
-import { Prayer, ReadingTypeEnum } from "@/types";
+import { MultiLingualText, Prayer, ReadingTypeEnum } from "@/types";
 import { CompoundPrayerSectionComponent } from "./CompoundPrayerSectionForm";
 import { InfoSectionComponent } from "./InfoSectionForm";
 import { ReadingSectionComponent } from "./ReadingSectionForm";
@@ -17,12 +17,13 @@ export type Section = Required<Prayer>["sections"][number];
 
 interface SectionsProps {
     sections: Section[] | undefined;
+    languages: (keyof MultiLingualText)[];
     onChange: (newSections: Section[]) => void;
     onDelete: (index: number) => void;
     onAdd: () => void;
 }
 
-export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsProps) => {
+export const SectionsForm = ({ sections, languages, onChange, onDelete, onAdd }: SectionsProps) => {
     const t = useTranslations("SectionsForm");
     const [parent] = useAutoAnimate();
 
@@ -116,7 +117,7 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }} ref={parent}>
             {sections?.map((section, sectionIndex) => (
-                <Fragment key={sectionIds[sectionIndex]}>
+                <Fragment key={sectionIds[sectionIndex] || sectionIndex}>
                     <Box sx={{ border: "1px solid #ccc" }}>
                         <Box sx={{ display: "flex", flexDirection: "column", gap: 2, padding: 2 }}>
                             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
@@ -168,12 +169,14 @@ export const SectionsForm = ({ sections, onChange, onDelete, onAdd }: SectionsPr
                             {section.type === "verses" && (
                                 <VersesSectionComponent
                                     section={section}
+                                    languages={languages}
                                     onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
                                 />
                             )}
                             {section.type === "info" && (
                                 <InfoSectionComponent
                                     section={section}
+                                    languages={languages}
                                     onChange={(updatedSection) => handleChange(sectionIndex, updatedSection)}
                                 />
                             )}
