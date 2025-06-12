@@ -1,7 +1,7 @@
 import { Occasion, ReadingSection, ReadingTypeEnum } from "@/types";
 import { FormControl, InputLabel, Select, MenuItem } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { OccasionForm } from "../OccasionForm";
+import { OccasionForm } from "../../components/OccasionForm";
 
 interface ReadingSectionProps {
     section: ReadingSection;

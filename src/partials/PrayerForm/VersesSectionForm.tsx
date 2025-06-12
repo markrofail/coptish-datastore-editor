@@ -1,3 +1,4 @@
+import React, { MouseEvent } from "react";
 import {
     type VersesSection,
     type Saint,
@@ -19,8 +20,8 @@ import {
     Typography,
 } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { OccasionForm } from "../OccasionForm";
-import { MultiLingualTextArrayForm } from "../MultiLingualTextArrayForm";
+import { OccasionForm } from "../../components/OccasionForm";
+import { MultiLingualTextArrayForm } from "../../components/MultiLingualTextArrayForm";
 
 interface VersesSectionProps {
     section: VersesSection;
@@ -40,7 +41,7 @@ export const VersesSectionComponent = ({ section, languages, onChange }: VersesS
         onChange({ ...section, saint: event.target.value as Saint });
     };
 
-    const handleInaudibleChange = (_: React.MouseEvent<HTMLElement>, value: boolean) => {
+    const handleInaudibleChange = (_: MouseEvent<HTMLElement>, value: boolean) => {
         onChange({ ...section, inaudible: value });
     };
 

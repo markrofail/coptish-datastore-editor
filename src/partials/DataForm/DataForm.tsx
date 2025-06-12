@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import _ from "lodash";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
 import {
@@ -16,33 +16,43 @@ import {
 import { Prayer, Reading, Root } from "@/types";
 import { useTranslations } from "next-intl";
 import { Header } from "../Header";
-import { PrayerForm } from "./PrayerForm";
-import { ReadingV2Form } from "./ReadingV2Form";
+import { PrayerForm } from "../PrayerForm";
+import { ReadingForm } from "./ReadingForm";
 
 const LANGUAGES = ["english", "arabic", "coptic", "coptic_english", "coptic_arabic"] as const;
 type Language = (typeof LANGUAGES)[number];
+
+const FORM_TYPES = ["prayer", "reading", "synaxarium"] as const;
+type FormType = (typeof FORM_TYPES)[number];
+
+const LABEL_MAP = (t: (id: string) => string) => ({
+    english: t("language-field-option-english"),
+    arabic: t("language-field-option-arabic"),
+    coptic: t("language-field-option-coptic"),
+    coptic_english: t("language-field-option-copticEnglish"),
+    coptic_arabic: t("language-field-option-copticArabic"),
+});
 
 const isPrayerT = (formData: Root): formData is Prayer => formData.hasOwnProperty("sections");
 const isReadingT = (formData: Root): formData is Reading => formData.hasOwnProperty("liturgy-gospel");
 
 interface DataFormProps {
     formData: Root;
-    setFormData: React.Dispatch<React.SetStateAction<Root>>;
+    setFormData: Dispatch<SetStateAction<Root>>;
     fileName: string;
-    setFileName: React.Dispatch<React.SetStateAction<string>>;
+    setFileName: Dispatch<SetStateAction<string>>;
 }
 
 export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataFormProps) => {
     const t = useTranslations("DataForm");
-    const [formType, setFormType] = useState<"prayer" | "reading" | "synaxarium">("prayer");
-    const [language1, setLanguage1] = React.useState<Language>("english");
-    const [language2, setLanguage2] = React.useState<Language>("arabic");
+    const [formType, setFormType] = useState<FormType>("prayer");
+    const [language1, setLanguage1] = useState<Language>("english");
+    const [language2, setLanguage2] = useState<Language>("arabic");
 
     const isPrayer = isPrayerT(formData);
     const isReading = isReadingT(formData);
 
     useEffect(() => {
-        console.log(formData);
         if (isPrayer || isReading) {
             if (isPrayer) setFormType("prayer");
             else if (isReading) setFormType("reading");
@@ -60,27 +70,25 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
         });
     };
 
-    const onFormTypeChange = (value: "prayer" | "reading" | "synaxarium") => {
+    const onFormTypeChange = (value: FormType) => {
         setFormType(value);
 
-        const commonProps = { title: formData.title };
-
+        const commonProps = { title: formData.title || {} };
         switch (value) {
             case "prayer":
-                setFormData({ ...commonProps, sections: [] });
+                const prayer: Prayer = { ...commonProps, sections: [] };
+                setFormData(prayer);
                 break;
             case "reading":
-                setFormData({ ...commonProps });
+                const reading: Reading = { ...commonProps };
+                setFormData(reading);
                 break;
         }
     };
 
-    const handleChange1 = (event: SelectChangeEvent) => {
-        setLanguage1(event.target.value as Language);
-    };
-
-    const handleChange2 = (event: SelectChangeEvent) => {
-        setLanguage2(event.target.value as Language);
+    const handleLanguageChange = (language: "left" | "right") => (event: SelectChangeEvent) => {
+        if (language === "left") setLanguage1(event.target.value as Language);
+        else setLanguage2(event.target.value as Language);
     };
 
     return (
@@ -96,47 +104,6 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
                 fullWidth
             />
 
-            <Box>
-                <Typography variant="h6">Language</Typography>
-
-                <Box sx={{ display: "flex", gap: 2 }}>
-                    <FormControl sx={{ minWidth: 120 }} fullWidth>
-                        <InputLabel id="language1-select-label">Language 1</InputLabel>
-                        <Select
-                            labelId="language1-select-label"
-                            id="language1-select"
-                            value={language1}
-                            label="Language 1"
-                            onChange={handleChange1}
-                            fullWidth
-                        >
-                            {LANGUAGES.map((lang) => (
-                                <MenuItem key={lang} value={lang}>
-                                    {lang}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                    <FormControl sx={{ minWidth: 120 }} fullWidth>
-                        <InputLabel id="language2-select-label">Language 2</InputLabel>
-                        <Select
-                            labelId="language2-select-label"
-                            id="language2-select"
-                            value={language2}
-                            label="Language 2"
-                            onChange={handleChange2}
-                            fullWidth
-                        >
-                            {LANGUAGES.map((lang) => (
-                                <MenuItem key={lang} value={lang}>
-                                    {lang}
-                                </MenuItem>
-                            ))}
-                        </Select>
-                    </FormControl>
-                </Box>
-            </Box>
-
             {/* Title */}
             <Box>
                 <Typography variant="h6">{t("title-field-label")}</Typography>
@@ -147,7 +114,39 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
                 />
             </Box>
 
-            {/* InAudible Field */}
+            {/* Language input */}
+            <Box>
+                <Typography variant="h6">{t("language-field-label")}</Typography>
+
+                <Box sx={{ display: "flex", gap: 2 }}>
+                    {(
+                        [
+                            { pos: "left", value: language1 },
+                            { pos: "right", value: language2 },
+                        ] as const
+                    ).map(({ pos, value }) => (
+                        <FormControl key={pos} sx={{ minWidth: 120 }} fullWidth>
+                            <InputLabel id={`${pos}-select-label`}>{t("language-field-label")}</InputLabel>
+                            <Select
+                                labelId={`${pos}-select-label`}
+                                id={`${pos}-select`}
+                                value={value}
+                                label={`${pos}`}
+                                onChange={handleLanguageChange(pos)}
+                                fullWidth
+                            >
+                                {LANGUAGES.map((lang) => (
+                                    <MenuItem key={lang} value={lang}>
+                                        {LABEL_MAP(t)[lang]}
+                                    </MenuItem>
+                                ))}
+                            </Select>
+                        </FormControl>
+                    ))}
+                </Box>
+            </Box>
+
+            {/* FormType Field */}
             <Box>
                 <Typography variant="h6">{t("formType-field-label")}</Typography>
                 <ToggleButtonGroup
@@ -157,7 +156,7 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
                     fullWidth
                     exclusive
                 >
-                    {["prayer", "reading"].map((type) => (
+                    {FORM_TYPES.map((type) => (
                         <ToggleButton key={type} value={type}>
                             {t(`formType-field-option-${type}`)}
                         </ToggleButton>
@@ -173,7 +172,7 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
                 />
             )}
             {formType === "reading" && (
-                <ReadingV2Form
+                <ReadingForm
                     formData={formData as Reading}
                     setFormData={setFormData}
                     languages={[language1, language2]}

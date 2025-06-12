@@ -1,6 +1,6 @@
 import { InfoSection, MultiLingualText, Occasion } from "@/types";
-import { MultiLingualTextForm } from "../MultiLingualTextForm";
-import { OccasionForm } from "../OccasionForm";
+import { MultiLingualTextForm } from "../../components/MultiLingualTextForm";
+import { OccasionForm } from "../../components/OccasionForm";
 
 interface InfoSectionProps {
     section: InfoSection;

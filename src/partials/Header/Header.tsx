@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Dispatch, SetStateAction } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
 import { Prayer } from "@/types";
@@ -7,9 +7,9 @@ import { ymlToUrl } from "@/utils/yml";
 
 interface HeaderProps {
     formData: Prayer;
-    setFormData: React.Dispatch<React.SetStateAction<Prayer>>;
+    setFormData: Dispatch<SetStateAction<Prayer>>;
     fileName: string;
-    setFileName: React.Dispatch<React.SetStateAction<string>>;
+    setFileName: Dispatch<SetStateAction<string>>;
 }
 
 export const Header = ({ formData, fileName }: HeaderProps) => {
@@ -26,7 +26,7 @@ export const Header = ({ formData, fileName }: HeaderProps) => {
         URL.revokeObjectURL(url);
     };
 
-    // const handleLoad = (event: React.ChangeEvent<HTMLInputElement>) => {
+    // const handleLoad = (event: ChangeEvent<HTMLInputElement>) => {
     //     const file = event.target.files?.[0];
     //     loadYmlFile(file)
     //         .then((result) => {

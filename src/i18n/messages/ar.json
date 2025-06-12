@@ -9,10 +9,14 @@
         "formType-field-label": "النوع",
         "formType-field-option-prayer": "صلاة",
         "formType-field-option-reading": "القراءات اليومية",
-        "fileName-field-label": "اسم الملف"
-    },
-    "ReadingForm": {
-        "text-field-label": "النص"
+        "formType-field-option-synaxarium": "السنكسار",
+        "fileName-field-label": "اسم الملف",
+        "language-field-label": "لغة",
+        "language-field-option-english": "إنجليزي",
+        "language-field-option-arabic": "عربي",
+        "language-field-option-coptic": "قبطي",
+        "language-field-option-copticEnglish": "قبطي (إنجليزي)",
+        "language-field-option-copticArabic": "قبطي (عربي)"
     },
     "MultiLingualText": {
         "multiLingual-field-option-english": "إنجليزي",
@@ -34,6 +38,7 @@
         "speaker-field-option-people": "الشعب"
     },
     "ReadingSection": {
+        "text-field-label": "النص",
         "readingType-field-label": "القراء",
         "readingType-field-option-acts-of-the-apostles": "أعمال الرسل",
         "readingType-field-option-catholic-epistle": "الكاثوليكون",

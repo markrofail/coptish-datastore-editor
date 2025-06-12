@@ -1,7 +1,7 @@
 import { CompoundPrayerSection, Occasion } from "@/types";
 import { TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { OccasionForm } from "../OccasionForm";
+import { OccasionForm } from "../../components/OccasionForm";
 
 interface CompoundPrayerSectionProps {
     section: CompoundPrayerSection;

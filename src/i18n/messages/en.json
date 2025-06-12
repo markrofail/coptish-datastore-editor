@@ -9,10 +9,14 @@
         "formType-field-label": "Type",
         "formType-field-option-prayer": "Prayer",
         "formType-field-option-reading": "Reading",
-        "fileName-field-label": "File Name"
-    },
-    "ReadingForm": {
-        "text-field-label": "Text"
+        "formType-field-option-synaxarium": "Synaxarium",
+        "fileName-field-label": "File Name",
+        "language-field-label": "Language",
+        "language-field-option-english": "English",
+        "language-field-option-arabic": "Arabic",
+        "language-field-option-coptic": "Coptic",
+        "language-field-option-copticEnglish": "Coptic (English)",
+        "language-field-option-copticArabic": "Coptic (Arabic)"
     },
     "MultiLingualText": {
         "multiLingual-field-option-english": "English",
@@ -34,6 +38,7 @@
         "speaker-field-option-people": "People"
     },
     "ReadingSection": {
+        "text-field-label": "Text",
         "readingType-field-label": "Reading",
         "readingType-field-option-acts-of-the-apostles": "Acts Of The Apostles",
         "readingType-field-option-catholic-epistle": "Catholic Epistle",

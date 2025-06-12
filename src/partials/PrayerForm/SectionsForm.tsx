@@ -1,4 +1,4 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import { Box, Typography, IconButton, ButtonGroup, Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
@@ -28,7 +28,7 @@ export const SectionsForm = ({ sections, languages, onChange, onDelete, onAdd }:
     const [parent] = useAutoAnimate();
 
     const [sectionIds, setSectionIds] = useState<string[]>([]);
-    React.useEffect(() => {
+    useEffect(() => {
         const initialIds = sections?.map((_, index) => sectionIds[index] || uuidv4()) || [];
         setSectionIds(initialIds);
     }, [sections]);
