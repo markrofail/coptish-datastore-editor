@@ -15,7 +15,6 @@ import {
 } from "@mui/material";
 import { Prayer, Reading, Root } from "@/types";
 import { useTranslations } from "next-intl";
-import { Header } from "../Header";
 import { PrayerForm } from "../PrayerForm";
 import { ReadingForm } from "./ReadingForm";
 
@@ -93,8 +92,6 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            <Header formData={formData} setFormData={setFormData} fileName={fileName} setFileName={setFileName} />
-
             {/* Filename input */}
             <TextField
                 label={t("fileName-field-label")}

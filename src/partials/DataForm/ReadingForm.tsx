@@ -65,7 +65,7 @@ const EachReadingForm = ({
     onTitleChange,
 }: EachReadingFormProps) => {
     const t = useTranslations("ReadingSection");
-    const [mode, setMode] = useState<"view" | "edit">("view");
+    const [mode, setMode] = useState<"view" | "edit">("edit");
 
     return (
         <Box sx={{ marginBottom: 4 }}>

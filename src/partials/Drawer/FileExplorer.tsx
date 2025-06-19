@@ -9,7 +9,6 @@ import FileIcon from "@mui/icons-material/Description";
 import { MultiLingualText, Prayer } from "@/types";
 import { useFetchFile } from "./utils";
 import { useLocale } from "@/app/providers";
-import { useTranslations } from "next-intl";
 
 interface Node {
     id: string;
@@ -24,7 +23,6 @@ export interface FileExplorerProps {
     onFileLoad: (fileName: string, data: Prayer) => void;
 }
 export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
-    const t = useTranslations("FileExplorer");
     const { dir } = useLocale();
     const { fetchFile, fileName, fileContent } = useFetchFile();
 
@@ -42,15 +40,12 @@ export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
     };
 
     return (
-        <>
-            <Typography variant="h6">{t("heading-database")}</Typography>
-            <SimpleTreeView
-                slots={{ collapseIcon: ExpandMoreIcon, expandIcon: dir === "ltr" ? ChevronRightIcon : ChevronLeftIcon }}
-                sx={{ flexGrow: 1, maxWidth: 400, width: 400, overflowY: "auto" }}
-            >
-                {directory.children?.map((node) => <DirectoryTree key={node.id} node={node} onSelect={onSelect} />)}
-            </SimpleTreeView>
-        </>
+        <SimpleTreeView
+            slots={{ collapseIcon: ExpandMoreIcon, expandIcon: dir === "ltr" ? ChevronRightIcon : ChevronLeftIcon }}
+            sx={{ flexGrow: 1, maxWidth: 400, width: 400, overflowY: "auto" }}
+        >
+            {directory.children?.map((node) => <DirectoryTree key={node.id} node={node} onSelect={onSelect} />)}
+        </SimpleTreeView>
     );
 };
 
