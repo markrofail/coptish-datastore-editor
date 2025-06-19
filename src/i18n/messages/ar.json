@@ -16,14 +16,8 @@
         "language-field-option-arabic": "عربي",
         "language-field-option-coptic": "قبطي",
         "language-field-option-copticEnglish": "قبطي (إنجليزي)",
-        "language-field-option-copticArabic": "قبطي (عربي)"
-    },
-    "MultiLingualText": {
-        "multiLingual-field-option-english": "إنجليزي",
-        "multiLingual-field-option-arabic": "عربي",
-        "multiLingual-field-option-coptic": "قبطي",
-        "multiLingual-field-option-copticEnglish": "قبطي (إنجليزي)",
-        "multiLingual-field-option-copticArabic": "قبطي (عربي)"
+        "language-field-option-copticArabic": "قبطي (عربي)",
+        "language-field-option-off": "-"
     },
     "VersesSection": {
         "speaker-field-label": "القائل",

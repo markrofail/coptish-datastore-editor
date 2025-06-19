@@ -6,19 +6,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import { useTranslations } from "next-intl";
 import { useLocale } from "@/app/providers";
 import { fontMap } from "@/fonts";
-
-const LABEL_MAP = (t: (id: string) => string) => ({
-    english: t("multiLingual-field-option-english"),
-    arabic: t("multiLingual-field-option-arabic"),
-    coptic: t("multiLingual-field-option-coptic"),
-    coptic_english: t("multiLingual-field-option-copticEnglish"),
-    coptic_arabic: t("multiLingual-field-option-copticArabic"),
-});
+import { LABEL_MAP, Language } from "@/partials/DataForm/LanguageFields";
 
 interface MultiLingualTextArrayFormProps {
     value: MultiLingualTextArray;
     onChange: (newValue: MultiLingualTextArray) => void;
-    languages: (keyof MultiLingualTextArray)[];
+    languages: Language[];
     multiline?: boolean;
     mode?: "edit" | "view";
     direction?: "column" | "row";
@@ -32,7 +25,7 @@ export const MultiLingualTextArrayForm = ({
     multiline,
     direction,
 }: MultiLingualTextArrayFormProps) => {
-    const t = useTranslations("MultiLingualText");
+    const t = useTranslations();
     const { dir } = useLocale();
 
     const handleChange = (field: keyof MultiLingualTextArray, index: number, newValue: string) => {
@@ -54,9 +47,8 @@ export const MultiLingualTextArrayForm = ({
 
     const labels = LABEL_MAP(t);
 
-    const flexDirection = `${direction}-${dir === "rtl" ? "reverse" : ""}`;
     return (
-        <Box sx={{ display: "flex", flexDirection, gap: 1, flex: 1 }}>
+        <Box sx={{ display: "flex", flexDirection: direction, gap: 1, flex: 1 }}>
             {languages
                 .map((lang) => ({ label: labels[lang], field: lang }))
                 .map(({ label, field }) => (

@@ -30,7 +30,7 @@ export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
         if (fileContent) {
             onFileLoad(fileName, fileContent);
         }
-    }, [fileContent]);
+    }, [fileContent, fileName, onFileLoad]);
 
     const onSelect = (node: Node) => {
         if (!!node.children) return;

@@ -23,7 +23,7 @@ export const PrayerForm = ({ formData, languages, setFormData }: PrayerFormProps
     };
 
     const handleSectionAdd = () => {
-        const newSection: VersesSection = { type: "verses", verses: { english: [""] } };
+        const newSection: VersesSection = { type: "verses", verses: {} };
         setFormData((prevData: Prayer) => ({
             ...prevData,
             sections: [...(prevData.sections ?? []), newSection],

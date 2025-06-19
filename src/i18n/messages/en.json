@@ -16,14 +16,8 @@
         "language-field-option-arabic": "Arabic",
         "language-field-option-coptic": "Coptic",
         "language-field-option-copticEnglish": "Coptic (English)",
-        "language-field-option-copticArabic": "Coptic (Arabic)"
-    },
-    "MultiLingualText": {
-        "multiLingual-field-option-english": "English",
-        "multiLingual-field-option-arabic": "Arabic",
-        "multiLingual-field-option-coptic": "Coptic",
-        "multiLingual-field-option-copticEnglish": "Coptic (English)",
-        "multiLingual-field-option-copticArabic": "Coptic (Arabic)"
+        "language-field-option-copticArabic": "Coptic (Arabic)",
+        "language-field-option-off": "-"
     },
     "VersesSection": {
         "speaker-field-label": "Speaker",

@@ -31,7 +31,7 @@ export const SectionsForm = ({ sections, languages, onChange, onDelete, onAdd }:
     useEffect(() => {
         const initialIds = sections?.map((_, index) => sectionIds[index] || uuidv4()) || [];
         setSectionIds(initialIds);
-    }, [sections]);
+    }, [sections, sectionIds]);
 
     const moveSectionUp = (index: number) => {
         if (!sections || index === 0) return;
@@ -81,10 +81,10 @@ export const SectionsForm = ({ sections, languages, onChange, onDelete, onAdd }:
         let newSection: Section;
         switch (newType) {
             case "verses":
-                newSection = { type: "verses", verses: { english: [] }, ...commonProps };
+                newSection = { type: "verses", verses: {}, ...commonProps };
                 break;
             case "info":
-                newSection = { type: "info", text: { english: "" }, ...commonProps };
+                newSection = { type: "info", text: {}, ...commonProps };
                 break;
             case "reading":
                 newSection = {

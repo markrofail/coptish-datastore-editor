@@ -2,28 +2,19 @@ import React from "react";
 import { MultiLingualText } from "@/types";
 import { Box, TextField, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
-import { useLocale } from "@/app/providers";
 import { fontMap } from "@/fonts";
-
-const LABEL_MAP = (t: (id: string) => string) => ({
-    english: t("multiLingual-field-option-english"),
-    arabic: t("multiLingual-field-option-arabic"),
-    coptic: t("multiLingual-field-option-coptic"),
-    coptic_english: t("multiLingual-field-option-copticEnglish"),
-    coptic_arabic: t("multiLingual-field-option-copticArabic"),
-});
+import { Language, LABEL_MAP } from "@/partials/DataForm/LanguageFields";
 
 interface MultiLingualTextFormProps {
     value: MultiLingualText;
     onChange: (newValue: MultiLingualText) => void;
-    languages: (keyof MultiLingualText)[];
+    languages: Language[];
     multiline?: boolean;
     mode?: "edit" | "view";
 }
 
 export const MultiLingualTextForm = ({ value, onChange, languages, multiline, mode }: MultiLingualTextFormProps) => {
-    const t = useTranslations("MultiLingualText");
-    const { dir } = useLocale();
+    const t = useTranslations();
 
     const handleChange = (field: keyof MultiLingualText, newValue: string) => {
         onChange({ ...value, [field]: newValue });
@@ -31,9 +22,8 @@ export const MultiLingualTextForm = ({ value, onChange, languages, multiline, mo
 
     const labels = LABEL_MAP(t);
 
-    const flexDirection = `row-${dir === "rtl" ? "reverse" : ""}`;
     return (
-        <Box sx={{ display: "flex", flexDirection, gap: 1, flex: 1 }}>
+        <Box sx={{ display: "flex", gap: 1, flex: 1 }}>
             {languages
                 .map((lang) => ({ label: labels[lang], field: lang }))
                 .map(({ label, field }) => (
