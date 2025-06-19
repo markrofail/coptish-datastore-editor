@@ -8,8 +8,9 @@ import { useLocale } from "./providers";
 import { DRAWER_WIDTH, DRAWER_WIDTH_COLLAPSED, ResponsiveDrawer } from "@/partials/Drawer";
 import { Root } from "@/types";
 import { NavigationBar } from "@/components/NavigationBar";
-import { ymlToUrl } from "@/utils/yml";
 import { DrawerContextProvider, useDrawerState } from "@/hooks/useDrawerState";
+import { parse } from "yaml";
+import { DownloadButtonModal } from "@/partials/DownloadModal/DownloadModal";
 
 const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{ open: boolean }>(({ theme, open }) => ({
     flexGrow: 1,
@@ -44,29 +45,43 @@ export default function Home() {
     const { locale } = useLocale();
     const [formData, setFormData] = useState<Root>({});
     const [fileName, setFileName] = useState("");
+    const [downloadModalOpen, setDownloadModalOpen] = useState(false);
+    const toggleDownloadModal = () => setDownloadModalOpen((prev) => !prev);
 
     const onFileLoad = (fileName: string, data: Root) => {
         setFileName(fileName);
         setFormData(data);
     };
 
-    const handleSave = () => {
-        const url = ymlToUrl(formData);
-
-        const link = document.createElement("a");
-        link.download = fileName.endsWith(".yml") || fileName.endsWith(".yaml") ? fileName : `${fileName}.yml`;
-        link.href = url;
-        link.click();
-
-        URL.revokeObjectURL(url);
+    const handleLoad = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0];
+        if (file) {
+            setFileName(file.name); // Update filename state when loading
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                try {
+                    const text = e.target?.result as string;
+                    setFormData(parse(text) as Root);
+                } catch (error) {
+                    console.error("Error parsing JSON:", error);
+                    alert("Invalid JSON file.");
+                }
+            };
+            reader.readAsText(file);
+        }
     };
-
     return (
         <DrawerContextProvider value={drawerState}>
             <Box sx={{ display: "flex" }} dir={locale === "ar" ? "rtl" : "ltr"}>
                 <NavigationBar />
 
-                <ResponsiveDrawer onFileLoad={onFileLoad} directory={directoryTree} onSaveButtonClick={handleSave} />
+                <ResponsiveDrawer
+                    onFileLoad={onFileLoad}
+                    directory={directoryTree}
+                    onSaveButtonClick={toggleDownloadModal}
+                    onUploadButtonClick={() => document.getElementById("file-upload")?.click()}
+                />
+                <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleLoad} />
 
                 <Main open={drawerState.open}>
                     <DataForm
@@ -76,6 +91,13 @@ export default function Home() {
                         setFileName={setFileName}
                     />
                 </Main>
+
+                <DownloadButtonModal
+                    open={downloadModalOpen}
+                    onClose={toggleDownloadModal}
+                    formData={formData}
+                    initialFileName={fileName}
+                />
             </Box>
         </DrawerContextProvider>
     );

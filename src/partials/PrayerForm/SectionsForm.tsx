@@ -29,9 +29,8 @@ export const SectionsForm = ({ sections, languages, onChange, onDelete, onAdd }:
 
     const [sectionIds, setSectionIds] = useState<string[]>([]);
     useEffect(() => {
-        const initialIds = sections?.map((_, index) => sectionIds[index] || uuidv4()) || [];
-        setSectionIds(initialIds);
-    }, [sections, sectionIds]);
+        setSectionIds((prevIds) => sections?.map((_, index) => prevIds[index] || uuidv4()) || []);
+    }, [sections]);
 
     const moveSectionUp = (index: number) => {
         if (!sections || index === 0) return;

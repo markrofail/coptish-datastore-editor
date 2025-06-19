@@ -91,7 +91,7 @@ const EachReadingForm = ({
                         <MultiLingualTextArrayForm
                             value={reading.text}
                             onChange={onReadingChange(readingType, i)}
-                            languages={["english", "arabic"]}
+                            languages={languages}
                             direction="row"
                             mode={mode}
                             multiline
