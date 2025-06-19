@@ -1,12 +1,11 @@
-import React, { Dispatch, Fragment, SetStateAction, useState } from "react";
+import React, { Dispatch, Fragment, SetStateAction } from "react";
 import _ from "lodash";
-import { Box, IconButton, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { MultiLingualText, MultiLingualTextArray, Reading, ReadingType, Root, SubReading } from "@/types";
 import { useTranslations } from "next-intl";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
 import { MultiLingualTextArrayForm } from "@/components/MultiLingualTextArrayForm";
-import EditModeIcon from "@mui/icons-material/Edit";
-import ViewModeIcon from "@mui/icons-material/ChromeReaderMode";
+
 interface ReadingFormProps {
     formData: Reading;
     languages: (keyof MultiLingualText)[];
@@ -65,17 +64,10 @@ const EachReadingForm = ({
     onTitleChange,
 }: EachReadingFormProps) => {
     const t = useTranslations("ReadingSection");
-    const [mode, setMode] = useState<"view" | "edit">("edit");
-
     return (
         <Box sx={{ marginBottom: 4 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
                 <Typography variant="h5"> {t(`readingType-field-option-${readingType}`)}</Typography>
-                <Box>
-                    <IconButton color="primary" onClick={() => setMode((prev) => (prev === "edit" ? "view" : "edit"))}>
-                        {mode === "view" ? <EditModeIcon /> : <ViewModeIcon />}
-                    </IconButton>
-                </Box>
             </Box>
             {readings.map((reading, i) => (
                 <Fragment key={i}>
@@ -83,20 +75,14 @@ const EachReadingForm = ({
                         value={reading.title}
                         onChange={onTitleChange(readingType, i)}
                         languages={languages}
-                        mode={mode}
                     />
-                    <Box>
-                        {mode !== "view" && <Typography variant="h6">{t("text-field-label")}</Typography>}
-
-                        <MultiLingualTextArrayForm
-                            value={reading.text}
-                            onChange={onReadingChange(readingType, i)}
-                            languages={languages}
-                            direction="row"
-                            mode={mode}
-                            multiline
-                        />
-                    </Box>
+                    <MultiLingualTextArrayForm
+                        value={reading.text}
+                        onChange={onReadingChange(readingType, i)}
+                        languages={languages}
+                        direction="row"
+                        multiline
+                    />
                 </Fragment>
             ))}
         </Box>

@@ -1,6 +1,6 @@
 import React from "react";
 import { MultiLingualText } from "@/types";
-import { Box, TextField, Typography } from "@mui/material";
+import { Box, TextField } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { fontMap } from "@/fonts";
 import { Language, LABEL_MAP } from "@/partials/DataForm/LanguageFields";
@@ -10,10 +10,9 @@ interface MultiLingualTextFormProps {
     onChange: (newValue: MultiLingualText) => void;
     languages: Language[];
     multiline?: boolean;
-    mode?: "edit" | "view";
 }
 
-export const MultiLingualTextForm = ({ value, onChange, languages, multiline, mode }: MultiLingualTextFormProps) => {
+export const MultiLingualTextForm = ({ value, onChange, languages, multiline }: MultiLingualTextFormProps) => {
     const t = useTranslations();
 
     const handleChange = (field: keyof MultiLingualText, newValue: string) => {
@@ -28,19 +27,15 @@ export const MultiLingualTextForm = ({ value, onChange, languages, multiline, mo
                 .map((lang) => ({ label: labels[lang], field: lang }))
                 .map(({ label, field }) => (
                     <Box key={field} sx={{ flex: 1 }}>
-                        {mode === "view" ? (
-                            <Typography variant="h6"> {value[field]}</Typography>
-                        ) : (
-                            <TextField
-                                label={label}
-                                value={value[field as keyof MultiLingualText] || ""}
-                                onChange={(e) => handleChange(field as keyof MultiLingualText, e.target.value)}
-                                sx={{ "& .MuiInputBase-root": fontMap[field].style }}
-                                multiline={multiline}
-                                dir={field === "arabic" || field === "coptic_arabic" ? "rtl" : "ltr"}
-                                fullWidth
-                            />
-                        )}
+                        <TextField
+                            label={label}
+                            value={value[field as keyof MultiLingualText] || ""}
+                            onChange={(e) => handleChange(field as keyof MultiLingualText, e.target.value)}
+                            sx={{ "& .MuiInputBase-root": fontMap[field].style }}
+                            multiline={multiline}
+                            dir={field === "arabic" || field === "coptic_arabic" ? "rtl" : "ltr"}
+                            fullWidth
+                        />
                     </Box>
                 ))}
         </Box>
