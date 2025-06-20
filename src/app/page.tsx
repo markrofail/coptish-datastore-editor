@@ -84,12 +84,7 @@ export default function Home() {
                 <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleLoad} />
 
                 <Main open={drawerState.open}>
-                    <DataForm
-                        formData={formData}
-                        setFormData={setFormData}
-                        fileName={fileName}
-                        setFileName={setFileName}
-                    />
+                    <DataForm formData={formData} setFormData={setFormData} />
                 </Main>
 
                 <DownloadButtonModal

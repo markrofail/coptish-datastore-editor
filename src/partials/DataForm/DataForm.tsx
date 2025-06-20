@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import _ from "lodash";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
-import { Box, TextField, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Box, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
 import { Prayer, Reading, Root } from "@/types";
 import { useTranslations } from "next-intl";
 import { PrayerForm } from "../PrayerForm";
@@ -17,11 +17,9 @@ const isReadingT = (formData: Root): formData is Reading => formData.hasOwnPrope
 interface DataFormProps {
     formData: Root;
     setFormData: Dispatch<SetStateAction<Root>>;
-    fileName: string;
-    setFileName: Dispatch<SetStateAction<string>>;
 }
 
-export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataFormProps) => {
+export const DataForm = ({ formData, setFormData }: DataFormProps) => {
     const t = useTranslations("DataForm");
     const [formType, setFormType] = useState<FormType>("prayer");
     const [languages, setLanguages] = useState<Language[]>(["english", "arabic"]);
@@ -65,15 +63,6 @@ export const DataForm = ({ formData, setFormData, fileName, setFileName }: DataF
 
     return (
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
-            {/* Filename input */}
-            <TextField
-                label={t("fileName-field-label")}
-                value={fileName}
-                dir="ltr"
-                onChange={(e) => setFileName(e.target.value)}
-                fullWidth
-            />
-
             {/* Language input */}
             <Box>
                 <Typography variant="h6">{t("language-field-label")}</Typography>
