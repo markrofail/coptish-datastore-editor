@@ -1,7 +1,13 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import _ from "lodash";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
-import { Box, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import {
+    Box,
+    Typography as MuiTypography,
+    ToggleButton as MuiToggleButton,
+    ToggleButtonGroup as MuiToggleButtonGroup,
+    styled,
+} from "@mui/material";
 import { Prayer, Reading, Root } from "@/types";
 import { useTranslations } from "next-intl";
 import { PrayerForm } from "../PrayerForm";
@@ -13,6 +19,36 @@ type FormType = (typeof FORM_TYPES)[number];
 
 const isPrayerT = (formData: Root): formData is Prayer => formData.hasOwnProperty("sections");
 const isReadingT = (formData: Root): formData is Reading => formData.hasOwnProperty("liturgy-gospel");
+
+const Typography = styled(MuiTypography)(() => ({
+    fontWeight: 600,
+    marginBottom: 8,
+}));
+
+const ToggleButtonGroup = styled(MuiToggleButtonGroup)(({ theme }) => ({
+    borderRadius: 12,
+    overflow: "hidden",
+    border: `1px solid ${theme.palette.divider}`,
+}));
+
+const ToggleButton = styled(MuiToggleButton)(({ theme }) => ({
+    flex: 1,
+    fontWeight: 500,
+    padding: "10px 16px",
+    color: theme.palette.text.primary,
+    border: "none",
+    "&.Mui-selected": {
+        backgroundColor: theme.palette.primary.main,
+        color: theme.palette.primary.contrastText,
+        boxShadow: `0 0 6px ${theme.palette.primary.main}33`,
+    },
+    "&:not(:last-of-type)": {
+        borderRight: `1px solid ${theme.palette.divider}`,
+    },
+    "&:hover": {
+        backgroundColor: theme.palette.action.hover,
+    },
+}));
 
 interface DataFormProps {
     formData: Root;

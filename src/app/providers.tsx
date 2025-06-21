@@ -4,43 +4,13 @@ import React from "react";
 import enMessages from "@/i18n/messages/en.json";
 import arMessages from "@/i18n/messages/ar.json";
 import { NextIntlClientProvider } from "next-intl";
-import { alpha, createTheme, getContrastRatio, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 import { useLocalStorage } from "usehooks-ts";
-import { arabicFont, englishFont } from "@/fonts";
-
-const primaryBase = "#000000";
-const primaryMain = alpha(primaryBase, 1);
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: primaryMain,
-            light: alpha(primaryBase, 0.5),
-            dark: alpha(primaryBase, 0.9),
-            contrastText: getContrastRatio(primaryMain, "#fff") > 4.5 ? "#fff" : "#111",
-        },
-    },
-});
-
-const rtlTheme = createTheme({
-    ...theme,
-    direction: "rtl",
-    typography: {
-        fontSize: 18,
-        fontFamily: arabicFont.style.fontFamily,
-    },
-});
-const ltrTheme = createTheme({
-    ...theme,
-    direction: "ltr",
-    typography: {
-        fontFamily: englishFont.style.fontFamily,
-    },
-});
+import { ltrTheme, rtlTheme } from "./theme";
 
 const rtlCache = createCache({
     key: "muirtl",
@@ -66,7 +36,10 @@ export const Providers = ({ children }: { children: React.ReactNode }) => {
         <NextIntlClientProvider locale={locale} messages={messages}>
             <ThemeProvider theme={dir === "rtl" ? rtlTheme : ltrTheme}>
                 <CacheProvider value={dir === "rtl" ? rtlCache : ltrCache}>
-                    <LocaleContext.Provider value={{ locale, setLocale, dir }}>{children}</LocaleContext.Provider>
+                    <LocaleContext.Provider value={{ locale, setLocale, dir }}>
+                        <CssBaseline />
+                        {children}
+                    </LocaleContext.Provider>
                 </CacheProvider>
             </ThemeProvider>
         </NextIntlClientProvider>
