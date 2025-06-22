@@ -1,7 +1,8 @@
 {
     "title": "Data Input Form",
-    "save-button-label": "Save",
-    "upload-button-label": "Upload",
+    "add-button-label": "Add",
+    "save-button-label": "Download",
+    "upload-button-label": "Import File",
     "occasion-field-label": "Occasion",
     "sections-field-label": "Sections",
     "DataForm": {
@@ -31,6 +32,9 @@
         "speaker-field-option-reader": "Reader",
         "speaker-field-option-people": "People"
     },
+    "InfoSection": {
+        "comment-field-label": "Comment"
+    },
     "ReadingSection": {
         "text-field-label": "Text",
         "readingType-field-label": "Reading",
@@ -55,6 +59,7 @@
     "OccasionField": {
         "occasion-field-label": "Occasion",
         "occasion-field-helper": "Only show section if the occasion matches",
+        "occasion-field-option-empty": "Always",
         "occasion-field-option-annual": "Annual",
         "occasion-field-option-great-lent": "Great Lent"
     },
@@ -70,5 +75,6 @@
     },
     "FileExplorer": {
         "heading-database": "Database"
-    }
+    },
+    "toggle-language-label": "عربي"
 }

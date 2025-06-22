@@ -16,7 +16,7 @@ import { MultiLingualTextArrayForm } from "@/components/MultiLingualTextArrayFor
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 
-const READING_TYPES = Object.values(ReadingTypeEnum);
+const READING_TYPES = Object.values(ReadingTypeEnum).filter((type) => type !== ReadingTypeEnum.Synaxarium);
 
 interface ReadingFormProps {
     formData: Reading;
@@ -108,12 +108,7 @@ const EachReadingForm = ({
         <Box sx={{ marginBottom: 4 }}>
             <Box sx={{ display: "flex", alignItems: "center", gap: 1, mb: 2 }}>
                 <Typography variant="h5">{t(`readingType-field-option-${readingType}`)}</Typography>
-                <IconButton
-                    onClick={() => onReadingsAdd(readingType)}
-                    size="small"
-                    color="primary"
-                    aria-label={`Add subreading to ${readingType}`}
-                >
+                <IconButton onClick={() => onReadingsAdd(readingType)} size="small" color="primary">
                     <AddIcon fontSize="small" />
                 </IconButton>
             </Box>
@@ -128,7 +123,7 @@ const EachReadingForm = ({
                         mb: 2,
                         gap: 2,
                         position: "relative",
-                        backgroundColor: "#fafafa",
+                        backgroundColor: "#fff",
                     }}
                 >
                     <Box

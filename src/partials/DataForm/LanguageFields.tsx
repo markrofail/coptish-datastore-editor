@@ -1,6 +1,7 @@
 import React from "react";
-import { FormControl, InputLabel, Select, MenuItem, Box, SelectChangeEvent } from "@mui/material";
+import { FormControl, InputLabel, MenuItem, Box, SelectChangeEvent } from "@mui/material";
 import { useTranslations } from "next-intl";
+import { Select } from "@/components/SelectField";
 
 export const LABEL_MAP = (t: (id: string) => string): Record<Language | "off", string> => ({
     english: t("DataForm.language-field-option-english"),
@@ -71,13 +72,15 @@ interface SelectFieldProps {
 const SelectField = ({ id, value, options, onChange }: SelectFieldProps) => {
     const t = useTranslations();
 
-    const handleChange = (event: SelectChangeEvent) => {
+    const handleChange = (event: SelectChangeEvent<unknown>) => {
         onChange(event.target.value as Language);
     };
 
     return (
         <FormControl fullWidth>
-            <InputLabel id={`${id}-select-label`}>{t("DataForm.language-field-label")}</InputLabel>
+            <InputLabel sx={{ fontWeight: 600 }} id={`${id}-select-label`}>
+                {t("DataForm.language-field-label")}
+            </InputLabel>
             <Select
                 labelId={`${id}-select-label`}
                 id={`${id}-select`}

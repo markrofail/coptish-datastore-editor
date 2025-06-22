@@ -1,8 +1,11 @@
 import React, { Dispatch, SetStateAction } from "react";
 import { Box, Typography, Button } from "@mui/material";
 import SaveIcon from "@mui/icons-material/Save";
+import FileUploadIcon from "@mui/icons-material/FileUpload";
+import TranslateIcon from "@/components/TranslateIcon";
 import { Prayer } from "@/types";
 import { useTranslations } from "next-intl";
+import { useLocale } from "@/app/providers";
 import { ymlToUrl } from "@/utils/yml";
 
 interface HeaderProps {
@@ -14,6 +17,8 @@ interface HeaderProps {
 
 export const Header = ({ formData, fileName }: HeaderProps) => {
     const t = useTranslations();
+    const { locale, setLocale } = useLocale();
+    const onLocaleToggle = () => setLocale(locale === "en" ? "ar" : "en");
 
     const handleSave = () => {
         const url = ymlToUrl(formData);
@@ -40,29 +45,34 @@ export const Header = ({ formData, fileName }: HeaderProps) => {
     // };
 
     return (
-        <Box sx={{ display: "flex", alignItems: "flex-end", gap: 2, marginBottom: 6 }}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             <Typography variant="h2" component="div">
                 {t("title")}
             </Typography>
 
             <Box sx={{ display: "flex", flexDirection: "row", gap: 2 }}>
                 <Box>
+                    <Button variant="text" color="inherit" startIcon={<TranslateIcon />} onClick={onLocaleToggle}>
+                        {t("toggle-language-label")}
+                    </Button>
+                </Box>
+
+                <Box>
                     <Button variant="text" color="inherit" startIcon={<SaveIcon />} onClick={handleSave}>
                         {t("save-button-label")}
                     </Button>
                 </Box>
 
-                {/* <Box>
+                <Box>
                     <Button
                         variant="text"
                         color="inherit"
-                        startIcon={<CloudUploadIcon />}
+                        startIcon={<FileUploadIcon />}
                         onClick={() => document.getElementById("file-upload")?.click()}
                     >
                         {t("upload-button-label")}
                     </Button>
-                    <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleLoad} />
-                </Box> */}
+                </Box>
             </Box>
         </Box>
     );

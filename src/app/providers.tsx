@@ -4,43 +4,13 @@ import React from "react";
 import enMessages from "@/i18n/messages/en.json";
 import arMessages from "@/i18n/messages/ar.json";
 import { NextIntlClientProvider } from "next-intl";
-import { alpha, createTheme, getContrastRatio, ThemeProvider } from "@mui/material";
+import { CssBaseline, ThemeProvider } from "@mui/material";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import rtlPlugin from "stylis-plugin-rtl";
 import { useLocalStorage } from "usehooks-ts";
-import { arabicFont, englishFont } from "@/fonts";
-
-const primaryBase = "#000000";
-const primaryMain = alpha(primaryBase, 1);
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: primaryMain,
-            light: alpha(primaryBase, 0.5),
-            dark: alpha(primaryBase, 0.9),
-            contrastText: getContrastRatio(primaryMain, "#fff") > 4.5 ? "#fff" : "#111",
-        },
-    },
-});
-
-const rtlTheme = createTheme({
-    ...theme,
-    direction: "rtl",
-    typography: {
-        fontSize: 18,
-        fontFamily: arabicFont.style.fontFamily,
-    },
-});
-const ltrTheme = createTheme({
-    ...theme,
-    direction: "ltr",
-    typography: {
-        fontFamily: englishFont.style.fontFamily,
-    },
-});
+import { ltrTheme, rtlTheme } from "./theme";
 
 const rtlCache = createCache({
     key: "muirtl",
@@ -59,14 +29,25 @@ export const useLocale = () => React.useContext(LocaleContext);
 
 export const Providers = ({ children }: { children: React.ReactNode }) => {
     const [locale, setLocale] = useLocalStorage<Locale>("settings:locale", "en");
-    const messages = locale === "en" ? enMessages : arMessages;
-    const dir = locale === "en" ? "ltr" : "rtl";
+    const [initialLocale, setInitialLocale] = React.useState<Locale>("en"); // Default for server render
+
+    React.useEffect(() => {
+        setInitialLocale(locale);
+    }, [locale]);
+
+    const messages = initialLocale === "en" ? enMessages : arMessages;
+    const dir = initialLocale === "en" ? "ltr" : "rtl";
 
     return (
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={initialLocale} messages={messages}>
             <ThemeProvider theme={dir === "rtl" ? rtlTheme : ltrTheme}>
                 <CacheProvider value={dir === "rtl" ? rtlCache : ltrCache}>
-                    <LocaleContext.Provider value={{ locale, setLocale, dir }}>{children}</LocaleContext.Provider>
+                    <LocaleContext.Provider value={{ locale, setLocale, dir }}>
+                        <CssBaseline />
+                        {/* Note: Removed dynamic 'dir' attribute to prevent hydration mismatch.
+                           Consider server-side locale detection or middleware for dynamic HTML 'dir'. */}
+                        <div dir={dir}>{children}</div>
+                    </LocaleContext.Provider>
                 </CacheProvider>
             </ThemeProvider>
         </NextIntlClientProvider>

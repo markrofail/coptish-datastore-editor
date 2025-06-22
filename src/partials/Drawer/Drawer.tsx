@@ -2,12 +2,9 @@ import React from "react";
 import { Drawer as MuiDrawer, Box, IconButton, List, Theme, styled } from "@mui/material";
 import { FileExplorer, FileExplorerProps } from "./FileExplorer";
 import { ListItem, ListItemButton, ListItemIcon, ListItemText } from "./ListItem";
-import { useLocale } from "@/app/providers";
 import { useTranslations } from "next-intl";
 import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
-import TranslateIcon from "@/components/TranslateIcon";
-import FileUploadIcon from "@mui/icons-material/FileUpload";
 import FileDownloadIcon from "@mui/icons-material/FileDownload";
 import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import { useDrawerContext } from "@/hooks/useDrawerState";
@@ -53,16 +50,9 @@ const Drawer = styled(MuiDrawer, { shouldForwardProp: (prop) => prop !== "open" 
 
 interface ResponsiveDrawerProps extends FileExplorerProps {
     onSaveButtonClick: () => void;
-    onUploadButtonClick: () => void;
 }
 
-export const ResponsiveDrawer = ({
-    onSaveButtonClick,
-    onUploadButtonClick,
-    ...fileExplorerProps
-}: ResponsiveDrawerProps) => {
-    const { locale, setLocale } = useLocale();
-    const onLocaleToggle = () => setLocale(locale === "en" ? "ar" : "en");
+export const ResponsiveDrawer = ({ onSaveButtonClick, ...fileExplorerProps }: ResponsiveDrawerProps) => {
     const t = useTranslations();
 
     const { open, setOpen, permanentOpen, setPermanentOpen } = useDrawerContext();
@@ -108,29 +98,11 @@ export const ResponsiveDrawer = ({
             {/* Top navigation items list */}
             <List>
                 <ListItem disablePadding sx={{ display: "block" }}>
-                    <ListItemButton open={open} onClick={onLocaleToggle}>
-                        <ListItemIcon open={open}>
-                            <TranslateIcon />
-                        </ListItemIcon>
-                        <ListItemText open={open} primary={locale === "en" ? "عربي" : "English"} />
-                    </ListItemButton>
-                </ListItem>
-
-                <ListItem disablePadding sx={{ display: "block" }}>
                     <ListItemButton open={open} onClick={onSaveButtonClick}>
                         <ListItemIcon open={open}>
                             <FileDownloadIcon />
                         </ListItemIcon>
                         <ListItemText open={open} primary={t("save-button-label")} />
-                    </ListItemButton>
-                </ListItem>
-
-                <ListItem disablePadding sx={{ display: "block" }}>
-                    <ListItemButton open={open} onClick={onUploadButtonClick}>
-                        <ListItemIcon open={open}>
-                            <FileUploadIcon />
-                        </ListItemIcon>
-                        <ListItemText open={open} primary={t("upload-button-label")} />
                     </ListItemButton>
                 </ListItem>
 

@@ -4,35 +4,19 @@ import React, { CSSProperties, useState } from "react";
 import { Box, styled } from "@mui/material";
 import directoryTree from "@/directory_tree.json";
 import { DataForm } from "@/partials/DataForm";
-import { useLocale } from "./providers";
-import { DRAWER_WIDTH, DRAWER_WIDTH_COLLAPSED, ResponsiveDrawer } from "@/partials/Drawer";
 import { Root } from "@/types";
-import { NavigationBar } from "@/components/NavigationBar";
-import { DrawerContextProvider, useDrawerState } from "@/hooks/useDrawerState";
 import { parse } from "yaml";
 import { DownloadButtonModal } from "@/partials/DownloadModal/DownloadModal";
+import { Header } from "@/partials/Header";
+import { FileExplorer } from "@/partials/Drawer/FileExplorer";
 
-const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{ open: boolean }>(({ theme, open }) => ({
+const Main = styled("main")(({ theme }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create("margin", {
-        easing: theme.transitions.easing.sharp,
-        duration: theme.transitions.duration.leavingScreen,
-    }),
-    // Initial margin when drawer is closed (respect collapsed width)
-    marginLeft: DRAWER_WIDTH_COLLAPSED,
-    // Initial width when drawer is closed (respect collapsed width)
-    width: `calc(100% - ${DRAWER_WIDTH_COLLAPSED}px)`,
-    ...(open && {
-        transition: theme.transitions.create("margin", {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        // Shift margin when drawer is open
-        marginLeft: DRAWER_WIDTH,
-        // Adjust width when drawer is open
-        width: `calc(100% - ${DRAWER_WIDTH}px)`,
-    }),
+    width: "100%",
+    maxWidth: 1024,
+    marginLeft: "auto",
+    marginRight: "auto",
     // Ensure content is pushed below the AppBar
     paddingTop: `calc(${theme.mixins.toolbar.minHeight}px + ${theme.spacing(3)})`,
     [theme.breakpoints.up("sm")]: {
@@ -41,8 +25,6 @@ const Main = styled("main", { shouldForwardProp: (prop) => prop !== "open" })<{ 
 }));
 
 export default function Home() {
-    const drawerState = useDrawerState();
-    const { locale } = useLocale();
     const [formData, setFormData] = useState<Root>({});
     const [fileName, setFileName] = useState("");
     const [downloadModalOpen, setDownloadModalOpen] = useState(false);
@@ -71,29 +53,20 @@ export default function Home() {
         }
     };
     return (
-        <DrawerContextProvider value={drawerState}>
-            <Box sx={{ display: "flex" }} dir={locale === "ar" ? "rtl" : "ltr"}>
-                <NavigationBar />
+        <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+            <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleLoad} />
+            <Main>
+                <Header formData={formData} setFormData={setFormData} fileName={fileName} setFileName={setFileName} />
+                <FileExplorer onFileLoad={onFileLoad} directory={directoryTree} />
+                <DataForm formData={formData} setFormData={setFormData} />
+            </Main>
 
-                <ResponsiveDrawer
-                    onFileLoad={onFileLoad}
-                    directory={directoryTree}
-                    onSaveButtonClick={toggleDownloadModal}
-                    onUploadButtonClick={() => document.getElementById("file-upload")?.click()}
-                />
-                <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleLoad} />
-
-                <Main open={drawerState.open}>
-                    <DataForm formData={formData} setFormData={setFormData} />
-                </Main>
-
-                <DownloadButtonModal
-                    open={downloadModalOpen}
-                    onClose={toggleDownloadModal}
-                    formData={formData}
-                    initialFileName={fileName}
-                />
-            </Box>
-        </DrawerContextProvider>
+            <DownloadButtonModal
+                open={downloadModalOpen}
+                onClose={toggleDownloadModal}
+                formData={formData}
+                initialFileName={fileName}
+            />
+        </Box>
     );
 }

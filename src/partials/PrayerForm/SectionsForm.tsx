@@ -1,5 +1,5 @@
 import React, { Fragment, useEffect, useState } from "react";
-import { Box, Typography, IconButton, ButtonGroup, Button, ToggleButton, ToggleButtonGroup } from "@mui/material";
+import { Box, Typography, IconButton as MuiIconButton, ButtonGroup, Button as MuiButton, styled } from "@mui/material";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import DeleteIcon from "@mui/icons-material/Delete";
@@ -12,8 +12,23 @@ import { useTranslations } from "next-intl";
 import { useAutoAnimate } from "@formkit/auto-animate/react";
 import { v4 as uuidv4 } from "uuid";
 import AddIcon from "@mui/icons-material/Add";
+import { ToggleButton, ToggleButtonGroup } from "@/components/ToggleButton";
 
 export type Section = Required<Prayer>["sections"][number];
+
+const Button = styled(MuiButton)(() => ({
+    borderRadius: 12,
+    fontWeight: 500,
+    textTransform: "none",
+}));
+
+const IconButton = styled(MuiIconButton)(() => ({
+    padding: 8,
+    borderRadius: 10,
+    "&:hover": {
+        backgroundColor: "rgba(0,0,0,0.05)",
+    },
+}));
 
 interface SectionsProps {
     sections: Section[] | undefined;
@@ -96,7 +111,7 @@ export const SectionsForm = ({ sections, languages, onChange, onDelete, onAdd }:
                 newSection = { type: "compound-prayer", path: "", ...commonProps };
                 break;
             default:
-                return; // Or handle the default case as needed
+                return;
         }
 
         newSections[sectionIndex] = newSection;
@@ -114,11 +129,11 @@ export const SectionsForm = ({ sections, languages, onChange, onDelete, onAdd }:
     };
 
     return (
-        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }} ref={parent}>
+        <Box sx={{ display: "flex", flexDirection: "column", gap: 3 }} ref={parent}>
             {sections?.map((section, sectionIndex) => (
                 <Fragment key={sectionIds[sectionIndex] || sectionIndex}>
-                    <Box sx={{ border: "1px solid #ccc" }}>
-                        <Box sx={{ display: "flex", flexDirection: "column", gap: 2, padding: 2 }}>
+                    <Box sx={{ border: "1px solid #e0e0e0", borderRadius: 2, background: "#fff", padding: 2 }}>
+                        <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
                             <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                                 <Typography variant="h6">{t("section-label", { index: sectionIndex + 1 })}</Typography>
 
@@ -149,21 +164,19 @@ export const SectionsForm = ({ sections, languages, onChange, onDelete, onAdd }:
                                 </ButtonGroup>
                             </Box>
 
-                            <Box>
-                                <ToggleButtonGroup
-                                    value={section.type}
-                                    onChange={(_, value) => handleSectionTypeChange(sectionIndex, value)}
-                                    color="primary"
-                                    fullWidth
-                                    exclusive
-                                >
-                                    {["verses", "info", "reading", "compound-prayer"].map((type) => (
-                                        <ToggleButton key={type} value={type}>
-                                            {t(`sectionType-field-option-${type}`)}
-                                        </ToggleButton>
-                                    ))}
-                                </ToggleButtonGroup>
-                            </Box>
+                            <ToggleButtonGroup
+                                value={section.type}
+                                onChange={(_, value) => handleSectionTypeChange(sectionIndex, value)}
+                                color="primary"
+                                fullWidth
+                                exclusive
+                            >
+                                {["verses", "info", "reading", "compound-prayer"].map((type) => (
+                                    <ToggleButton disabled={type === section.type} key={type} value={type}>
+                                        {t(`sectionType-field-option-${type}`)}
+                                    </ToggleButton>
+                                ))}
+                            </ToggleButtonGroup>
 
                             {section.type === "verses" && (
                                 <VersesSectionComponent

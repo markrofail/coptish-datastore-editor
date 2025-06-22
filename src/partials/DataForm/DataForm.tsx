@@ -1,12 +1,14 @@
 import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import _ from "lodash";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
-import { Box, ToggleButton, ToggleButtonGroup, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Prayer, Reading, Root } from "@/types";
 import { useTranslations } from "next-intl";
 import { PrayerForm } from "../PrayerForm";
 import { ReadingForm } from "./ReadingForm";
 import { Language, LanguageFields } from "./LanguageFields";
+import { ToggleButton, ToggleButtonGroup } from "@/components/ToggleButton";
+import { useLocalStorage } from "usehooks-ts";
 
 const FORM_TYPES = ["prayer", "reading", "synaxarium"] as const;
 type FormType = (typeof FORM_TYPES)[number];
@@ -22,7 +24,7 @@ interface DataFormProps {
 export const DataForm = ({ formData, setFormData }: DataFormProps) => {
     const t = useTranslations("DataForm");
     const [formType, setFormType] = useState<FormType>("prayer");
-    const [languages, setLanguages] = useState<Language[]>(["english", "arabic"]);
+    const [languages, setLanguages] = useLocalStorage<Language[]>("settings:form-languages", ["english", "arabic"]);
 
     const isPrayer = isPrayerT(formData);
     const isReading = isReadingT(formData);
@@ -65,13 +67,17 @@ export const DataForm = ({ formData, setFormData }: DataFormProps) => {
         <Box sx={{ display: "flex", flexDirection: "column", gap: 2 }}>
             {/* Language input */}
             <Box>
-                <Typography variant="h6">{t("language-field-label")}</Typography>
+                <Typography fontWeight="600" variant="h6">
+                    {t("language-field-label")}
+                </Typography>
                 <LanguageFields value={languages} onChange={setLanguages} size={2} />
             </Box>
 
             {/* Title */}
             <Box>
-                <Typography variant="h6">{t("title-field-label")}</Typography>
+                <Typography fontWeight="600" variant="h6">
+                    {t("title-field-label")}
+                </Typography>
                 <MultiLingualTextForm
                     value={formData.title || { english: "" }}
                     onChange={(value) => handleChange("title", value)}
@@ -81,7 +87,9 @@ export const DataForm = ({ formData, setFormData }: DataFormProps) => {
 
             {/* FormType Field */}
             <Box>
-                <Typography variant="h6">{t("formType-field-label")}</Typography>
+                <Typography fontWeight="600" variant="h6">
+                    {t("formType-field-label")}
+                </Typography>
                 <ToggleButtonGroup
                     value={formType}
                     onChange={(_, value) => onFormTypeChange(value)}
@@ -90,7 +98,7 @@ export const DataForm = ({ formData, setFormData }: DataFormProps) => {
                     exclusive
                 >
                     {FORM_TYPES.map((type) => (
-                        <ToggleButton key={type} value={type}>
+                        <ToggleButton disabled={type === formType} key={type} value={type}>
                             {t(`formType-field-option-${type}`)}
                         </ToggleButton>
                     ))}

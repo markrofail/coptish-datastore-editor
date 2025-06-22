@@ -8,20 +8,12 @@ import {
     Occasion,
     MultiLingualText,
 } from "@/types";
-import {
-    Box,
-    FormControl,
-    InputLabel,
-    MenuItem,
-    Select,
-    SelectChangeEvent,
-    ToggleButton,
-    ToggleButtonGroup,
-    Typography,
-} from "@mui/material";
+import { Box, FormControl, InputLabel, MenuItem, SelectChangeEvent, Typography } from "@mui/material";
 import { useTranslations } from "next-intl";
 import { OccasionForm } from "../../components/OccasionForm";
 import { MultiLingualTextArrayForm } from "../../components/MultiLingualTextArrayForm";
+import { ToggleButton, ToggleButtonGroup } from "@/components/ToggleButton";
+import { Select } from "@/components/SelectField";
 
 interface VersesSectionProps {
     section: VersesSection;
@@ -33,11 +25,11 @@ interface VersesSectionProps {
 export const VersesSectionComponent = ({ section, languages, onChange }: VersesSectionProps) => {
     const t = useTranslations("VersesSection");
 
-    const handleSpeakerChange = (event: SelectChangeEvent<SpeakerEnum>) => {
+    const handleSpeakerChange = (event: SelectChangeEvent<unknown>) => {
         onChange({ ...section, speaker: event.target.value as Speaker });
     };
 
-    const handleSaintChange = (event: SelectChangeEvent<SaintEnum>) => {
+    const handleSaintChange = (event: SelectChangeEvent<unknown>) => {
         onChange({ ...section, saint: event.target.value as Saint });
     };
 
@@ -97,18 +89,25 @@ export const VersesSectionComponent = ({ section, languages, onChange }: VersesS
 
                 {/* InAudible Field */}
                 <ToggleButtonGroup value={section.inaudible} onChange={handleInaudibleChange} color="primary" exclusive>
-                    <ToggleButton value={false}>{t("inaudible-field-off")}</ToggleButton>
-                    <ToggleButton value={true}>{t("inaudible-field-on")}</ToggleButton>
+                    <ToggleButton disabled={section.inaudible === false} value={false}>
+                        {t("inaudible-field-off")}
+                    </ToggleButton>
+                    <ToggleButton disabled={section.inaudible === true} value={true}>
+                        {t("inaudible-field-on")}
+                    </ToggleButton>
                 </ToggleButtonGroup>
             </Box>
 
             {/* Verses Field */}
             <Box>
-                <Typography variant="h6">{t("verses-field-label")}</Typography>
+                <Typography fontWeight="600" variant="h6">
+                    {t("verses-field-label")}
+                </Typography>
 
                 <MultiLingualTextArrayForm
                     value={section.verses}
                     languages={languages}
+                    direction="row"
                     onChange={(newValue) => onChange({ ...section, verses: newValue })}
                     multiline
                 />

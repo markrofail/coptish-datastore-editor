@@ -1,7 +1,8 @@
 {
     "title": "نموذج إدخال البيانات",
+    "add-button-label": "إضافة",
     "save-button-label": "حفظ",
-    "upload-button-label": "رفع",
+    "upload-button-label": "استيراد ملف",
     "occasion-field-label": "المناسبة",
     "sections-field-label": "المقاطع",
     "DataForm": {
@@ -19,6 +20,9 @@
         "language-field-option-copticArabic": "قبطي (عربي)",
         "language-field-option-off": "-"
     },
+    "InfoSection": {
+        "comment-field-label": "التعليق"
+    },
     "VersesSection": {
         "speaker-field-label": "القائل",
         "verses-field-label": "المرادات",
@@ -33,7 +37,7 @@
     },
     "ReadingSection": {
         "text-field-label": "النص",
-        "readingType-field-label": "القراء",
+        "readingType-field-label": "القراءة",
         "readingType-field-option-acts-of-the-apostles": "أعمال الرسل",
         "readingType-field-option-catholic-epistle": "الكاثوليكون",
         "readingType-field-option-liturgy-gospel": "إنجيل القداس",
@@ -55,6 +59,7 @@
     "OccasionField": {
         "occasion-field-label": "المناسبة",
         "occasion-field-helper": "اعرض فقط إذا كانت المناسبة متطابقة",
+        "occasion-field-option-empty": "دائماً",
         "occasion-field-option-annual": "سنوي",
         "occasion-field-option-great-lent": "الصوم الكبير"
     },
@@ -70,5 +75,6 @@
     },
     "FileExplorer": {
         "heading-database": "قاعدة البيانات"
-    }
+    },
+    "toggle-language-label": "English"
 }

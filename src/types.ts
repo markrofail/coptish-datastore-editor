@@ -129,20 +129,20 @@ export enum OccasionEnum {
 }
 
 export enum ReadingTypeEnum {
-    "Acts Of The Apostles" = "acts-of-the-apostles",
-    "Catholic Epistle" = "catholic-epistle",
-    "Evening Prayers Gospel" = "evening-prayers-gospel",
-    "Evening Prayers Psalm" = "evening-prayers-psalm",
-    "Liturgy Gospel" = "liturgy-gospel",
-    "Liturgy Psalm" = "liturgy-psalm",
-    "Matins Gospel" = "matins-gospel",
-    "Matins Prophecies" = "matins-prophecies",
-    "Matins Psalm" = "matins-psalm",
-    "Matins Sermon" = "matins-sermon",
-    "Pauline Epistle" = "pauline-epistle",
-    "Synaxarium" = "synaxarium",
-    "Vespers Gospel" = "vespers-gospel",
     "Vespers Psalm" = "vespers-psalm",
+    "Vespers Gospel" = "vespers-gospel",
+    "Matins Prophecies" = "matins-prophecies",
+    "Matins Sermon" = "matins-sermon",
+    "Matins Psalm" = "matins-psalm",
+    "Matins Gospel" = "matins-gospel",
+    "Pauline Epistle" = "pauline-epistle",
+    "Catholic Epistle" = "catholic-epistle",
+    "Acts Of The Apostles" = "acts-of-the-apostles",
+    "Synaxarium" = "synaxarium",
+    "Liturgy Psalm" = "liturgy-psalm",
+    "Liturgy Gospel" = "liturgy-gospel",
+    "Evening Prayers Psalm" = "evening-prayers-psalm",
+    "Evening Prayers Gospel" = "evening-prayers-gospel",
 }
 
 export enum SpeakerEnum {
