@@ -66,7 +66,9 @@ export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
         if (!!node.children) return;
 
         console.log(node);
-        fetchFile({ filePath: node.path });
+        fetchFile({ filePath: node.path }).then(() => {
+            setExpanded(false);
+        });
     };
 
     return (

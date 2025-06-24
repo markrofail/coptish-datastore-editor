@@ -67,7 +67,6 @@ export const rtlTheme = createTheme({
     ...theme,
     direction: "rtl",
     typography: {
-        fontSize: 18,
         fontFamily: arabicFont.style.fontFamily,
     },
 });

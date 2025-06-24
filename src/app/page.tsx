@@ -9,6 +9,9 @@ import { parse } from "yaml";
 import { DownloadButtonModal } from "@/partials/DownloadModal/DownloadModal";
 import { Header } from "@/partials/Header";
 import { FileExplorer } from "@/partials/Drawer/FileExplorer";
+import { ymlToUrl } from "@/utils/yml";
+import { exportToPdf } from "@/pdf";
+import { useLocale } from "./providers";
 
 const Main = styled("main")(({ theme }) => ({
     flexGrow: 1,
@@ -25,6 +28,9 @@ const Main = styled("main")(({ theme }) => ({
 }));
 
 export default function Home() {
+    const { locale, setLocale } = useLocale();
+    const onLocaleToggle = () => setLocale(locale === "en" ? "ar" : "en");
+
     const [formData, setFormData] = useState<Root>({});
     const [fileName, setFileName] = useState("");
     const [downloadModalOpen, setDownloadModalOpen] = useState(false);
@@ -33,6 +39,17 @@ export default function Home() {
     const onFileLoad = (fileName: string, data: Root) => {
         setFileName(fileName);
         setFormData(data);
+    };
+
+    const handleSave = () => {
+        const url = ymlToUrl(formData);
+
+        const link = document.createElement("a");
+        link.download = fileName.endsWith(".yml") || fileName.endsWith(".yaml") ? fileName : `${fileName}.yml`;
+        link.href = url;
+        link.click();
+
+        URL.revokeObjectURL(url);
     };
 
     const handleLoad = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -52,11 +69,22 @@ export default function Home() {
             reader.readAsText(file);
         }
     };
+
+    const handleUploadClick = () => {
+        const fileInput = document.getElementById("file-upload") as HTMLInputElement;
+        if (fileInput) fileInput.click();
+    };
+
     return (
         <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
             <input type="file" id="file-upload" style={{ display: "none" }} onChange={handleLoad} />
             <Main>
-                <Header formData={formData} setFormData={setFormData} fileName={fileName} setFileName={setFileName} />
+                <Header
+                    onSaveClick={handleSave}
+                    onUploadClick={handleUploadClick}
+                    onLocaleToggle={onLocaleToggle}
+                    onPdfExportClick={() => exportToPdf(formData, `${fileName}.pdf`)}
+                />
                 <FileExplorer onFileLoad={onFileLoad} directory={directoryTree} />
                 <DataForm formData={formData} setFormData={setFormData} />
             </Main>

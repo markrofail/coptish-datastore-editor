@@ -3,6 +3,7 @@
     "add-button-label": "إضافة",
     "save-button-label": "حفظ",
     "upload-button-label": "استيراد ملف",
+    "pdf-button-label": "إنشاء PDF",
     "occasion-field-label": "المناسبة",
     "sections-field-label": "المقاطع",
     "DataForm": {

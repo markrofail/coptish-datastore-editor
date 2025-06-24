@@ -3,6 +3,7 @@
     "add-button-label": "Add",
     "save-button-label": "Download",
     "upload-button-label": "Import File",
+    "pdf-button-label": "Export PDF",
     "occasion-field-label": "Occasion",
     "sections-field-label": "Sections",
     "DataForm": {
