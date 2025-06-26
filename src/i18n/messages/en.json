@@ -4,6 +4,8 @@
     "save-button-label": "Download",
     "upload-button-label": "Import File",
     "pdf-button-label": "Export PDF",
+    "toggle-language-label": "عربي",
+    "clear-button-label": "Clear Data",
     "occasion-field-label": "Occasion",
     "sections-field-label": "Sections",
     "DataForm": {
@@ -77,5 +79,11 @@
     "FileExplorer": {
         "heading-database": "Database"
     },
-    "toggle-language-label": "عربي"
+    "DownloadModal": {
+        "title": "Save your file",
+        "subtext": "Choose a name for your file",
+        "filenameLabel": "Filename",
+        "cancelButton": "Cancel",
+        "confirmButton": "Confirm"
+    }
 }

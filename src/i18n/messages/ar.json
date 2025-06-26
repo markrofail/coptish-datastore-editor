@@ -1,9 +1,11 @@
 {
     "title": "نموذج إدخال البيانات",
     "add-button-label": "إضافة",
-    "save-button-label": "حفظ",
+    "save-button-label": "حفظ الملف",
     "upload-button-label": "استيراد ملف",
     "pdf-button-label": "إنشاء PDF",
+    "toggle-language-label": "English",
+    "clear-button-label": "مسح البيانات",
     "occasion-field-label": "المناسبة",
     "sections-field-label": "المقاطع",
     "DataForm": {
@@ -77,5 +79,11 @@
     "FileExplorer": {
         "heading-database": "قاعدة البيانات"
     },
-    "toggle-language-label": "English"
+    "DownloadModal": {
+        "title": "حفظ ملفك",
+        "subtext": "اختر اسمًا للملف",
+        "filenameLabel": "اسم الملف",
+        "cancelButton": "إلغاء",
+        "confirmButton": "تأكيد"
+    }
 }

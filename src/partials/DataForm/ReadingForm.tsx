@@ -126,14 +126,7 @@ const EachReadingForm = ({
                         backgroundColor: "#fff",
                     }}
                 >
-                    <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "start",
-                            alignItems: "center",
-                            mb: 1,
-                        }}
-                    >
+                    <Box sx={{ display: "flex", alignItems: "center", justifyContent: "space-between", mb: 2 }}>
                         <Typography variant="subtitle1">
                             {t("readingType-field-label")} {i + 1}
                         </Typography>

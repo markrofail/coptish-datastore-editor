@@ -1,8 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { Box, Button, Collapse, Typography, styled } from "@mui/material";
+import React, { useEffect } from "react";
+import { Box, Dialog, DialogTitle, DialogContent, Typography, styled } from "@mui/material";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
-import ExpandLessIcon from "@mui/icons-material/ExpandLess";
-import FolderOpenIcon from "@mui/icons-material/FolderOpen";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import FolderIcon from "@mui/icons-material/Folder";
@@ -12,15 +10,6 @@ import { TreeItem, SimpleTreeView } from "@mui/x-tree-view";
 import { MultiLingualText, Prayer } from "@/types";
 import { useFetchFile } from "./utils";
 import { useLocale } from "@/app/providers";
-
-const ExplorerToggleButton = styled(Button)(({ theme }) => ({
-    justifyContent: "flex-start",
-    textAlign: "left",
-    padding: theme.spacing(1),
-    borderRadius: theme.shape.borderRadius,
-    textTransform: "none",
-    fontWeight: theme.typography.fontWeightBold,
-}));
 
 const ExplorerContentBox = styled(Box)(({ theme }) => ({
     padding: theme.spacing(1),
@@ -42,49 +31,31 @@ interface Node {
     children?: Node[];
 }
 
-export interface FileExplorerProps {
+export interface FileExplorerModalProps {
     directory: Node;
     onFileLoad: (fileName: string, data: Prayer) => void;
+    open: boolean;
+    onClose: () => void;
 }
-export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
+export const FileExplorerModal = ({ directory, onFileLoad, open, onClose }: FileExplorerModalProps) => {
     const { dir } = useLocale();
     const { fetchFile, fileName, fileContent } = useFetchFile();
     const t = useTranslations();
-    const [expanded, setExpanded] = useState(false);
-
-    const toggleExpanded = () => {
-        setExpanded(!expanded);
-    };
 
     useEffect(() => {
-        if (fileContent) {
-            onFileLoad(fileName, fileContent);
-        }
+        if (fileContent) onFileLoad(fileName, fileContent);
     }, [fileContent, fileName, onFileLoad]);
 
-    const onSelect = (node: Node) => {
+    const onSelect = async (node: Node) => {
         if (!!node.children) return;
 
-        console.log(node);
-        fetchFile({ filePath: node.path }).then(() => {
-            setExpanded(false);
-        });
+        await fetchFile({ filePath: node.path });
     };
 
     return (
-        <Box sx={{ marginBottom: 2, width: "100%" }}>
-            <ExplorerToggleButton
-                variant="text"
-                color="primary"
-                onClick={toggleExpanded}
-                startIcon={<FolderOpenIcon />}
-                endIcon={expanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-                aria-expanded={expanded}
-                aria-controls="file-explorer-content"
-            >
-                {t("FileExplorer.heading-database")}
-            </ExplorerToggleButton>
-            <Collapse in={expanded} timeout="auto" unmountOnExit>
+        <Dialog open={open} onClose={onClose} maxWidth="md" dir={dir} fullWidth>
+            <DialogTitle>{t("FileExplorer.heading-database")}</DialogTitle>
+            <DialogContent>
                 <ExplorerContentBox
                     id="file-explorer-content"
                     role="region"
@@ -95,15 +66,15 @@ export const FileExplorer = ({ directory, onFileLoad }: FileExplorerProps) => {
                             collapseIcon: ExpandMoreIcon,
                             expandIcon: dir === "ltr" ? ChevronRightIcon : ChevronLeftIcon,
                         }}
-                        sx={{ flexGrow: 1, maxWidth: 400, width: 400, overflowY: "auto" }}
+                        sx={{ flexGrow: 1, maxWidth: 400, width: "100%", overflowY: "auto" }}
                     >
                         {directory.children?.map((node) => (
                             <DirectoryTree key={node.id} node={node} onSelect={onSelect} />
                         ))}
                     </SimpleTreeView>
                 </ExplorerContentBox>
-            </Collapse>
-        </Box>
+            </DialogContent>
+        </Dialog>
     );
 };
 
