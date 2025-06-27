@@ -1,11 +1,12 @@
 import React from "react";
 import { MultiLingualTextArray } from "@/types";
-import { Box, IconButton as MuiIconButton, Button, useTheme, Typography, styled, TextField } from "@mui/material";
+import { Box, IconButton as MuiIconButton, Button, useTheme, Typography, styled } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { useTranslations } from "next-intl";
 import { fontMap } from "@/fonts";
 import { LABEL_MAP, Language } from "@/partials/DataForm/LanguageFields";
+import { TextField } from "./TextField";
 
 interface MultiLingualTextArrayFormProps {
     value: MultiLingualTextArray;

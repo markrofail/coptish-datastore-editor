@@ -7,6 +7,7 @@ export const TextField = styled(MuiTextField)(({ theme }) => ({
         boxShadow: "0 1px 3px rgba(60, 60, 67, 0.1)", // subtle iOS-style shadow
         paddingLeft: 12,
         paddingRight: 12,
+        fontSize: "2rem",
         // Smooth transition for focus
         transition: theme.transitions.create(["box-shadow", "border-color"], {
             duration: theme.transitions.duration.short,
