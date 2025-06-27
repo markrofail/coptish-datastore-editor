@@ -7,7 +7,9 @@ import PictureAsPdfIcon from "@mui/icons-material/PictureAsPdf";
 import ClearIcon from "@mui/icons-material/Clear";
 import { useTranslations } from "next-intl";
 import { ExpandableButton } from "@/components/ExpandableButton";
-import FolderOpenIcon from "@mui/icons-material/FolderOpen";
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import FolderSharedIcon from "@mui/icons-material/FolderShared";
+import InsertDriveFileIcon from "@mui/icons-material/InsertDriveFile";
 
 interface ToolbarProps {
     onSaveClick: () => void;
@@ -42,7 +44,7 @@ export const Toolbar = ({
                 {...commonProps}
                 startIcon={<SaveIcon />}
                 options={[
-                    { label: t("save-button-label"), icon: <SaveIcon />, onClick: onSaveClick },
+                    { label: t("save-button-label"), icon: <InsertDriveFileIcon />, onClick: onSaveClick },
                     { label: t("pdf-button-label"), icon: <PictureAsPdfIcon />, onClick: onPdfExportClick },
                 ]}
             >
@@ -54,10 +56,10 @@ export const Toolbar = ({
                 options={[
                     {
                         label: t("FileExplorer.heading-database"),
-                        icon: <FolderOpenIcon />,
+                        icon: <FolderSharedIcon />,
                         onClick: onFileExplorerClick,
                     },
-                    { label: t("upload-button-label"), icon: <FileUploadIcon />, onClick: onUploadClick },
+                    { label: t("upload-button-label"), icon: <UploadFileIcon />, onClick: onUploadClick },
                 ]}
             >
                 {t("upload-button-label")}

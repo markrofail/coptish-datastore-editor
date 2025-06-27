@@ -15,6 +15,8 @@ import { useLocale } from "./providers";
 import { useLocalStorage, useToggle } from "usehooks-ts";
 import { useTranslations } from "next-intl";
 
+const DEFAULT_FORM_DATA: Root = { type: "prayer" };
+
 const Main = styled("main")(({ theme }) => ({
     flexGrow: 1,
     padding: theme.spacing(3),
@@ -28,7 +30,7 @@ export default function Home() {
     const t = useTranslations();
     const { locale, setLocale } = useLocale();
     const onLocaleToggle = () => setLocale(locale === "en" ? "ar" : "en");
-    const [formData, setFormData] = useLocalStorage<Root>("form:data", {});
+    const [formData, setFormData] = useLocalStorage<Root>("form:data", DEFAULT_FORM_DATA);
     const [fileName, setFileName] = useLocalStorage("form:file-name", "");
     const [downloadModalOpen, toggleDownloadModal] = useToggle(false);
     const [pdfExportModalOpen, togglePdfExportModal] = useToggle(false);
@@ -79,9 +81,9 @@ export default function Home() {
     };
 
     const handleClearClick =
-        Object.keys(formData).length > 0
+        JSON.stringify(formData) !== JSON.stringify(DEFAULT_FORM_DATA)
             ? () => {
-                  setFormData({});
+                  setFormData(DEFAULT_FORM_DATA);
                   setFileName("");
               }
             : undefined;

@@ -7,7 +7,7 @@ import FolderIcon from "@mui/icons-material/Folder";
 import FileIcon from "@mui/icons-material/Description";
 import { useTranslations } from "next-intl";
 import { TreeItem, SimpleTreeView } from "@mui/x-tree-view";
-import { MultiLingualText, Prayer } from "@/types";
+import { MultiLingualText, Root } from "@/types";
 import { useFetchFile } from "./utils";
 import { useLocale } from "@/app/providers";
 
@@ -33,7 +33,7 @@ interface Node {
 
 export interface FileExplorerModalProps {
     directory: Node;
-    onFileLoad: (fileName: string, data: Prayer) => void;
+    onFileLoad: (fileName: string, data: Root) => void;
     open: boolean;
     onClose: () => void;
 }
@@ -49,6 +49,7 @@ export const FileExplorerModal = ({ directory, onFileLoad, open, onClose }: File
     const onSelect = async (node: Node) => {
         if (!!node.children) return;
 
+        onClose();
         await fetchFile({ filePath: node.path });
     };
 

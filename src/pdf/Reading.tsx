@@ -4,7 +4,7 @@ import { MultiLingualText } from "./MultiLinguaglText";
 import { convertMultiLingualTextArrayToMultiLingualText } from "./util";
 
 /* eslint-disable  @typescript-eslint/no-unused-vars */
-export const Reading = ({ title, ...readings }: Partial<ReadingT>) => {
+export const Reading = ({ title, type, ...readings }: Partial<ReadingT>) => {
     return (
         <>
             {Object.values(readings).map((subReadings, i) => (

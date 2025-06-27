@@ -24,16 +24,16 @@ export const PrayerForm = ({ formData, languages, setFormData }: PrayerFormProps
 
     const handleSectionAdd = () => {
         const newSection: VersesSection = { type: "verses", verses: {} };
-        setFormData((prevData: Prayer) => ({
+        setFormData((prevData: Root) => ({
             ...prevData,
-            sections: [...(prevData.sections ?? []), newSection],
+            sections: [...((prevData as Prayer).sections ?? []), newSection],
         }));
     };
 
     const handleSectionDelete = (index: number) => {
-        setFormData((prevData: Prayer) => ({
+        setFormData((prevData: Root) => ({
             ...prevData,
-            sections: prevData.sections?.filter((_, i) => i !== index),
+            sections: (prevData as Prayer).sections?.filter((_, i) => i !== index),
         }));
     };
 

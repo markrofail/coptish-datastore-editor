@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useEffect, useState } from "react";
 import _ from "lodash";
 import { MultiLingualTextForm } from "@/components/MultiLingualTextForm";
 import { Box, Typography } from "@mui/material";
-import { Prayer, Reading, Root } from "@/types";
+import { Prayer, Reading, Root, Synaxarium } from "@/types";
 import { useTranslations } from "next-intl";
 import { PrayerForm } from "../PrayerForm";
 import { ReadingForm } from "./ReadingForm";
@@ -13,8 +13,8 @@ import { useLocalStorage } from "usehooks-ts";
 const FORM_TYPES = ["prayer", "reading", "synaxarium"] as const;
 type FormType = (typeof FORM_TYPES)[number];
 
-const isPrayerT = (formData: Root): formData is Prayer => formData.hasOwnProperty("sections");
-const isReadingT = (formData: Root): formData is Reading => formData.hasOwnProperty("liturgy-gospel");
+const isPrayerT = (formData: Root): formData is Prayer => formData.type === "prayer";
+const isReadingT = (formData: Root): formData is Reading => formData.type === "reading";
 
 interface DataFormProps {
     formData: Root;
@@ -53,12 +53,16 @@ export const DataForm = ({ formData, setFormData }: DataFormProps) => {
         const commonProps = { title: formData.title || {} };
         switch (value) {
             case "prayer":
-                const prayer: Prayer = { ...commonProps, sections: [] };
+                const prayer: Prayer = { ...commonProps, type: "prayer", sections: [] };
                 setFormData(prayer);
                 break;
             case "reading":
-                const reading: Reading = { ...commonProps };
+                const reading: Reading = { ...commonProps, type: "reading" };
                 setFormData(reading);
+                break;
+            case "synaxarium":
+                const synaxarium: Synaxarium = { ...commonProps, type: "synaxarium", commemorations: [] };
+                setFormData(synaxarium);
                 break;
         }
     };

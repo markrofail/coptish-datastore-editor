@@ -20,7 +20,7 @@ export const MyDocument = ({ data }: { data: Root }) => {
     return (
         <Document>
             <Page size={{ height: "720", width: "405" }} orientation="landscape" style={styles.page}>
-                <Reading {...data} />
+                {data.type === "reading" && <Reading {...data} />}
             </Page>
         </Document>
     );
